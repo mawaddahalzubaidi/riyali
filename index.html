@@ -6,6 +6,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="دفتر ريالي AI" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#528c6e" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <title>دفتر ريالي AI | المفكرة المالية الذكية ورف الدفاتر السنوي</title>
 
   <!-- استيراد الخطوط اليدوية وخطوط المفكرة من Google Fonts -->
@@ -1657,6 +1660,152 @@
     .paper-toast.show {
       transform: translateX(-50%) translateY(0) rotate(-1deg);
     }
+
+    /* ================= إضافات الإصدار الجديد ================= */
+
+    /* شريط تمرير ورقي نحيف (Cozy Scrollbar) */
+    html, body, .chat-paper-box, .modal-scrap, .ledger-sheet {
+      scrollbar-width: thin;
+      scrollbar-color: var(--kraft-border) transparent;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--kraft-border), var(--input-underline));
+      border-radius: 10px;
+      border: 1px solid var(--card-bg);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
+    ::-webkit-scrollbar-corner { background: transparent; }
+
+    /* اختيار شخصية المساعد */
+    .persona-row { display: flex; gap: 6px; margin-bottom: 10px; }
+    .persona-pill {
+      flex: 1; text-align: center; padding: 6px 4px;
+      border: 1.5px dashed var(--card-border); border-radius: 12px;
+      font-family: var(--font-hand); font-size: 0.72rem; cursor: pointer;
+      background: var(--bg-paper-secondary); color: var(--ink-secondary);
+      transition: transform 0.12s ease;
+    }
+    .persona-pill small { display: block; font-family: var(--font-body); font-size: 0.6rem; color: var(--ink-muted); }
+    .persona-pill.selected { border-style: solid; border-color: var(--sage-green); background: var(--sage-soft); color: var(--ink-primary); transform: rotate(-1deg); }
+
+    /* زر المايكروفون */
+    .mic-btn {
+      width: 42px; min-width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid var(--card-border); background: var(--card-bg);
+      font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .mic-btn.listening { background: var(--rose-soft); border-color: var(--dusty-rose); animation: micPulse 1s infinite; }
+    @keyframes micPulse { 0%,100% { box-shadow: 0 0 0 0 var(--rose-soft); } 50% { box-shadow: 0 0 0 7px transparent; } }
+
+    .chat-inline-btn {
+      display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 10px;
+      border: 1px solid var(--sage-green); background: var(--sage-soft);
+      font-family: var(--font-hand); font-size: 0.72rem; cursor: pointer; color: var(--ink-primary);
+    }
+
+    /* شريط المزاج */
+    .mood-strip { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+    .mood-strip-label { font-size: 0.72rem; color: var(--ink-secondary); font-family: var(--font-hand); }
+    .mood-pill {
+      padding: 4px 9px; border-radius: 20px; border: 1.5px solid var(--card-border);
+      background: var(--bg-paper-secondary); font-size: 0.72rem; cursor: pointer; color: var(--ink-primary);
+    }
+    .mood-pill.selected { border-color: var(--warm-mustard); background: var(--mustard-soft); font-weight: 700; }
+    .radio-pills.wrap { flex-wrap: wrap; }
+    .radio-pills.wrap .radio-pill { flex: 1 1 45%; }
+
+    /* رادار المزاج */
+    .mood-bar-row { display: grid; grid-template-columns: 92px 1fr 70px; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 0.76rem; }
+    .mood-bar-track { height: 12px; border-radius: 8px; background: var(--bg-paper-secondary); border: 1px solid var(--card-border); overflow: hidden; }
+    .mood-bar-fill { height: 100%; border-radius: 8px; }
+    .mood-insight { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--sticker-yellow); border: 1px dashed var(--warm-mustard); font-size: 0.78rem; line-height: 1.6; color: #3c3228; }
+
+    /* ركن الأمنيات */
+    .wish-form { display: flex; gap: 6px; margin-bottom: 10px; }
+    .wish-form .lined-input { font-size: 0.85rem; }
+    .wish-card {
+      background: var(--sticker-lavender); border: 2px solid var(--sticker-border);
+      box-shadow: 0 0 0 1px var(--sticker-ring), 0 3px 8px rgba(60,50,40,0.08);
+      border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; color: #3c3228;
+    }
+    .wish-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .wish-title { font-family: var(--font-hand); font-size: 0.9rem; }
+    .wish-lock { font-size: 0.7rem; color: #6e5f4f; margin: 4px 0 8px; }
+    .wish-lock-track { height: 6px; border-radius: 6px; background: rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 8px; }
+    .wish-lock-fill { height: 100%; background: #8b6fa8; }
+    .wish-actions { display: flex; gap: 6px; }
+    .wish-actions button {
+      flex: 1; padding: 7px 6px; border-radius: 10px; font-family: var(--font-hand); font-size: 0.72rem; cursor: pointer;
+    }
+    .btn-resist { border: 1.5px solid #528c6e; background: #dff6e8; color: #2f5c45; font-weight: 700; }
+    .btn-buy { border: 1.5px solid #cbb698; background: #fffdf9; color: #6e5f4f; }
+    .btn-buy:disabled { opacity: 0.55; cursor: not-allowed; }
+    .wish-empty { text-align: center; color: var(--ink-muted); font-family: var(--font-hand); font-size: 0.8rem; padding: 8px 0; }
+    .wish-stats { font-size: 0.72rem; color: var(--sage-green); font-family: var(--font-hand); text-align: center; margin-top: 4px; }
+
+    /* قرعة التحدي اليومي */
+    .challenge-ticket {
+      border: 2px dashed var(--warm-mustard); border-radius: 14px; padding: 14px; text-align: center;
+      background: var(--sticker-peach); color: #3c3228; margin-bottom: 10px; position: relative;
+    }
+    .challenge-ticket .ch-emoji { font-size: 2rem; display: block; }
+    .challenge-ticket .ch-text { font-family: var(--font-hand); font-size: 0.95rem; margin: 6px 0; line-height: 1.6; }
+    .challenge-ticket .ch-save { font-size: 0.75rem; color: #528c6e; font-weight: 700; }
+    .challenge-ticket.done { background: #dff6e8; border-color: #528c6e; }
+    .challenge-ticket.rolling { animation: wiggle 0.35s ease-in-out 2; }
+    @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+    .challenge-actions { display: flex; gap: 8px; }
+    .challenge-actions button { flex: 1; }
+
+    /* ألبوم الأختام */
+    .stamps-album { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .stamp-slot { text-align: center; }
+    .stamp-circle {
+      width: 64px; height: 64px; margin: 0 auto 4px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+      border: 2px dashed var(--card-border); background: var(--bg-paper-secondary); filter: grayscale(1); opacity: 0.45;
+    }
+    .stamp-slot.unlocked .stamp-circle {
+      filter: none; opacity: 1; border: 3px double var(--dusty-rose); background: var(--rose-soft);
+      transform: rotate(-8deg); box-shadow: inset 0 0 0 3px var(--card-bg);
+    }
+    .stamp-slot.unlocked:nth-child(even) .stamp-circle { transform: rotate(7deg); border-color: var(--sage-green); background: var(--sage-soft); }
+    .stamp-name { font-family: var(--font-hand); font-size: 0.68rem; color: var(--ink-primary); display: block; }
+    .stamp-hint { font-size: 0.58rem; color: var(--ink-muted); display: block; line-height: 1.3; }
+    .stamp-slot.just-unlocked .stamp-circle { animation: stampIn 0.6s ease; }
+    @keyframes stampIn { 0% { transform: scale(2) rotate(-25deg); opacity: 0; } 100% { transform: scale(1) rotate(-8deg); opacity: 1; } }
+    @media (max-width: 380px) { .stamps-album { grid-template-columns: repeat(3, 1fr); } }
+
+    /* تسجيل من رسالة البنك + التصفير */
+    .sms-textarea {
+      width: 100%; min-height: 96px; resize: vertical; padding: 10px 12px; border-radius: 12px;
+      border: 1.5px dashed var(--input-underline); background: var(--bg-paper-secondary);
+      font-family: var(--font-body); font-size: 0.82rem; color: var(--ink-primary); line-height: 1.6; outline: none;
+    }
+    .sms-textarea:focus { border-style: solid; border-color: var(--sage-green); }
+    .sms-status { font-size: 0.78rem; margin: 8px 0; line-height: 1.5; }
+    .sms-parsed { display: none; border-top: 1px dashed var(--card-border); padding-top: 8px; }
+    .sms-row { display: flex; gap: 8px; }
+    .sms-row .form-group { flex: 1; }
+    .danger-zone {
+      margin-top: 14px; padding: 10px 12px; border-radius: 12px;
+      border: 1.5px dashed var(--dusty-rose); background: var(--rose-soft);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.74rem; color: var(--ink-primary);
+    }
+    .btn-danger {
+      background: var(--dusty-rose); color: #fff; border: none; padding: 9px 12px; border-radius: 12px;
+      font-family: var(--font-hand); font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .btn-danger:disabled { cursor: not-allowed; }
+    .reset-warning {
+      background: var(--rose-soft); border: 2px solid var(--dusty-rose); border-radius: 12px;
+      padding: 10px 12px; font-size: 0.78rem; line-height: 1.7; color: var(--ink-primary); margin-bottom: 12px;
+    }
+    .reset-warning ul { margin: 4px 18px 0 0; padding: 0; }
+    .backup-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .backup-row > * { flex: 1; text-align: center; }
   </style>
 </head>
 <body>
@@ -1815,9 +1964,15 @@
           <button class="sketch-btn" onclick="openModal('stickerModal')">+ ملصق جديد</button>
         </div>
 
+        <div class="mood-strip" id="homeMoodStrip"></div>
         <div class="stickers-grid" id="quickStickersContainer"></div>
 
-        <div class="custom-expense-bar">
+        <button class="add-custom-btn" style="width: 100%; margin-top: 14px; background: var(--sky-soft); border-color: var(--sky-calm);" onclick="openBankSmsModal()">
+          <span>📩</span>
+          <span>تسجيل من رسالة البنك (الصق الرسالة)</span>
+        </button>
+
+        <div class="custom-expense-bar" style="margin-top: 8px;">
           <button class="add-custom-btn" onclick="openModal('customExpenseModal')">
             <span>✒️</span>
             <span>تدوين مصروف باليد...</span>
@@ -1827,6 +1982,26 @@
             <span>مسح فاتورة بالـ AI</span>
           </button>
         </div>
+      </section>
+
+      <!-- ركن الأمنيات وقفل الـ 48 ساعة -->
+      <section class="card washi-pink">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🎁</span>
+            <span>ركن الأمنيات وقفل الـ 48 ساعة</span>
+          </h2>
+        </div>
+        <p style="font-size: 0.74rem; color: var(--ink-secondary); margin-bottom: 8px;">
+          اشتهيت شي كمالي وأنت متردد؟ حطه هنا وانتظر 48 ساعة.. إذا قاومت، حوّل قيمته لمغلف الادخار 💪
+        </p>
+        <div class="wish-form">
+          <input type="text" id="wishTitleInput" class="lined-input" placeholder="مثال: سماعة جديدة" style="flex: 2;" />
+          <input type="number" id="wishAmountInput" class="lined-input" placeholder="السعر" inputmode="decimal" style="flex: 1;" onkeydown="if(event.key==='Enter') addWishItem()" />
+          <button class="sketch-btn" onclick="addWishItem()">+ أمنية</button>
+        </div>
+        <div id="wishlistContainer"></div>
+        <div class="wish-stats" id="wishStatsText"></div>
       </section>
 
       <!-- 4. سجل العمليات المسطر -->
@@ -1937,16 +2112,22 @@
           <span class="pro-pill" id="aiModeStatusBadge">محرك ذكي مدمج ✓</span>
         </div>
 
+        <!-- اختيار شخصية المساعد -->
+        <div class="persona-row" id="personaRow"></div>
+
         <!-- رسائل المحادثة -->
         <div class="chat-paper-box" id="aiChatMessagesBox">
           <div class="chat-bubble ai">
             أهلاً بك في <strong>دفتر ريالي الذكي</strong>! 📒✨<br/>
-            يمكنك التحدث معي لتسجيل مصروفاتك فوراً (مثلاً اكتب: <em>«سجل 25 ريال قهوة»</em> أو <em>«دفعت 150 مقاضي»</em>) أو سؤالي عن تحليل ميزانيتك وأقساطك!
+            يمكنك التحدث معي لتسجيل مصروفاتك فوراً (مثلاً اكتب: <em>«سجل 25 ريال قهوة»</em> أو <em>«دفعت 150 مقاضي»</em>) أو سؤالي عن تحليل ميزانيتك وأقساطك!<br/>
+            وإذا ضايقتك الفلوس.. فضفض لي (<em>«طفرت»</em>، <em>«مضغوط»</em>، <em>«ودي أشتري شي يغير نفسيتي»</em>) 🤍 وتقدر تضغط 🎙️ وتتكلم بصوتك.
           </div>
         </div>
 
         <!-- أزرار أوامر وأسئلة سريعة -->
         <div class="quick-prompts-row">
+          <button class="prompt-chip" onclick="sendQuickPrompt('مضغوط والراتب طار 😮‍💨')">😮‍💨 أبي أفضفض</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('ودي أشتري شي يغير نفسيتي')">🛍️ ودي أشتري شي</button>
           <button class="prompt-chip" onclick="sendQuickPrompt('حلل لي مصروفاتي وعاداتي هذا الشهر')">📊 حلل مصروفاتي</button>
           <button class="prompt-chip" onclick="sendQuickPrompt('كم باقي من راتبي بعد أقساط تابي وتمارا؟')">🛡️ كم رصيدي الآمن؟</button>
           <button class="prompt-chip" onclick="sendQuickPrompt('سجل 22 ريال قهوة ومطاعم')">☕ سجل 22 ريال قهوة</button>
@@ -1960,9 +2141,10 @@
             type="text"
             id="aiChatInput"
             class="lined-input"
-            placeholder="اكتب أمرك أو سؤالك المالي هنا..."
+            placeholder="اكتب أو اضغط 🎙️ وتكلم..."
             onkeydown="if(event.key==='Enter') handleSendAiMessage()"
           />
+          <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()" title="تحدث بصوتك">🎙️</button>
           <button class="sketch-btn sage-btn" style="padding: 8px 16px; font-weight: 700;" onclick="handleSendAiMessage()">إرسال ↵</button>
         </div>
       </div>
@@ -2061,6 +2243,17 @@
         </div>
       </div>
 
+      <!-- متتبع المزاج مع الصرف -->
+      <div class="card washi-blue">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🎭</span>
+            <span>رادار المزاج: أي مزاج يخليك تصرف أكثر؟</span>
+          </h2>
+        </div>
+        <div id="moodRadarContainer"></div>
+      </div>
+
       <!-- 3. متتبع عادات الصرف الشهري (Habit Tracker Grid) -->
       <div class="card washi-mustard">
         <div class="card-header">
@@ -2112,6 +2305,34 @@
           <span id="coloringProgressText">تم تلوين: 0 من 20</span>
           <strong style="font-family: var(--font-hand); color: var(--sage-green);" id="coloringSavedTotal">وفرت بالتحدي: 0</strong>
         </div>
+      </div>
+
+      <!-- قرعة التحدي اليومي السريع -->
+      <div class="card washi-mustard">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🎲</span>
+            <span>قرعة التحدي اليومي</span>
+          </h2>
+        </div>
+        <div class="challenge-ticket" id="challengeTicket"></div>
+        <div class="challenge-actions">
+          <button class="sketch-btn" id="challengeRollBtn" onclick="rollDailyChallenge()">🎲 اسحب تحدي اليوم</button>
+          <button class="sketch-btn sage-btn" id="challengeDoneBtn" onclick="completeDailyChallenge()" style="display:none;">✅ أنجزته! حوّل التوفير للمغلف</button>
+        </div>
+        <div class="bar-meta"><span id="challengeStatsText"></span></div>
+      </div>
+
+      <!-- ألبوم أختام الإنجاز -->
+      <div class="card washi-green">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🏅</span>
+            <span>ألبوم أختام الإنجاز</span>
+          </h2>
+          <span class="pro-pill" id="stampsCountBadge">0 / 8</span>
+        </div>
+        <div class="stamps-album" id="stampsAlbumContainer"></div>
       </div>
 
     </section>
@@ -2417,9 +2638,99 @@
           <div class="radio-pill" id="expTypeWant" onclick="selectExpenseNeedType('want')">🛍️ كمالي (رغبة)</div>
         </div>
       </div>
+      <div class="form-group">
+        <label class="form-label">🎭 مزاجك وقت الشراء (اختياري):</label>
+        <div class="mood-strip" id="expMoodPills" style="margin-top: 6px;"></div>
+      </div>
       <div class="modal-actions">
         <button class="btn-save-scrap" onclick="addCustomExpense()">تدوين بالدفتر ✓</button>
         <button class="btn-cancel-scrap" onclick="closeModal('customExpenseModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تسجيل مصروف من رسالة البنك -->
+  <div class="modal-overlay" id="bankSmsModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title">📩 تسجيل من رسالة البنك</h3>
+      <p style="font-size: 0.74rem; color: var(--ink-secondary); margin-bottom: 8px;">
+        انسخ رسالة البنك (مثل: «شراء بمبلغ 65 ريال لدى Starbucks») والصقها هنا، والدفتر يطلع المبلغ والمتجر ويقترح التصنيف:
+      </p>
+      <textarea id="smsTextInput" class="sms-textarea" placeholder="الصق نص رسالة البنك هنا..." oninput="handleSmsInput()"></textarea>
+      <button class="sketch-btn" style="width: 100%; margin-top: 6px;" onclick="pasteSmsFromClipboard()">📋 لصق من الحافظة</button>
+      <div class="sms-status" id="smsParseStatus"></div>
+
+      <div class="sms-parsed" id="smsParsedBox">
+        <div class="radio-pills" style="margin-bottom: 10px;">
+          <div class="radio-pill selected" id="smsKindExpense" onclick="setSmsKind('expense')">💸 مصروف</div>
+          <div class="radio-pill" id="smsKindIncome" onclick="setSmsKind('income')">💰 دخل وارد</div>
+        </div>
+        <div class="sms-row">
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label">المتجر / البيان:</label>
+            <input type="text" id="smsStoreInput" class="lined-input" placeholder="اسم المتجر" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">المبلغ:</label>
+            <input type="text" id="smsAmountInput" class="lined-input" placeholder="0.00" inputmode="decimal" />
+          </div>
+        </div>
+        <div id="smsExpenseOnly">
+          <div class="form-group">
+            <label class="form-label">التصنيف المقترح:</label>
+            <select id="smsCategoryInput" class="lined-select" onchange="onSmsCategoryChange()"></select>
+          </div>
+          <div class="form-group">
+            <div class="radio-pills">
+              <div class="radio-pill selected" id="smsNeedPill" onclick="selectSmsNeed('need')">🌿 أساسي</div>
+              <div class="radio-pill" id="smsWantPill" onclick="selectSmsNeed('want')">🛍️ كمالي</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🎭 مزاجك وقت الشراء (اختياري):</label>
+            <div class="mood-strip" id="smsMoodPills" style="margin-top: 6px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-save-scrap" id="smsConfirmBtn" onclick="confirmSmsExpense()">✓ تأكيد التسجيل</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('bankSmsModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تصفير الدفتر -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title" style="color: var(--dusty-rose);">⚠️ تصفير الدفتر والبدء من جديد</h3>
+      <div class="reset-warning">
+        <strong>تحذير: هذا الإجراء نهائي ولا يمكن التراجع عنه!</strong> سيتم حذف:
+        <ul>
+          <li>كل المصروفات والدخل في جميع الشهور ورف الدفاتر</li>
+          <li>رصيد المغلف والأظرف الفرعية والراتب</li>
+          <li>الأقساط والاشتراكات وركن الأمنيات</li>
+          <li>تحدي التلوين والتحديات وألبوم الأختام</li>
+        </ul>
+      </div>
+      <p style="font-size: 0.74rem; color: var(--ink-secondary); margin-bottom: 6px;">💾 ننصحك تحمّل نسخة احتياطية أولاً (تقدر تسترجعها لاحقاً):</p>
+      <div class="backup-row">
+        <button class="sketch-btn" onclick="downloadBackupJson()">💾 تحميل نسخة احتياطية</button>
+        <label class="sketch-btn" style="cursor: pointer;">♻️ استرجاع نسخة
+          <input type="file" accept="application/json,.json" style="display: none;" onchange="restoreBackupJson(event)" />
+        </label>
+      </div>
+      <label style="display: flex; gap: 8px; align-items: center; font-size: 0.76rem; margin-bottom: 10px; cursor: pointer;">
+        <input type="checkbox" id="resetWipeSettings" />
+        <span>احذف كذلك الإعدادات وبيانات الدخول (تسجيل خروج كامل)</span>
+      </label>
+      <div class="form-group">
+        <label class="form-label">للتأكيد اكتب كلمة <strong style="color: var(--dusty-rose);">تصفير</strong>:</label>
+        <input type="text" id="resetConfirmInput" class="lined-input" placeholder="تصفير" oninput="updateResetButtonState()" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-danger" id="resetConfirmBtn" onclick="performFullReset()" disabled>🗑️ صفّر كل شيء</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('resetModal')">تراجع</button>
       </div>
     </div>
   </div>
@@ -2485,6 +2796,10 @@
       <div class="modal-actions">
         <button class="btn-save-scrap" onclick="saveJournalSettings()">حفظ الإعدادات ✓</button>
         <button class="btn-cancel-scrap" onclick="closeModal('settingsModal')">إلغاء</button>
+      </div>
+      <div class="danger-zone">
+        <span>🧹 تبي تبدأ من الصفر؟ تقدر تصفّر الدفتر بالكامل.</span>
+        <button class="btn-danger" onclick="openResetModal()">تصفير الدفتر</button>
       </div>
     </div>
   </div>
@@ -2702,6 +3017,7 @@
       document.getElementById('authScreen').classList.remove('active');
       renderAll();
       showPaperToast(`🔓 أهلاً بك في دفترك (${email})`);
+      openPendingSharedText();
     }
 
     function lockNotebook() {
@@ -2845,6 +3161,7 @@
       renderInstallmentsAndSubsTab(totalIncome, dueThisMonthInstallments, totalRemainingInstallments, cur);
       renderChartsAndCurrentWeekTab(activeBook.expenses, totalIncome, totalSpent, daysInMonth, cur);
       renderBookshelfAndReportTab(activeBook, totalIncome, totalSpent, remaining, cur);
+      renderNewFeatures(cur);
     }
 
     // =========================================================
@@ -2941,6 +3258,21 @@
       box.scrollTop = box.scrollHeight;
     }
 
+    // تحويل الأرقام الهندية والكلمات المنطوقة الشائعة إلى أرقام
+    function normalizeSpokenNumbers(text) {
+      let t = text.replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+      const words = {
+        'خمسة عشر': 15, 'خمسطعش': 15, 'خمستعش': 15, 'عشرين': 20, 'ثلاثين': 30, 'اربعين': 40, 'أربعين': 40,
+        'خمسين': 50, 'ستين': 60, 'سبعين': 70, 'ثمانين': 80, 'تسعين': 90, 'ميتين': 200, 'مئتين': 200,
+        'ثلاثمية': 300, 'خمسمية': 500, 'الف': 1000, 'ألف': 1000, 'مية': 100, 'ميه': 100, 'مئة': 100, 'مائة': 100,
+        'عشرة': 10, 'عشره': 10, 'خمسة': 5, 'خمسه': 5
+      };
+      Object.keys(words).sort((a, b) => b.length - a.length).forEach((w) => {
+        t = t.replace(new RegExp(`(^|\\s)${w}(?=\\s|$)`, 'g'), `$1${words[w]}`);
+      });
+      return t;
+    }
+
     function sendQuickPrompt(promptText) {
       document.getElementById('aiChatInput').value = promptText;
       handleSendAiMessage();
@@ -2948,11 +3280,12 @@
 
     async function handleSendAiMessage() {
       const input = document.getElementById('aiChatInput');
-      const msg = input.value.trim();
+      let msg = input.value.trim();
       if (!msg) return;
 
-      appendChatBubble(msg, 'user');
+      appendChatBubble(escapeHtml(msg), 'user');
       input.value = '';
+      msg = normalizeSpokenNumbers(msg);
 
       // أولاً: فحص هل الرسالة أمر بتسجيل مصروف مباشر (مثل: سجل 45 ريال مقاضي / دفعت 120 بنزين)
       const commandMatch = msg.match(/(?:سجل|دفعت|صرفت|اشتريت|اضف|أضف)\s*(\d+(?:\.\d+)?)\s*(?:ريال|ر\.س|درهم|دينار)?\s*(.*)/i);
@@ -2983,6 +3316,7 @@
           category: cat,
           icon,
           needType,
+          mood: appData.currentMood || null,
           isoDate: now.toISOString(),
           timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
         });
@@ -2996,12 +3330,31 @@
         return;
       }
 
+      // رسالة بنك ملصوقة في المحادثة؟ نفتح نافذة التأكيد مباشرة
+      const smsGuess = parseBankSms(msg);
+      if (smsGuess.looksLikeBank && /شراء|purchase|pos|مدى|mada|بطاقة|card|لدى|apple pay|حوالة|إيداع|ايداع|سحب/i.test(msg)) {
+        appendChatBubble(`📩 شكلها رسالة بنك! لقيت مبلغ <strong>${formatNum(smsGuess.amount)} ${appData.currency}</strong>${smsGuess.store ? ` لدى <strong>${escapeHtml(smsGuess.store)}</strong>` : ''}.. راجعها واضغط «تأكيد التسجيل» 👇`, 'ai');
+        openBankSmsModal(msg);
+        return;
+      }
+
+      // محرك الفضفضة: يرد محلياً فوراً إذا لم يكن هناك مفتاح Gemini
+      const ventTopic = detectVentingTopic(msg);
+      if (ventTopic && !appData.geminiApiKey) {
+        setTimeout(() => appendChatBubble(generateVentingReply(ventTopic), 'ai'), 350);
+        return;
+      }
+
       // ثانياً: إذا كان المستخدم قد وضع مفتاح Gemini API، نستخدم نموذج Gemini لتحليل سؤاله المالي
       if (appData.geminiApiKey) {
         try {
           const activeBook = getActiveNotebook();
           const totalSpent = activeBook.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
-          const contextPrompt = `أنت "رفيق الدفتر"، مستشار مالي شخصي لطيف داخل تطبيق "دفتر ريالي". أجب باختصار وود وباللغة العربية.
+          const snap = getFinanceSnapshot();
+          const contextPrompt = `أنت "رفيق الدفتر"، رفيق مالي شخصي داخل تطبيق "دفتر ريالي". أجب باختصار وباللغة العربية واللهجة السعودية.
+${getPersonaPromptLine()}
+إذا كان المستخدم يفضفض أو متضايق مالياً (طفران، مضغوط، تعبان من الديون، زهقان، يبي يشتري شي يغير نفسيته)، ابدأ بالمواساة الحقيقية ثم اربطها بلطف بوضع دفتره بدون إشعاره بالذنب، واقترح «ركن الأمنيات وقفل 48 ساعة» أو «قرعة التحدي اليومي» عند المناسبة.
+- الرصيد الآمن بعد الأقساط: ${Math.round(snap.safe)} ${appData.currency}، أيام متبقية على الراتب: ${snap.daysToPay}، الكماليات هذا الشهر: ${Math.round(snap.wants)} ${appData.currency}، الأقساط المتبقية: ${Math.round(snap.remInst)} ${appData.currency}
 بيانات العميل الحالية:
 - الراتب الشهري: ${appData.monthlySalary} ${appData.currency}
 - رصيد البنك المدخر: ${appData.bankBalance} ${appData.currency}
@@ -3022,7 +3375,7 @@
           const data = await response.json();
           const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           if (aiReply) {
-            appendChatBubble(aiReply.replace(/\n/g, '<br/>'), 'ai');
+            appendChatBubble(escapeHtml(aiReply).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>'), 'ai');
             return;
           }
         } catch (err) {
@@ -3031,7 +3384,11 @@
       }
 
       // ثالثاً: المحرك المالي الذكي المدمج (يعمل فوراً بدون إنترنت)
-      const reply = generateLocalSmartReply(msg);
+      if (ventTopic) {
+        appendChatBubble(generateVentingReply(ventTopic), 'ai');
+        return;
+      }
+      const reply = generateLocalSmartReply(msg) + personaSignature();
       appendChatBubble(reply, 'ai');
     }
 
@@ -3159,6 +3516,7 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
         category: catRaw[0],
         icon: catRaw[1] || '🧾',
         needType: catRaw[2] || 'need',
+        mood: appData.currentMood || null,
         receiptImage: currentScannedImageBase64,
         isoDate: now.toISOString(),
         timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
@@ -3499,6 +3857,7 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
         category: sticker.category,
         icon: sticker.icon || '🏷️',
         needType: sticker.needType || 'want',
+        mood: appData.currentMood || null,
         isoDate: now.toISOString(),
         timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       });
@@ -3534,8 +3893,9 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
                   <span>${item.title}</span>
                   <span class="need-badge ${badgeClass}">${badgeText}</span>
                   ${clipBtn}
+                  ${item.source === 'sms' ? '<span title="من رسالة البنك" style="font-size:0.75rem;">📩</span>' : ''}
                 </div>
-                <span class="ledger-date">${item.category} • ${item.timestamp}</span>
+                <span class="ledger-date">${item.category} • ${item.timestamp}${item.mood && MOODS[item.mood] ? ` • ${MOODS[item.mood].emoji} ${MOODS[item.mood].label}` : ''}</span>
               </div>
             </div>
             <div class="ledger-right">
@@ -3602,6 +3962,9 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
         document.getElementById('bankGoalInput').value = appData.bankNote || '';
       } else if (modalId === 'salaryModal') {
         document.getElementById('salaryInput').value = appData.monthlySalary;
+      } else if (modalId === 'customExpenseModal') {
+        selectedExpenseMood = appData.currentMood || null;
+        document.getElementById('expMoodPills').innerHTML = moodPillsHtml(selectedExpenseMood, 'selectExpenseMood');
       } else if (modalId === 'settingsModal') {
         document.getElementById('ownerNameInput').value = appData.ownerTitle || 'دفتر ريالي';
         document.getElementById('currencySelectInput').value = appData.currency || 'ر.س';
@@ -3752,6 +4115,7 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
         category: catRaw[0],
         icon: catRaw[1] || '📎',
         needType: selectedExpenseNeed,
+        mood: selectedExpenseMood || null,
         isoDate: now.toISOString(),
         timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       });
@@ -3849,9 +4213,914 @@ ${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${f
       showPaperToast('📊 تم تحميل ملف Excel (CSV)');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      loadAppData();
+
+    // =========================================================
+    // إضافات الإصدار الجديد: المزاج، الأمنيات، التحدي، الأختام، الشخصيات، الصوت
+    // =========================================================
+    const MOODS = {
+      relaxed:  { label: 'رايق',        emoji: '😊', color: '#528c6e', tip: 'وأنت رايق تصرف بوعي غالباً، استمر 🌿' },
+      stressed: { label: 'مضغوط/متعب', emoji: '😫', color: '#d96b6b', tip: 'الضغط يفتح المحفظة! جرّب تأجل أي شراء كمالي 48 ساعة في ركن الأمنيات 🎁' },
+      bored:    { label: 'ملل',         emoji: '🥱', color: '#d99b26', tip: 'الملل يخليك تتصفح وتشتري.. جرّب مشي قصير أو تحدي اليوم بدل التطبيقات 🎲' },
+      reward:   { label: 'مكافأة للذات', emoji: '🎉', color: '#8b6fa8', tip: 'المكافأة حلوة! بس حدد لها ميزانية ثابتة كل شهر عشان ما تتحول لعادة 🎀' }
+    };
+
+    const DAILY_CHALLENGES = [
+      { emoji: '☕', text: 'قهوة البيت اليوم بدل الكافيه', save: 18 },
+      { emoji: '🥪', text: 'جيب غداك من البيت اليوم', save: 35 },
+      { emoji: '🚫', text: 'يوم بدون أي طلب توصيل', save: 40 },
+      { emoji: '🛍️', text: 'لا تفتح أي تطبيق تسوق اليوم', save: 50 },
+      { emoji: '🧃', text: 'استبدل العصير/المشروب الغازي بالماء اليوم', save: 8 },
+      { emoji: '🚶', text: 'امشِ للمشوار القريب بدل السيارة/التوصيل', save: 15 },
+      { emoji: '🍿', text: 'سهرة اليوم في البيت بدل الطلعة', save: 60 },
+      { emoji: '📵', text: 'ألغِ اشتراكاً لا تستخدمه أو أجّله شهراً', save: 30 },
+      { emoji: '🧺', text: 'اطبخ من الموجود في الثلاجة بدون مقاضي جديدة', save: 45 },
+      { emoji: '🌿', text: 'تحدي يوم بدون صرف نهائياً!', save: 70 },
+      { emoji: '🍩', text: 'لا حلى ولا سناكات من برّا اليوم', save: 20 },
+      { emoji: '🎁', text: 'حط أول رغبة تجيك اليوم في ركن الأمنيات بدل ما تشتريها', save: 25 }
+    ];
+
+    const STAMPS = [
+      { id: 'resist',   emoji: '💪', name: 'ختم الصمود',          hint: 'قاوم رغبة شراء واحدة' },
+      { id: 'green',    emoji: '🟢', name: 'ختم الميزانية الخضراء', hint: 'صرف أقل من 60% من دخل الشهر' },
+      { id: 'inst',     emoji: '💳', name: 'ختم قاهر الأقساط',     hint: 'أنهِ كل دفعات قسط واحد' },
+      { id: 'nospend',  emoji: '🌿', name: 'ختم الأيام الهادئة',    hint: '3 أيام بدون صرف هذا الشهر' },
+      { id: 'coloring', emoji: '🎨', name: 'ختم الفنان المدخر',     hint: 'لوّن 10 مربعات في تحدي التلوين' },
+      { id: 'challenger', emoji: '🎲', name: 'ختم المتحدي',        hint: 'أنجز 3 تحديات يومية' },
+      { id: 'mindful',  emoji: '🎭', name: 'ختم المزاج الواعي',     hint: 'سجّل مزاجك مع 5 مصروفات' },
+      { id: 'saver',    emoji: '🏆', name: 'ختم كنز المغلف',       hint: 'وفّر 500 من الأمنيات والتحديات' }
+    ];
+
+    const PERSONAS = {
+      kind:   { label: '🌿 الصديق الحنون', welcome: 'أنا هنا معك 🤍 فضفض براحتك، وأي مصروف قول لي «سجل 20 قهوة» وأنا أدونه.' },
+      fun:    { label: '☕ رفيق السوالف',  welcome: 'هلا والله! ☕ جاهز للسوالف والتحديات.. وإذا صرفت شي قول لي وأنا أفضحك بلطف 😄' },
+      strict: { label: '🧐 المستشار الحازم', welcome: 'أهلاً. سأعطيك الأرقام كما هي بدون مجاملة. سجل مصروفاتك وأنا أراقب.' }
+    };
+
+    let selectedExpenseMood = null;
+    let lastStampsSnapshot = null;
+
+    function escapeHtml(str) {
+      return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function ensureNewFeatureData() {
+      if (!Array.isArray(appData.wishlist)) appData.wishlist = [];
+      if (!Array.isArray(appData.unlockedStamps)) appData.unlockedStamps = [];
+      if (typeof appData.resistedTotal !== 'number') appData.resistedTotal = 0;
+      if (typeof appData.resistedCount !== 'number') appData.resistedCount = 0;
+      if (typeof appData.challengesDone !== 'number') appData.challengesDone = 0;
+      if (typeof appData.challengeSavedTotal !== 'number') appData.challengeSavedTotal = 0;
+      if (!appData.aiPersona || !PERSONAS[appData.aiPersona]) appData.aiPersona = 'kind';
+      if (appData.currentMood && !MOODS[appData.currentMood]) appData.currentMood = null;
+    }
+
+    // ---------- المزاج مع الصرف ----------
+    function moodPillsHtml(selected, onclickFn) {
+      return Object.entries(MOODS).map(([key, m]) =>
+        `<span class="mood-pill ${selected === key ? 'selected' : ''}" onclick="${onclickFn}('${key}')">${m.emoji} ${m.label}</span>`
+      ).join('');
+    }
+
+    function setCurrentMood(key) {
+      appData.currentMood = appData.currentMood === key ? null : key;
+      saveAppData();
+      renderMoodStrip();
+      if (appData.currentMood) showPaperToast(`${MOODS[key].emoji} مزاجك الحين: ${MOODS[key].label} — بيتسجل مع مصروفاتك`);
+    }
+
+    function renderMoodStrip() {
+      const el = document.getElementById('homeMoodStrip');
+      if (!el) return;
+      el.innerHTML = `<span class="mood-strip-label">🎭 مزاجك وقت الشراء:</span>` + moodPillsHtml(appData.currentMood, 'setCurrentMood');
+    }
+
+    function selectExpenseMood(key) {
+      selectedExpenseMood = selectedExpenseMood === key ? null : key;
+      document.getElementById('expMoodPills').innerHTML = moodPillsHtml(selectedExpenseMood, 'selectExpenseMood');
+    }
+
+    function renderMoodRadar(expenses, cur) {
+      const box = document.getElementById('moodRadarContainer');
+      if (!box) return;
+      const totals = {}; const counts = {};
+      let moodSum = 0;
+      expenses.forEach((e) => {
+        if (e.mood && MOODS[e.mood]) {
+          totals[e.mood] = (totals[e.mood] || 0) + (Number(e.amount) || 0);
+          counts[e.mood] = (counts[e.mood] || 0) + 1;
+          moodSum += Number(e.amount) || 0;
+        }
+      });
+
+      if (moodSum === 0) {
+        box.innerHTML = `<div class="wish-empty">اختر مزاجك قبل ما تسجل مصروفاتك (في الصفحة الرئيسية أو نافذة التدوين) ليظهر لك الرادار 🎭</div>`;
+        return;
+      }
+      const max = Math.max(...Object.values(totals));
+      let html = Object.entries(MOODS).map(([key, m]) => {
+        const val = totals[key] || 0;
+        const pct = Math.round((val / max) * 100);
+        return `
+          <div class="mood-bar-row">
+            <span>${m.emoji} ${m.label}</span>
+            <div class="mood-bar-track"><div class="mood-bar-fill" style="width:${pct}%; background:${m.color};"></div></div>
+            <strong class="sensitive-num" style="font-family:var(--font-hand); text-align:left;">${formatNum(val)}</strong>
+          </div>`;
+      }).join('');
+
+      const topKey = Object.keys(totals).sort((a, b) => totals[b] - totals[a])[0];
+      const top = MOODS[topKey];
+      const share = Math.round((totals[topKey] / moodSum) * 100);
+      const avg = totals[topKey] / counts[topKey];
+      html += `<div class="mood-insight">
+        <strong>${top.emoji} أكثر مزاج يخليك تصرف: «${top.label}»</strong><br/>
+        صرفت فيه <span class="sensitive-num">${formatNum(totals[topKey])} ${cur}</span> (${share}% من صرفك المرتبط بمزاج) بمعدل <span class="sensitive-num">${formatNum(Math.round(avg))} ${cur}</span> للعملية.<br/>
+        💡 ${top.tip}
+      </div>`;
+      box.innerHTML = html;
+    }
+
+    // ---------- ركن الأمنيات وقفل 48 ساعة ----------
+    const WISH_LOCK_MS = 48 * 60 * 60 * 1000;
+
+    function addWishItem() {
+      const title = document.getElementById('wishTitleInput').value.trim();
+      const amount = parseFloat(document.getElementById('wishAmountInput').value);
+      if (!title || isNaN(amount) || amount <= 0) {
+        showPaperToast('⚠️ اكتب اسم المنتج وسعره');
+        return;
+      }
+      appData.wishlist.unshift({ id: 'wish_' + Date.now(), title, amount, addedAt: Date.now() });
+      document.getElementById('wishTitleInput').value = '';
+      document.getElementById('wishAmountInput').value = '';
+      saveAppData();
       renderAll();
+      showPaperToast('🎁 انحطت في ركن الأمنيات.. قفل 48 ساعة بدأ 🔒');
+    }
+
+    function resistWish(id) {
+      const item = appData.wishlist.find((w) => w.id === id);
+      if (!item) return;
+      appData.bankBalance = (Number(appData.bankBalance) || 0) + Number(item.amount);
+      appData.resistedTotal += Number(item.amount);
+      appData.resistedCount += 1;
+      appData.wishlist = appData.wishlist.filter((w) => w.id !== id);
+      saveAppData();
+      renderAll();
+      showPaperToast(`💪 بطل! انضاف ${formatNum(item.amount)} ${appData.currency} لمغلف الادخار`);
+    }
+
+    function buyWish(id) {
+      const item = appData.wishlist.find((w) => w.id === id);
+      if (!item) return;
+      if (Date.now() - item.addedAt < WISH_LOCK_MS) {
+        showPaperToast('🔒 لسا القفل شغال.. اصبر شوي 😉');
+        return;
+      }
+      const now = new Date();
+      getActiveNotebook().expenses.unshift({
+        id: 'exp_' + Date.now(), title: item.title, amount: Number(item.amount),
+        category: 'تسوق ومشتريات', icon: '🎁', needType: 'want', mood: appData.currentMood || null,
+        isoDate: now.toISOString(),
+        timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      });
+      appData.wishlist = appData.wishlist.filter((w) => w.id !== id);
+      saveAppData();
+      renderAll();
+      showPaperToast(`🛒 تم تسجيل شراء "${item.title}" بعد تفكير 48 ساعة — قرار واعي 👌`);
+    }
+
+    function deleteWish(id) {
+      appData.wishlist = appData.wishlist.filter((w) => w.id !== id);
+      saveAppData();
+      renderAll();
+    }
+
+    function renderWishlist(cur) {
+      const box = document.getElementById('wishlistContainer');
+      if (!box) return;
+      if (appData.wishlist.length === 0) {
+        box.innerHTML = `<div class="wish-empty">ما فيه أمنيات حالياً.. أول ما تشتهي شي كمالي حطه هنا قبل ما تشتريه 🎁</div>`;
+      } else {
+        box.innerHTML = appData.wishlist.map((w) => {
+          const elapsed = Date.now() - w.addedAt;
+          const unlocked = elapsed >= WISH_LOCK_MS;
+          const hoursLeft = Math.max(0, Math.ceil((WISH_LOCK_MS - elapsed) / 3600000));
+          const pct = Math.min(100, Math.round((elapsed / WISH_LOCK_MS) * 100));
+          return `
+            <div class="wish-card">
+              <div class="wish-top">
+                <span class="wish-title">🎁 ${escapeHtml(w.title)}</span>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <strong class="sensitive-num" style="font-family:var(--font-hand);">${formatNum(w.amount)} ${cur}</strong>
+                  <button class="delete-entry-btn" onclick="deleteWish('${w.id}')">✕</button>
+                </div>
+              </div>
+              <div class="wish-lock">${unlocked ? '🔓 انتهى القفل — لو لسا تبيه، قرارك الحين واعي' : `🔒 مقفل.. باقي ${hoursLeft} ساعة قبل ما تقدر تشتريه`}</div>
+              <div class="wish-lock-track"><div class="wish-lock-fill" style="width:${pct}%;"></div></div>
+              <div class="wish-actions">
+                <button class="btn-resist" onclick="resistWish('${w.id}')">💪 قاومت الرغبة! حوّل قيمته لمغلف الادخار</button>
+                <button class="btn-buy" onclick="buyWish('${w.id}')" ${unlocked ? '' : 'disabled'}>${unlocked ? '🛒 اشتريته' : `🔒 ${hoursLeft}س`}</button>
+              </div>
+            </div>`;
+        }).join('');
+      }
+      document.getElementById('wishStatsText').textContent = appData.resistedCount > 0
+        ? `قاومت ${appData.resistedCount} رغبة ووفرت ${formatNum(appData.resistedTotal)} ${cur} 💪`
+        : '';
+    }
+
+    // ---------- قرعة التحدي اليومي ----------
+    function rollDailyChallenge() {
+      const current = appData.dailyChallenge;
+      if (current && current.date === todayKey() && current.done) {
+        showPaperToast('✅ أنجزت تحدي اليوم! تعال بكرة لقرعة جديدة');
+        return;
+      }
+      let idx;
+      do { idx = Math.floor(Math.random() * DAILY_CHALLENGES.length); }
+      while (DAILY_CHALLENGES.length > 1 && current && current.idx === idx);
+      appData.dailyChallenge = { date: todayKey(), idx, done: false };
+      saveAppData();
+      renderDailyChallenge(appData.currency);
+      const t = document.getElementById('challengeTicket');
+      t.classList.remove('rolling'); void t.offsetWidth; t.classList.add('rolling');
+    }
+
+    function completeDailyChallenge() {
+      const c = appData.dailyChallenge;
+      if (!c || c.date !== todayKey() || c.done) return;
+      const ch = DAILY_CHALLENGES[c.idx];
+      c.done = true;
+      appData.challengesDone += 1;
+      appData.challengeSavedTotal += ch.save;
+      appData.bankBalance = (Number(appData.bankBalance) || 0) + ch.save;
+      saveAppData();
+      renderAll();
+      showPaperToast(`🎉 أنجزت التحدي! +${ch.save} ${appData.currency} لمغلف الادخار`);
+    }
+
+    function renderDailyChallenge(cur) {
+      const t = document.getElementById('challengeTicket');
+      if (!t) return;
+      const c = appData.dailyChallenge;
+      const doneBtn = document.getElementById('challengeDoneBtn');
+      const rollBtn = document.getElementById('challengeRollBtn');
+      t.classList.remove('done');
+      if (!c || c.date !== todayKey()) {
+        t.innerHTML = `<span class="ch-emoji">🎲</span><div class="ch-text">اضغط «اسحب تحدي اليوم» وشوف حظك!</div>`;
+        doneBtn.style.display = 'none';
+        rollBtn.textContent = '🎲 اسحب تحدي اليوم';
+      } else {
+        const ch = DAILY_CHALLENGES[c.idx];
+        t.innerHTML = `<span class="ch-emoji">${ch.emoji}</span>
+          <div class="ch-text">تحدي اليوم: ${ch.text}</div>
+          <div class="ch-save">${c.done ? '✅ تم الإنجاز — ' : ''}يوفر لك ${ch.save} ${cur}</div>`;
+        if (c.done) t.classList.add('done');
+        doneBtn.style.display = c.done ? 'none' : '';
+        rollBtn.textContent = c.done ? '✅ أنجزت تحدي اليوم' : '🔄 قرعة ثانية';
+      }
+      document.getElementById('challengeStatsText').textContent =
+        `تحديات منجزة: ${appData.challengesDone} • وفرت بالتحديات: ${formatNum(appData.challengeSavedTotal)} ${cur}`;
+    }
+
+    // ---------- ألبوم أختام الإنجاز ----------
+    function computeStampStatus() {
+      const book = getActiveNotebook();
+      const extra = book.extraIncomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const income = (Number(appData.monthlySalary) || 0) + extra;
+      const spent = book.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+
+      const now = new Date();
+      const isCurrentMonth = appData.activeMonthKey === getCurrentMonthKey();
+      const lastDay = isCurrentMonth ? now.getDate() : 0;
+      const spentDays = new Set();
+      book.expenses.forEach((e) => { if (e.isoDate) { const d = new Date(e.isoDate); if (!isNaN(d)) spentDays.add(d.getDate()); } });
+      let noSpend = 0;
+      for (let d = 1; d <= lastDay; d++) if (!spentDays.has(d)) noSpend++;
+
+      let moodCount = 0;
+      Object.values(appData.notebooks).forEach((b) => (b.expenses || []).forEach((e) => { if (e.mood) moodCount++; }));
+
+      return {
+        resist: appData.resistedCount >= 1,
+        green: income > 0 && book.expenses.length >= 3 && spent / income < 0.6,
+        inst: !!appData.unlockedStamps.includes('inst') || appData.installments.some((i) => (Number(i.paidSplits) || 0) >= (Number(i.totalSplits) || 4)),
+        nospend: book.expenses.length >= 1 && noSpend >= 3,
+        coloring: appData.coloredBoxes.length >= 10,
+        challenger: appData.challengesDone >= 3,
+        mindful: moodCount >= 5,
+        saver: (appData.resistedTotal + appData.challengeSavedTotal) >= 500
+      };
+    }
+
+    function renderStampsAlbum() {
+      const box = document.getElementById('stampsAlbumContainer');
+      if (!box) return;
+      const status = computeStampStatus();
+      const newly = [];
+      STAMPS.forEach((s) => {
+        if (status[s.id] && !appData.unlockedStamps.includes(s.id)) {
+          appData.unlockedStamps.push(s.id);
+          newly.push(s);
+        }
+      });
+      if (newly.length) {
+        saveAppData();
+        // لا نعرض التهنئة عند أول تحميل للصفحة
+        if (lastStampsSnapshot !== null) {
+          setTimeout(() => showPaperToast(`🏅 ختم جديد في الألبوم: ${newly.map((s) => s.name).join('، ')}!`), 2600);
+        }
+      }
+      lastStampsSnapshot = appData.unlockedStamps.length;
+
+      box.innerHTML = STAMPS.map((s) => {
+        const on = appData.unlockedStamps.includes(s.id);
+        const fresh = newly.some((n) => n.id === s.id);
+        return `
+          <div class="stamp-slot ${on ? 'unlocked' : ''} ${fresh ? 'just-unlocked' : ''}">
+            <div class="stamp-circle">${on ? s.emoji : '🔒'}</div>
+            <span class="stamp-name">${s.name}</span>
+            <span class="stamp-hint">${on ? 'تم الختم ✓' : s.hint}</span>
+          </div>`;
+      }).join('');
+      document.getElementById('stampsCountBadge').textContent = `${appData.unlockedStamps.length} / ${STAMPS.length}`;
+    }
+
+    function renderNewFeatures(cur) {
+      ensureNewFeatureData();
+      const book = getActiveNotebook();
+      renderMoodStrip();
+      renderWishlist(cur);
+      renderMoodRadar(book.expenses, cur);
+      renderDailyChallenge(cur);
+      renderStampsAlbum();
+      renderPersonaRow();
+    }
+
+    // ---------- شخصيات المساعد ----------
+    function renderPersonaRow() {
+      const el = document.getElementById('personaRow');
+      if (!el) return;
+      const subs = { kind: 'دعم وطبطبة', fun: 'خفة دم وتحديات', strict: 'الحقيقة بدون مجاملة' };
+      el.innerHTML = Object.entries(PERSONAS).map(([key, p]) =>
+        `<div class="persona-pill ${appData.aiPersona === key ? 'selected' : ''}" onclick="setAiPersona('${key}')">${p.label}<small>${subs[key]}</small></div>`
+      ).join('');
+    }
+
+    function setAiPersona(key) {
+      if (!PERSONAS[key] || appData.aiPersona === key) return;
+      appData.aiPersona = key;
+      saveAppData();
+      renderPersonaRow();
+      appendChatBubble(PERSONAS[key].welcome, 'ai');
+    }
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function getFinanceSnapshot() {
+      const book = getActiveNotebook();
+      const extra = book.extraIncomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const income = (Number(appData.monthlySalary) || 0) + extra;
+      const spent = book.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+      let dueInst = 0; let remInst = 0;
+      appData.installments.forEach((inst) => {
+        const split = (Number(inst.totalAmount) || 0) / (Number(inst.totalSplits) || 4);
+        const unpaid = Math.max(0, (Number(inst.totalSplits) || 4) - (Number(inst.paidSplits) || 0));
+        if (unpaid > 0) { dueInst += split; remInst += split * unpaid; }
+      });
+      const safe = income - spent - dueInst;
+      const wants = book.expenses.filter((e) => e.needType === 'want').reduce((s, e) => s + (Number(e.amount) || 0), 0);
+      const now = new Date();
+      const payDay = Number(appData.paydayDay) || 27;
+      let target = new Date(now.getFullYear(), now.getMonth(), payDay);
+      if (now.getDate() > payDay) target = new Date(now.getFullYear(), now.getMonth() + 1, payDay);
+      const daysToPay = Math.max(0, Math.ceil((target - now) / 86400000));
+      const daily = safe > 0 && daysToPay > 0 ? Math.floor(safe / daysToPay) : 0;
+      return { income, spent, safe, dueInst, remInst, wants, daysToPay, daily, bank: Number(appData.bankBalance) || 0 };
+    }
+
+    // محرك الفضفضة والدعم النفسي المالي
+    function detectVentingTopic(text) {
+      const t = text.replace(/[إأآ]/g, 'ا').replace(/ة/g, 'ه');
+      if (/ودي اشتري|ابي اشتري|ابغى اشتري|ابغا اشتري|يغير نفسيتي|اغير نفسيتي|افش خلقي|اغير جو|نفسي اشتري/.test(t)) return 'retail';
+      if (/ديون|الدين|دين علي|السلف|القروض|تعبان من الاقساط|الاقساط تعبتني/.test(t)) return 'debt';
+      if (/الفقر|فقير|طفرت|طفران|مفلس|فلست|الراتب طار|طار الراتب|خلص الراتب|ما معي فلوس|مافي فلوس|ما عندي فلوس/.test(t)) return 'broke';
+      if (/زهقان|زهقت|طفشان|طفشت|طفش|ملل|مليت|ملان/.test(t)) return 'bored';
+      if (/مضغوط|ضغط|متوتر|توتر|تعبان|تعبت|مرهق|قلقان|قلق|مخنوق|متضايق|ضايق|حزين|زعلان|مهموم|ابي افضفض|افضفض/.test(t)) return 'stress';
+      return null;
+    }
+
+    function generateVentingReply(topic) {
+      const p = appData.aiPersona || 'kind';
+      const s = getFinanceSnapshot();
+      const cur = appData.currency || 'ر.س';
+      const n = (v) => `<strong class="sensitive-num">${formatNum(Math.round(v))} ${cur}</strong>`;
+      const wishBtn = `<br/><button class="chat-inline-btn" onclick="switchTab('home'); setTimeout(()=>document.getElementById('wishTitleInput').focus(), 300)">🎁 حطه في ركن الأمنيات</button>`;
+      const challengeBtn = `<br/><button class="chat-inline-btn" onclick="switchTab('charts'); setTimeout(()=>{rollDailyChallenge(); document.getElementById('challengeTicket').scrollIntoView({behavior:'smooth', block:'center'});}, 300)">🎲 اسحب لي تحدي</button>`;
+      const safeLine = s.safe > 0
+        ? `باقي لك ${n(s.safe)} آمنة بعد الأقساط، يعني تقريباً ${n(s.daily)} باليوم لين الراتب (${s.daysToPay} يوم).`
+        : `رصيدك الآمن هذا الشهر بالسالب ${n(Math.abs(s.safe))}، وباقي ${s.daysToPay} يوم على الراتب.`;
+
+      const R = {
+        broke: {
+          kind: [
+            `أفهمك والله 🤍 شعور «الراتب طار» متعب ويخلي الواحد يحس إنه مهما سوى ما يكفي. بس خلني أطمنك: إنك تكتب في دفترك وتتابع هذا بحد ذاته وعي، ومو كل الناس يسوونه.<br/>${safeLine}<br/>خذها يوم بيوم، ولا تقسى على نفسك 🌿`,
+            `ضيقة آخر الشهر تمر على الكل، وأنت مو لحالك فيها 🫂<br/>${safeLine}<br/>خلنا نركز على الأساسيات بس هالأيام، والمغلف ${s.bank > 0 ? `فيه ${n(s.bank)} يطمنك إن عندك ظهر` : 'بنبنيه سوا خطوة خطوة'} 💛`
+          ],
+          fun: [
+            `هههه أهلاً بك في نادي «طفرانين آخر الشهر» 😂🎉 عضويتك مجانية!<br/>بس اسمع، الوضع مو كارثي: ${safeLine}<br/>نسوي تحدي؟ يوم كامل بدون صرف وأعطيك ختم الأبطال 🏅${challengeBtn}`,
+            `الراتب طار؟ أكيد راح سياحة 😅✈️ يرجع يوم ${appData.paydayDay || 27} إن شاء الله.<br/>${safeLine}<br/>وش رأيك نلعب لعبة «قهوة البيت أطيب»؟ ☕${challengeBtn}`
+          ],
+          strict: [
+            `الحقيقة بالأرقام: صرفت ${n(s.spent)} من دخل ${n(s.income)}، والكماليات منها ${n(s.wants)}.<br/>${safeLine}<br/>القرار: لا كماليات إلى يوم الراتب. أي رغبة تروح لركن الأمنيات مباشرة.${wishBtn}`,
+            `«الطفر» نتيجة، والسبب غالباً الكماليات (${n(s.wants)} هذا الشهر).<br/>${safeLine}<br/>التزم بالحد اليومي ولا تتجاوزه. هذا كل شيء.`
+          ]
+        },
+        debt: {
+          kind: [
+            `الديون ثقيلة على القلب قبل المحفظة، وتعبك مفهوم جداً 🤍<br/>باقي عليك من الأقساط ${n(s.remInst)}، ومستحق هذا الشهر ${n(s.dueInst)}. كل دفعة تختمها تقربك من الراحة.<br/>ركز على قسط واحد تخلصه أول، وإحساس الإنجاز بيخفف عنك كثير 🌿`,
+            `أنت مو رقم في كشف حساب 🫂 الأقساط مرحلة وتعدي.<br/>المتبقي ${n(s.remInst)} — وإذا خلصت قسط كامل بيفتح لك «ختم قاهر الأقساط» 💳✨<br/>وخلال الفترة هذي حاول ما تضيف أي قسط جديد.`
+          ],
+          fun: [
+            `تابي وتمارا صاروا من العائلة؟ 😂 لازم نسوي لهم حفلة وداع قريب!<br/>الباقي ${n(s.remInst)}، وهالشهر ${n(s.dueInst)}. ختم «قاهر الأقساط» ينتظرك 💳🏅<br/>تحدي: لا قسط جديد هالشهر، اتفقنا؟ 🤝`,
+            `الديون مثل الضيف الثقيل 😅 نخليه يطلع بأدب: دفعة دفعة.<br/>باقي ${n(s.remInst)}. وكل ما ختمت دفعة، رقص بسيط مسموح 💃`
+          ],
+          strict: [
+            `أقساطك المتبقية ${n(s.remInst)}، ومستحق هذا الشهر ${n(s.dueInst)}${s.income > 0 ? ` (${Math.round((s.dueInst / s.income) * 100)}% من دخلك، والسقف الآمن 20%)` : ''}.<br/>القاعدة: صفر أقساط جديدة حتى تنهي الحالية، وابدأ بالأصغر لتتخلص منه بسرعة.`,
+            `التعب من الديون يعني إن الوقت حان للإيقاف. لا «اشتر الآن وادفع لاحقاً» بعد اليوم.<br/>المتبقي ${n(s.remInst)}. ${safeLine}`
+          ]
+        },
+        stress: {
+          kind: [
+            `خذ نفس عميق معي 🌬️ ... أنا هنا وأسمعك.<br/>الضغط يخلي كل شي يبين أكبر من حجمه، والفلوس من أكثر الأشياء اللي تتعب البال. بس وضعك: ${safeLine}<br/>اليوم لا تتخذ أي قرار شراء كبير، بس ارتاح 🤍 وإذا تبي تفضفض أكثر أنا موجود.`,
+            `يعطيك العافية على كل اللي تشيله 🫂 مو لازم تكون مثالي.<br/>معلومة صغيرة: كثير منا يصرف أكثر وهو مضغوط، فلو حسيت برغبة شراء حطها في ركن الأمنيات وارجع لها بعد يومين 💛${wishBtn}`
+          ],
+          fun: [
+            `أوووف 😮‍💨 شكلك محتاج كوب شاي بالنعناع وموسيقى هادية 🍵🎶<br/>والخبر الحلو: ${safeLine}<br/>ممنوع تفتح تطبيقات التسوق وأنت مضغوط، هذي قاعدة الشلة 😄`,
+            `الضغط؟ نطرده بتحدي خفيف 😎 ${challengeBtn}<br/>وتراك بطل، دفترك مرتب أكثر من دفاتر ناس كثير 📒✨`
+          ],
+          strict: [
+            `مفهوم إنك مضغوط، لكن انتبه: قرارات الشراء وقت الضغط غالباً غلط.<br/>${safeLine}<br/>أي مصروف كمالي اليوم = مؤجل 48 ساعة. بدون استثناء.${wishBtn}`,
+            `الضغط ليس مبرراً للصرف. سجّل مزاجك «😫 مضغوط» مع أي مصروف، وبتشوف في الرسوم كم يكلفك هالمزاج فعلياً.`
+          ]
+        },
+        bored: {
+          kind: [
+            `الملل يجي لنا كلنا 🤍 وأحياناً نحاول نعبيه بالتسوق بدون ما نحس.<br/>وش رأيك بشي بسيط يغير جوك بدون فلوس: مشي قصير، مكالمة لشخص تحبه، أو ترتيب ركن صغير في البيت 🌿${challengeBtn}`,
+            `الزهق علامة إنك محتاج تغيير صغير، مو بالضرورة مشتريات 💛<br/>${safeLine}`
+          ],
+          fun: [
+            `زهقان؟ 😏 عندي لك أحسن علاج: قرعة التحدي اليومي! 🎲${challengeBtn}`,
+            `الملل خطير على المحفظة 😂 أول ما تطفش تفتح التطبيقات وتعبي السلة! خلنا نسولف بدالها.. وش آخر شي اشتريته وندمت عليه؟ 😄`
+          ],
+          strict: [
+            `الملل من أكبر أسباب الشراء العشوائي. ${s.spent > 0 ? `الكماليات عندك هذا الشهر ${n(s.wants)}.` : ''}<br/>الحل: لا تطبيقات تسوق وقت الفراغ. استبدلها بنشاط مجاني.`,
+            `اقتراح عملي: حدد ساعة الملل وحط فيها شي مفيد. الشراء ليس ترفيهاً.`
+          ]
+        },
+        retail: {
+          kind: [
+            `أفهم إحساسك 🤍 أحياناً نبي شي يفرحنا ويغير نفسيتنا، وهذا طبيعي جداً.<br/>بس خلني أقترح عليك: حطه في ركن الأمنيات، ولو بعد 48 ساعة لسا تبيه وميزانيتك تسمح (${safeLine}) اشتره وأنت مرتاح 💛${wishBtn}`,
+            `تستاهل شي يفرحك 🌸 بس الفرحة الحقيقية تكون لما ما تندم بعدها.<br/>جرّب قفل الـ48 ساعة، وإذا قاومت بيروح المبلغ لمغلفك وتحس بإنجاز أحلى من الشراء نفسه 💪${wishBtn}`
+          ],
+          fun: [
+            `آها! 😏 حالة «أبي أشتري شي وخلاص» مسجلة عندي!<br/>الحل السحري: حطه في ركن الأمنيات وننتظر 48 ساعة.. إذا نسيته؟ فلوسه تروح للمغلف وتصير غني 😎💰${wishBtn}`,
+            `هههه كلنا مرينا فيها 😂 بس تعال نلعب: لو قاومت، أعطيك ختم الصمود 💪🏅${wishBtn}`
+          ],
+          strict: [
+            `الشراء لتغيير المزاج هو أكثر نوع شراء يُندم عليه.<br/>${safeLine}<br/>الإجراء: ركن الأمنيات، 48 ساعة، ثم قرر.${wishBtn}`,
+            `لا. ليس الآن. ضعه في ركن الأمنيات، وإذا ما زلت تريده بعد يومين نناقشه.${wishBtn}`
+          ]
+        }
+      };
+      return pickRandom(R[topic][p]);
+    }
+
+    function personaSignature() {
+      const p = appData.aiPersona || 'kind';
+      const lines = {
+        kind: ['<br/><em>🌿 خطوة خطوة، وأنا معك.</em>', '<br/><em>🤍 فخور فيك إنك تتابع دفترك.</em>'],
+        fun: ['<br/><em>☕ يلا لا تخليني أفضحك آخر الشهر 😄</em>', '<br/><em>🎲 جرّب قرعة التحدي اليومي اليوم!</em>'],
+        strict: ['<br/><em>🧐 الأرقام لا تكذب. التزم.</em>', '<br/><em>🧐 كل ريال كمالي اليوم هو ريال ناقص من مغلفك.</em>']
+      };
+      return pickRandom(lines[p]);
+    }
+
+    function getPersonaPromptLine() {
+      const p = appData.aiPersona || 'kind';
+      return {
+        kind: 'شخصيتك: صديق حنون يواسي ويطبطب ويشجع بلطف، بلهجة سعودية دافئة، بدون لوم أو إشعار بالذنب.',
+        fun: 'شخصيتك: رفيق سوالف خفيف دم بلهجة سعودية، يمزح بلطف ويقترح تحديات ممتعة.',
+        strict: 'شخصيتك: مستشار مالي حازم يقول الحقيقة بالأرقام بدون مجاملات، باحترام.'
+      }[p];
+    }
+
+    // ---------- التحدث بالصوت ----------
+    let speechRec = null;
+    let isListening = false;
+
+    function toggleVoiceInput() {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        showPaperToast('🎙️ متصفحك لا يدعم التحدث بالصوت (جرّب Chrome أو Safari)');
+        return;
+      }
+      if (isListening && speechRec) { speechRec.stop(); return; }
+
+      speechRec = new SR();
+      speechRec.lang = 'ar-SA';
+      speechRec.interimResults = true;
+      speechRec.maxAlternatives = 1;
+      const input = document.getElementById('aiChatInput');
+      const btn = document.getElementById('micBtn');
+      let finalText = '';
+
+      speechRec.onstart = () => {
+        isListening = true;
+        btn.classList.add('listening');
+        input.placeholder = '🎙️ أسمعك... تكلم الحين';
+      };
+      speechRec.onresult = (e) => {
+        let interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) finalText += e.results[i][0].transcript;
+          else interim += e.results[i][0].transcript;
+        }
+        input.value = (finalText + interim).trim();
+      };
+      speechRec.onerror = (e) => {
+        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+          showPaperToast('🎙️ اسمح للمتصفح باستخدام المايكروفون (ويلزم فتح الصفحة عبر https)');
+        } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
+          showPaperToast('🎙️ تعذر التعرف على الصوت، حاول مرة ثانية');
+        }
+      };
+      speechRec.onend = () => {
+        isListening = false;
+        btn.classList.remove('listening');
+        input.placeholder = 'اكتب أو اضغط 🎙️ وتكلم...';
+        if (input.value.trim()) handleSendAiMessage();
+      };
+      try { speechRec.start(); } catch (err) { console.warn(err); }
+    }
+
+
+    // =========================================================
+    // تسجيل المصروف من رسالة البنك (لصق / مشاركة)
+    // =========================================================
+    const SMS_CATEGORIES = [
+      { cat: 'قهوة ومطاعم', icon: '☕', need: 'want', label: '☕ قهوة ومطاعم',
+        re: /starbucks|ستاربكس|coffee|cafe|caf[eé]|كافيه|كوفي|قهوة|dunkin|دانكن|barn'?s|بارنز|kyan|tim hortons|تيم هورتنز|half million|هاف مليون|dose|دوز|مطعم|restaurant|mcdonald|ماكدونالد|kfc|كنتاكي|albaik|البيك|burger|برجر|pizza|بيتزا|shawarma|شاورما|hungerstation|هنقرستيشن|jahez|جاهز|mrsool|مرسول|keeta|كيتا|toyou|تويو|chefz|ذا شفز|kudu|كودو|herfy|هرفي|maestro|مايسترو|dominos|دومينوز|subway|صب واي|baskin|حلويات|sweets|bakery|مخبز/i },
+      { cat: 'مقاضي وبقالة', icon: '🛒', need: 'need', label: '🛒 مقاضي وبقالة',
+        re: /panda|بنده|danube|الدانوب|othaim|العثيم|carrefour|كارفور|lulu|لولو|tamimi|التميمي|nana|نعناع|farm|المزرعة|bin dawood|بن داود|manuel|مانويل|hyper|هايبر|super ?market|سوبر ?ماركت|grocery|بقالة|تموينات|market|ماركت/i },
+      { cat: 'وقود ومواصلات', icon: '⛽', need: 'need', label: '⛽ وقود ومواصلات',
+        re: /aldrees|الدريس|sasco|ساسكو|petromin|بترومين|naft|نفط|fuel|محطة|بنزين|uber|أوبر|اوبر|careem|كريم|bolt|بولت|jeeny|جيني|parking|مواقف|سيارة|car wash|مغسلة/i },
+      { cat: 'تسوق ومشتريات', icon: '🛍️', need: 'want', label: '🛍️ تسوق ومشتريات',
+        re: /amazon|امازون|أمازون|noon|نون|shein|شي ان|namshi|نمشي|zara|زارا|h&m|centre ?point|سنتربوينت|ikea|ايكيا|jarir|جرير|extra|اكسترا|sephora|سيفورا|nice ?one|نايس ون|max|ماكس|redtag|ريدتاغ|mall|مول|aliexpress|trendyol|ترينديول|golden scent|قولدن سنت|عطور|perfume|fashion|ملابس/i },
+      { cat: 'فواتير والتزامات', icon: '📱', need: 'need', label: '📱 فواتير والتزامات',
+        re: /stc|اس تي سي|mobily|موبايلي|zain|زين|virgin|سداد|sadad|كهرباء|electricity|المياه|water|netflix|نتفليكس|shahid|شاهد|apple\.com|itunes|spotify|سبوتيفاي|icloud|google|youtube|osn|anghami|أنغامي|tabby|تابي|tamara|تمارا|ايجار|إيجار|rent/i },
+      { cat: 'صحة وعناية', icon: '🌿', need: 'need', label: '🌿 صحة وعناية',
+        re: /pharmacy|صيدلية|nahdi|النهدي|aldawaa|الدواء|whites|clinic|عيادة|مستشفى|hospital|طبي|medical|salon|صالون|gym|نادي|fitness|لياقة/i },
+      { cat: 'أخرى', icon: '📎', need: 'need', label: '📎 أخرى', re: /^$/ }
+    ];
+
+    let smsNeedType = 'need';
+    let smsMood = null;
+    let smsKind = 'expense';
+    let pendingSharedText = null;
+
+    function toWesternDigits(t) {
+      return String(t || '')
+        .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+        .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+        .replace(/٫/g, '.').replace(/٬/g, ',');
+    }
+
+    function parseBankSms(raw) {
+      const text = toWesternDigits(raw).replace(/\r/g, '');
+      const flat = text.replace(/\s+/g, ' ');
+      const NUM = '(\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?)';
+      const CUR = '(?:SAR|SR|ر\\.?\\s?س|ريال|رس)';
+
+      // 1) المبلغ: نبحث أولاً عن رقم بجانب العملة، ثم بعد كلمة «مبلغ / بقيمة / بـ»
+      const amountPatterns = [
+        new RegExp(`(?:مبلغ|بمبلغ|بقيمة|قيمة|amount|بـ|ب)\\s*[:：]?\\s*${CUR}?\\s*${NUM}`, 'i'),
+        new RegExp(`${CUR}\\s*[:：]?\\s*${NUM}`, 'i'),
+        new RegExp(`${NUM}\\s*${CUR}`, 'i'),
+        new RegExp(`(?:USD|\\$|EUR|AED|درهم|دولار)\\s*${NUM}|${NUM}\\s*(?:USD|EUR|AED|درهم|دولار)`, 'i')
+      ];
+      let amount = null;
+      for (const re of amountPatterns) {
+        const m = flat.match(re);
+        if (m) {
+          const n = m.slice(1).find((x) => x !== undefined);
+          const v = parseFloat(String(n).replace(/,/g, ''));
+          if (!isNaN(v) && v > 0) { amount = v; break; }
+        }
+      }
+
+      // 2) اسم المتجر
+      const stopWords = '(?:\\n|$|\\s+(?:في|بتاريخ|تاريخ|بطاقة|البطاقة|مدى|فيزا|visa|mada|on|using|with|card|via|من حساب|حساب|الرصيد|رصيد|المتبقي|الوقت|time|date|عبر|بواسطة)\\b|\\s*[،,؛;|]|\\s+\\d{1,2}[/:-]\\d{1,2})';
+      const storePatterns = [
+        new RegExp(`(?:^|[\\s:：])(?:لدى|لدي|عند|في متجر|المتجر|التاجر|merchant|at)(?=[\\s:：])\\s*[:：]?\\s*(.+?)${stopWords}`, 'i'),
+        new RegExp(`(?:^|\\n)\\s*(?:من|الى|إلى)\\s*[:：]\\s*(.+?)${stopWords}`, 'i')
+      ];
+      let store = '';
+      for (const re of storePatterns) {
+        const m = text.match(re);
+        if (m && m[1]) {
+          store = m[1].replace(/[*#"'«»]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
+          if (store && !/^\d+$/.test(store)) break;
+          store = '';
+        }
+      }
+      if (store.length > 40) store = store.slice(0, 40).trim();
+
+      // 3) نوع العملية: مصروف أم دخل
+      let kind = 'expense';
+      if (/حوالة واردة|حوالة محلية واردة|إيداع|ايداع|استرداد|مسترد|refund|credited|deposit|incoming|راتب|salary|إضافة رصيد/i.test(flat)
+          && !/شراء|purchase|pos|سحب|خصم|debited/i.test(flat)) {
+        kind = 'income';
+      }
+
+      // 4) التصنيف المقترح
+      const hay = `${store} ${flat}`;
+      let catInfo = SMS_CATEGORIES.find((c) => c.cat !== 'أخرى' && c.re.test(store))
+        || SMS_CATEGORIES.find((c) => c.cat !== 'أخرى' && c.re.test(hay))
+        || SMS_CATEGORIES[SMS_CATEGORIES.length - 1];
+      if (/سحب نقدي|سحب صراف|atm|withdrawal/i.test(flat) && !store) {
+        store = 'سحب نقدي';
+        catInfo = SMS_CATEGORIES[SMS_CATEGORIES.length - 1];
+      }
+
+      const looksLikeBank = amount !== null && /(SAR|SR|ريال|ر\.?\s?س|مبلغ|شراء|purchase|pos|مدى|mada|بطاقة|card|apple pay|حوالة|إيداع|ايداع|سحب)/i.test(flat);
+      return { amount, store, catInfo, kind, looksLikeBank };
+    }
+
+    function openBankSmsModal(prefill) {
+      const ta = document.getElementById('smsTextInput');
+      ta.value = prefill || '';
+      smsMood = appData.currentMood || null;
+      document.getElementById('smsCategoryInput').innerHTML = SMS_CATEGORIES.map((c, i) =>
+        `<option value="${i}">${c.label}</option>`).join('');
+      document.getElementById('bankSmsModal').classList.add('open');
+      handleSmsInput();
+      if (!prefill) setTimeout(() => ta.focus(), 150);
+    }
+
+    async function pasteSmsFromClipboard() {
+      try {
+        const t = await navigator.clipboard.readText();
+        if (!t) { showPaperToast('📋 الحافظة فاضية.. انسخ رسالة البنك أولاً'); return; }
+        document.getElementById('smsTextInput').value = t;
+        handleSmsInput();
+      } catch (e) {
+        showPaperToast('📋 اضغط مطولاً في المربع واختر «لصق»');
+        document.getElementById('smsTextInput').focus();
+      }
+    }
+
+    function selectSmsNeed(type) {
+      smsNeedType = type;
+      document.getElementById('smsNeedPill').classList.toggle('selected', type === 'need');
+      document.getElementById('smsWantPill').classList.toggle('selected', type === 'want');
+    }
+
+    function selectSmsMood(key) {
+      smsMood = smsMood === key ? null : key;
+      document.getElementById('smsMoodPills').innerHTML = moodPillsHtml(smsMood, 'selectSmsMood');
+    }
+
+    function onSmsCategoryChange() {
+      const c = SMS_CATEGORIES[Number(document.getElementById('smsCategoryInput').value)] || SMS_CATEGORIES[0];
+      selectSmsNeed(c.need);
+    }
+
+    function setSmsKind(kind) {
+      smsKind = kind;
+      document.getElementById('smsKindExpense').classList.toggle('selected', kind === 'expense');
+      document.getElementById('smsKindIncome').classList.toggle('selected', kind === 'income');
+      document.getElementById('smsExpenseOnly').style.display = kind === 'expense' ? '' : 'none';
+      document.getElementById('smsConfirmBtn').textContent = kind === 'expense' ? '✓ تأكيد التسجيل' : '💰 تأكيد كدخل إضافي';
+    }
+
+    function handleSmsInput() {
+      const raw = document.getElementById('smsTextInput').value;
+      const result = document.getElementById('smsParsedBox');
+      const status = document.getElementById('smsParseStatus');
+      if (!raw.trim()) {
+        result.style.display = 'none';
+        status.textContent = '';
+        return;
+      }
+      const p = parseBankSms(raw);
+      result.style.display = 'block';
+      document.getElementById('smsAmountInput').value = p.amount ?? '';
+      document.getElementById('smsStoreInput').value = p.store || '';
+      document.getElementById('smsCategoryInput').value = String(SMS_CATEGORIES.indexOf(p.catInfo));
+      selectSmsNeed(p.catInfo.need);
+      document.getElementById('smsMoodPills').innerHTML = moodPillsHtml(smsMood, 'selectSmsMood');
+      setSmsKind(p.kind);
+
+      if (p.amount === null) {
+        status.innerHTML = '⚠️ ما قدرت أطلع المبلغ.. اكتبه بيدك تحت';
+        status.style.color = 'var(--dusty-rose)';
+      } else {
+        const what = p.kind === 'income' ? 'دخل وارد' : `${p.catInfo.icon} ${p.catInfo.cat}`;
+        status.innerHTML = `✨ لقيت المبلغ <strong>${formatNum(p.amount)}</strong>${p.store ? ` لدى <strong>${escapeHtml(p.store)}</strong>` : ''} — اقتراح: ${what}`;
+        status.style.color = 'var(--sage-green)';
+      }
+    }
+
+    function confirmSmsExpense() {
+      const amount = parseFloat(toWesternDigits(document.getElementById('smsAmountInput').value));
+      const storeRaw = document.getElementById('smsStoreInput').value.trim();
+      if (isNaN(amount) || amount <= 0) {
+        showPaperToast('⚠️ تأكد من المبلغ');
+        return;
+      }
+
+      if (smsKind === 'income') {
+        const title = storeRaw || 'حوالة / إيداع وارد';
+        getActiveNotebook().extraIncomes.push({ id: 'inc_' + Date.now(), title, amount });
+        saveAppData();
+        renderAll();
+        closeModal('bankSmsModal');
+        showPaperToast(`💰 تمت إضافة "${title}" (+${formatNum(amount)} ${appData.currency}) لدخل الشهر`);
+        return;
+      }
+
+      const c = SMS_CATEGORIES[Number(document.getElementById('smsCategoryInput').value)] || SMS_CATEGORIES[SMS_CATEGORIES.length - 1];
+      const title = storeRaw || c.cat;
+      const now = new Date();
+      getActiveNotebook().expenses.unshift({
+        id: 'exp_' + Date.now(),
+        title,
+        amount,
+        category: c.cat,
+        icon: c.icon,
+        needType: smsNeedType,
+        mood: smsMood || null,
+        source: 'sms',
+        isoDate: now.toISOString(),
+        timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      });
+      saveAppData();
+      renderAll();
+      closeModal('bankSmsModal');
+      switchTab('home');
+      showPaperToast(`📩 تم تسجيل ${formatNum(amount)} ${appData.currency} لدى "${title}" من رسالة البنك`);
+    }
+
+    // استقبال النص المُشارك من الجوال (Web Share Target أو رابط ?text=)
+    function checkSharedTextFromUrl() {
+      try {
+        const params = new URLSearchParams(location.search);
+        const shared = [params.get('title'), params.get('text'), params.get('url')].filter(Boolean).join('\n').trim();
+        if (!shared) return;
+        pendingSharedText = shared;
+        history.replaceState(null, '', location.pathname);
+      } catch (e) { /* تجاهل */ }
+    }
+
+    function openPendingSharedText() {
+      if (!pendingSharedText) return;
+      if (!appData.userAuth || !appData.userAuth.isLoggedIn) return;
+      const t = pendingSharedText;
+      pendingSharedText = null;
+      setTimeout(() => openBankSmsModal(t), 300);
+    }
+
+    // تسجيل الـ Service Worker عند الاستضافة (لتثبيت التطبيق وتفعيل المشاركة)
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+
+    // =========================================================
+    // تصفير الدفتر والبدء من جديد (مع تحذير وتأكيد)
+    // =========================================================
+    function openResetModal() {
+      closeModal('settingsModal');
+      document.getElementById('resetConfirmInput').value = '';
+      document.getElementById('resetWipeSettings').checked = false;
+      updateResetButtonState();
+      document.getElementById('resetModal').classList.add('open');
+    }
+
+    function updateResetButtonState() {
+      const ok = document.getElementById('resetConfirmInput').value.trim() === 'تصفير';
+      const btn = document.getElementById('resetConfirmBtn');
+      btn.disabled = !ok;
+      btn.style.opacity = ok ? '1' : '0.45';
+    }
+
+    function downloadBackupJson() {
+      const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `نسخة_احتياطية_دفتر_ريالي_${todayKey()}.json`;
+      a.click();
+      showPaperToast('💾 تم تحميل النسخة الاحتياطية');
+    }
+
+    function restoreBackupJson(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data || typeof data !== 'object' || !data.notebooks) throw new Error('bad');
+          if (!confirm('سيتم استبدال بيانات الدفتر الحالية بالنسخة الاحتياطية. متأكد؟')) return;
+          appData = { ...appData, ...data, userAuth: appData.userAuth };
+          ensureNewFeatureData();
+          saveAppData();
+          renderAll();
+          closeModal('resetModal');
+          showPaperToast('♻️ تم استرجاع النسخة الاحتياطية');
+        } catch (err) {
+          showPaperToast('⚠️ الملف غير صالح كنسخة احتياطية');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function performFullReset() {
+      if (document.getElementById('resetConfirmInput').value.trim() !== 'تصفير') return;
+      const wipeSettings = document.getElementById('resetWipeSettings').checked;
+      const keep = {
+        userAuth: appData.userAuth,
+        ownerTitle: appData.ownerTitle,
+        currency: appData.currency,
+        paydayDay: appData.paydayDay,
+        geminiApiKey: appData.geminiApiKey,
+        aiPersona: appData.aiPersona
+      };
+      const monthKey = getCurrentMonthKey();
+
+      appData = {
+        userAuth: wipeSettings ? { email: '', password: '', isLoggedIn: false } : keep.userAuth,
+        ownerTitle: wipeSettings ? 'دفتر ريالي' : keep.ownerTitle,
+        currency: wipeSettings ? 'ر.س' : keep.currency,
+        paydayDay: wipeSettings ? 27 : keep.paydayDay,
+        geminiApiKey: wipeSettings ? '' : keep.geminiApiKey,
+        aiPersona: wipeSettings ? 'kind' : keep.aiPersona,
+        bankBalance: 0,
+        bankNote: 'مدخراتك المحفوظة عبر جميع الشهور',
+        subEnvelopes: [],
+        monthlySalary: 0,
+        installments: [],
+        subscriptions: [],
+        quickStickers: defaultStickers.map((s) => ({ ...s })),
+        coloringStep: 50,
+        coloredBoxes: [],
+        activeMonthKey: monthKey,
+        notebooks: { [monthKey]: { expenses: [], extraIncomes: [], reflectionNote: '' } },
+        wishlist: [],
+        unlockedStamps: [],
+        resistedTotal: 0,
+        resistedCount: 0,
+        challengesDone: 0,
+        challengeSavedTotal: 0,
+        dailyChallenge: null,
+        currentMood: null
+      };
+
+      try {
+        ['riyali_diamond_pro_v3', 'riyali_pro_journal_v2'].forEach((k) => localStorage.removeItem(k));
+        if (wipeSettings) localStorage.removeItem(THEME_KEY);
+      } catch (e) { /* تجاهل */ }
+      saveAppData();
+
+      // تنظيف شاشة المحادثة
+      document.getElementById('aiChatMessagesBox').innerHTML =
+        `<div class="chat-bubble ai">صفحة جديدة نظيفة 📒✨ بداية موفقة! ابدأ بتحديد راتبك ومغلف الادخار من الصفحة الرئيسية.</div>`;
+
+      closeModal('resetModal');
+      if (wipeSettings) {
+        document.body.classList.remove('kraft-night');
+        document.getElementById('authScreen').classList.add('active');
+      }
+      switchTab('home');
+      renderAll();
+      showPaperToast('🧹 تم تصفير الدفتر.. صفحة جديدة بانتظارك!');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkSharedTextFromUrl();
+      loadAppData();
+      ensureNewFeatureData();
+      renderAll();
+      openPendingSharedText();
     });
   </script>
 </body>
