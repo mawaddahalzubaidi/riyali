@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="دفتر ريالي برو" />
-  <title>دفتر ريالي برو | مفكرة المصروفات والعادات المالية</title>
+  <title>دفتر ريالي برو | مفكرة المصروفات والأقساط والعادات المالية</title>
 
   <!-- استيراد الخطوط اليدوية وخطوط المفكرة من Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +43,7 @@
       --sky-calm: #5b8fa8;
       --sky-soft: rgba(91, 143, 168, 0.22);
       --lavender-calm: #8b6fa8;
+      --lavender-soft: rgba(139, 111, 168, 0.2);
 
       --sticker-yellow: #fff6cc;
       --sticker-pink: #ffe4e6;
@@ -120,6 +121,17 @@
       --washi-blue: rgba(123, 180, 207, 0.38);
     }
 
+    /* وضع الكافيه / إخفاء الأرقام الحساسة (Privacy Blur Mode) */
+    body.privacy-mode .sensitive-num {
+      filter: blur(6px);
+      user-select: none;
+      transition: filter 0.25s ease;
+    }
+
+    .sensitive-num {
+      transition: filter 0.25s ease;
+    }
+
     /* =========================================================
        2. الإعدادات العامة وخلفية دفتر النقاط
        ========================================================= */
@@ -137,7 +149,7 @@
       background-size: 18px 18px;
       color: var(--ink-primary);
       min-height: 100vh;
-      padding-bottom: calc(105px + env(safe-area-inset-bottom));
+      padding-bottom: calc(110px + env(safe-area-inset-bottom));
       padding-top: env(safe-area-inset-top);
       transition: background-color 0.35s ease, color 0.35s ease;
       overflow-x: hidden;
@@ -159,36 +171,36 @@
     .app-container {
       max-width: 500px;
       margin: 0 auto;
-      padding: 16px 15px 30px;
+      padding: 14px 14px 32px;
       position: relative;
     }
 
     /* =========================================================
-       3. ترويسة الدفتر (Notebook Header)
+       3. ترويسة الدفتر وعداد يوم الراتب (Notebook Header)
        ========================================================= */
     .journal-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
+      align-items: flex-start;
+      margin-bottom: 20px;
       padding: 6px 4px 12px;
       border-bottom: 2px dashed var(--card-border);
     }
 
     .brand-title {
       font-family: var(--font-calligraphy);
-      font-size: 1.85rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--ink-primary);
       line-height: 1.1;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .pro-pill {
       font-family: var(--font-hand);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       background: var(--mustard-soft);
       border: 1px solid var(--warm-mustard);
       color: var(--ink-primary);
@@ -197,30 +209,47 @@
       transform: rotate(-3deg);
     }
 
+    .header-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
     .brand-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--ink-secondary);
-      margin-top: 3px;
       font-weight: 500;
+    }
+
+    .payday-badge {
+      font-family: var(--font-hand);
+      font-size: 0.7rem;
+      background: var(--sage-soft);
+      color: var(--sage-green);
+      border: 1px dashed var(--sage-green);
+      padding: 1px 8px;
+      border-radius: 9px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .notebook-icon-btn {
       background: var(--card-bg);
       border: 1.5px solid var(--card-border);
       color: var(--ink-primary);
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 12px 15px 13px 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       cursor: pointer;
       box-shadow: var(--card-shadow);
       transition: transform 0.15s ease;
@@ -230,6 +259,11 @@
       transform: scale(0.92) rotate(-3deg);
     }
 
+    .notebook-icon-btn.privacy-active {
+      background: var(--rose-soft);
+      border-color: var(--dusty-rose);
+    }
+
     /* =========================================================
        4. البطاقات كقصاصات ورقية وشريط Washi Tape
        ========================================================= */
@@ -237,7 +271,7 @@
       background: var(--card-bg);
       border: 1.5px solid var(--card-border);
       border-radius: 16px 12px 18px 14px;
-      padding: 20px 16px 18px;
+      padding: 20px 15px 18px;
       margin-bottom: 22px;
       box-shadow: var(--card-shadow);
       position: relative;
@@ -287,7 +321,7 @@
 
     .card-title {
       font-family: var(--font-hand);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--ink-primary);
       display: flex;
@@ -300,7 +334,7 @@
       border: 1.5px dashed var(--input-underline);
       color: var(--ink-primary);
       font-family: var(--font-body);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
       padding: 5px 10px;
       border-radius: 10px;
@@ -319,8 +353,14 @@
       color: var(--sage-green);
     }
 
+    .sketch-btn.rose-btn {
+      background: var(--rose-soft);
+      border-color: var(--dusty-rose);
+      color: var(--dusty-rose);
+    }
+
     /* =========================================================
-       5. بطاقة الحساب البنكي كمغلف ادخار فاخر (Savings Envelope)
+       5. بطاقة الحساب البنكي كمغلف ادخار فاخر + الأظرف الفرعية
        ========================================================= */
     .bank-card {
       background: var(--kraft-bg);
@@ -413,24 +453,55 @@
       margin-right: 4px;
     }
 
+    /* الأظرف الورقية الفرعية داخل المغلف البنكي */
+    .sub-envelopes-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 0 10px;
+      scrollbar-width: none;
+    }
+    .sub-envelopes-row::-webkit-scrollbar { display: none; }
+
+    .mini-envelope {
+      background: rgba(255, 253, 249, 0.65);
+      border: 1px dashed var(--kraft-border);
+      border-radius: 9px;
+      padding: 5px 9px;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    body.kraft-night .mini-envelope {
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .mini-envelope strong {
+      font-family: var(--font-hand);
+      color: var(--sage-green);
+    }
+
     .envelope-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-top: 9px;
       border-top: 1px dashed var(--kraft-border);
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--ink-secondary);
     }
 
     /* =========================================================
-       6. بطاقة الميزانية وتعدد مصادر الدخل (Multiple Incomes)
+       6. بطاقة الميزانية والرصيد الآمن بعد الأقساط
        ========================================================= */
     .salary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .salary-stat-box {
@@ -442,14 +513,14 @@
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--ink-secondary);
       margin-bottom: 2px;
     }
 
     .stat-val {
       font-family: var(--font-hand);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: var(--ink-primary);
     }
@@ -458,14 +529,32 @@
     .stat-val.rose { color: var(--dusty-rose); }
     .stat-val.mustard { color: var(--warm-mustard); }
 
-    /* قائمة مصادر الدخل الإضافية المصغرة */
+    /* شريط الرصيد الحقيقي الآمن بعد حجز أقساط تابي وتمارا */
+    .safe-balance-banner {
+      background: var(--sticker-mint);
+      border: 1.5px dashed var(--sage-green);
+      border-radius: 11px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+
+    .safe-balance-banner strong {
+      font-family: var(--font-calligraphy);
+      font-size: 1.15rem;
+      color: var(--sage-green);
+    }
+
     .extra-incomes-box {
       background: var(--bg-paper-secondary);
       border: 1px dashed var(--sage-green);
       border-radius: 11px;
       padding: 8px 10px;
       margin-bottom: 12px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
     }
 
     .extra-income-header {
@@ -492,7 +581,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
     }
 
     .income-chip strong {
@@ -506,7 +595,6 @@
       color: var(--ink-muted);
       cursor: pointer;
       font-size: 0.75rem;
-      padding: 0 2px;
     }
 
     .bar-track {
@@ -537,7 +625,7 @@
     .bar-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       color: var(--ink-secondary);
       margin-top: 6px;
       font-weight: 500;
@@ -595,19 +683,19 @@
 
     .sticker-title {
       font-weight: 700;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       display: block;
     }
 
     .sticker-cat {
-      font-size: 0.66rem;
+      font-size: 0.65rem;
       color: var(--ink-secondary);
       display: block;
     }
 
     .sticker-price {
       font-family: var(--font-hand);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       background: rgba(255, 255, 255, 0.55);
       padding: 2px 7px;
@@ -631,7 +719,7 @@
       border: 2px dashed var(--warm-mustard);
       color: var(--ink-primary);
       font-family: var(--font-hand);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       padding: 10px;
       border-radius: 12px;
@@ -643,7 +731,161 @@
     }
 
     /* =========================================================
-       8. سجل المصروفات المسطر (Ruled Notebook Ledger)
+       8. بطاقات تخريم أقساط تابي وتمارا (Tabby & Tamara Punch Cards)
+       ========================================================= */
+    .punch-card {
+      background: var(--bg-paper-secondary);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 13px 12px;
+      margin-bottom: 12px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(60, 50, 40, 0.05);
+    }
+
+    .punch-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .provider-badge {
+      font-family: var(--font-hand);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 7px;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    .provider-tabby {
+      background: #d4f8e8;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .provider-tamara {
+      background: #fce7f3;
+      color: #9d174d;
+      border: 1px solid #f9a8d4;
+    }
+
+    .provider-jamiyah {
+      background: var(--sticker-yellow);
+      color: #854d0e;
+      border: 1px solid #fde047;
+    }
+
+    body.kraft-night .provider-tabby { background: #1e3a2f; color: #86efac; }
+    body.kraft-night .provider-tamara { background: #4a2135; color: #f9a8d4; }
+    body.kraft-night .provider-jamiyah { background: #493d1e; color: #fde047; }
+
+    .punch-circles-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .punch-circle {
+      border: 2px dashed var(--input-underline);
+      border-radius: 12px;
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card-bg);
+      transition: transform 0.15s ease, background 0.2s ease;
+      position: relative;
+      user-select: none;
+    }
+
+    .punch-circle:active {
+      transform: scale(0.93);
+    }
+
+    .punch-circle.paid {
+      background: var(--sage-soft);
+      border: 2px solid var(--sage-green);
+      color: var(--sage-green);
+    }
+
+    .punch-circle.due-now {
+      background: var(--mustard-soft);
+      border: 2px solid var(--warm-mustard);
+      color: var(--ink-primary);
+      animation: gentlePulse 2s infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .punch-step-num {
+      font-size: 0.65rem;
+      color: var(--ink-muted);
+      display: block;
+    }
+
+    .punch-step-amt {
+      font-family: var(--font-hand);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: block;
+    }
+
+    .punch-step-status {
+      font-size: 0.64rem;
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* =========================================================
+       9. تحدي التلوين للتوفير (Savings Coloring Challenge Grid)
+       ========================================================= */
+    .coloring-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .color-jar-cell {
+      aspect-ratio: 1.15;
+      border: 2px dashed var(--input-underline);
+      border-radius: 12px 10px 14px 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--bg-paper-secondary);
+      font-family: var(--font-hand);
+      font-size: 0.8rem;
+      color: var(--ink-secondary);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select: none;
+    }
+
+    .color-jar-cell.colored {
+      border-style: solid;
+      border-color: var(--sage-green);
+      color: var(--ink-primary);
+      font-weight: 700;
+      transform: rotate(-1.5deg);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.5);
+    }
+
+    .color-jar-cell.colored:nth-child(4n+1) { background: var(--sticker-mint); }
+    .color-jar-cell.colored:nth-child(4n+2) { background: var(--sticker-yellow); border-color: var(--warm-mustard); }
+    .color-jar-cell.colored:nth-child(4n+3) { background: var(--sticker-pink); border-color: var(--dusty-rose); }
+    .color-jar-cell.colored:nth-child(4n+4) { background: var(--sticker-blue); border-color: var(--sky-calm); }
+
+    /* =========================================================
+       10. سجل المصروفات المسطر (Ruled Notebook Ledger)
        ========================================================= */
     .ledger-card {
       padding: 20px 0 12px 0;
@@ -704,16 +946,17 @@
 
     .ledger-title {
       font-family: var(--font-hand);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--ink-primary);
       display: flex;
       align-items: center;
       gap: 5px;
+      flex-wrap: wrap;
     }
 
     .need-badge {
       font-family: var(--font-body);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       padding: 1px 5px;
       border-radius: 5px;
       font-weight: 600;
@@ -730,7 +973,7 @@
     }
 
     .ledger-date {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       color: var(--ink-muted);
     }
 
@@ -742,7 +985,7 @@
 
     .ledger-amount {
       font-family: var(--font-calligraphy);
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 700;
       color: var(--dusty-rose);
       background: var(--rose-soft);
@@ -765,24 +1008,24 @@
       text-align: center;
       font-family: var(--font-hand);
       color: var(--ink-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     /* =========================================================
-       9. الرسوم البيانية المائية (Watercolor & Sketch Charts)
+       11. الرسوم البيانية المائية ومتتبع العادات
        ========================================================= */
     .donut-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       margin: 8px 0;
     }
 
     .donut-svg-box {
       position: relative;
-      width: 190px;
-      height: 190px;
+      width: 185px;
+      height: 185px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -795,14 +1038,14 @@
     }
 
     .donut-center-label span {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--ink-secondary);
       display: block;
     }
 
     .donut-center-label strong {
       font-family: var(--font-calligraphy);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       color: var(--ink-primary);
     }
 
@@ -821,24 +1064,23 @@
       border: 1px solid var(--card-border);
       padding: 6px 9px;
       border-radius: 9px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
     }
 
     .legend-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
       display: inline-block;
       margin-left: 6px;
     }
 
-    /* الرسم البياني لأيام الأسبوع */
     .weekly-bars-box {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 6px;
       align-items: end;
-      height: 150px;
+      height: 145px;
       padding: 16px 6px 6px;
       background: var(--bg-paper-secondary);
       border: 1px dashed var(--card-border);
@@ -855,14 +1097,14 @@
 
     .day-val {
       font-family: var(--font-hand);
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       color: var(--ink-secondary);
       margin-bottom: 4px;
     }
 
     .day-bar {
       width: 100%;
-      max-width: 26px;
+      max-width: 24px;
       background: linear-gradient(180deg, var(--warm-mustard), rgba(217, 155, 38, 0.55));
       border: 1.5px solid var(--ink-primary);
       border-radius: 8px 6px 3px 3px;
@@ -875,48 +1117,43 @@
     }
 
     .day-name {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--ink-primary);
       margin-top: 6px;
     }
 
-    /* =========================================================
-       10. تتبع عادات الصرف (Bullet Journal Habit Tracker)
-       ========================================================= */
     .habits-insight-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 9px;
+      margin-bottom: 12px;
     }
 
     .habit-stat-card {
       background: var(--bg-paper-secondary);
       border: 1.5px solid var(--card-border);
       border-radius: 12px;
-      padding: 11px 10px;
-      position: relative;
+      padding: 10px;
     }
 
     .habit-stat-label {
-      font-size: 0.73rem;
+      font-size: 0.71rem;
       color: var(--ink-secondary);
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .habit-stat-value {
       font-family: var(--font-hand);
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       font-weight: 700;
       color: var(--ink-primary);
     }
 
-    /* شبكة 30 يوماً لتتبع عادات الصرف (No-Spend & Mindful Grid) */
     .bujo-habit-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
+      gap: 7px;
       margin: 12px 0;
     }
 
@@ -929,8 +1166,7 @@
       align-items: center;
       justify-content: center;
       font-family: var(--font-hand);
-      font-size: 0.78rem;
-      position: relative;
+      font-size: 0.76rem;
       background: var(--bg-paper-secondary);
     }
 
@@ -954,32 +1190,28 @@
       font-weight: 700;
     }
 
-    .bujo-day-cell.future-day {
-      opacity: 0.4;
-    }
+    .bujo-day-cell.future-day { opacity: 0.38; }
 
     .bujo-legend {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
       gap: 8px;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: var(--ink-secondary);
       padding-top: 8px;
       border-top: 1px dashed var(--card-border);
     }
 
     /* =========================================================
-       11. صفحة التقرير والملاحظة اللاصقة (Sticky Note & Stamp)
+       12. صفحة التقرير، الملاحظة اللاصقة، وبطاقة المشاركة (Story)
        ========================================================= */
     .tab-section {
       display: none;
       animation: pageFlip 0.25s ease-out;
     }
 
-    .tab-section.active {
-      display: block;
-    }
+    .tab-section.active { display: block; }
 
     @keyframes pageFlip {
       from { opacity: 0; transform: translateY(6px); }
@@ -1009,7 +1241,7 @@
 
     .sticky-title {
       font-family: var(--font-hand);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       margin-bottom: 10px;
       border-bottom: 1.5px dotted rgba(60, 50, 40, 0.25);
@@ -1022,13 +1254,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
 
     .sticky-item strong {
       display: block;
       font-family: var(--font-calligraphy);
-      font-size: 1.25rem;
+      font-size: 1.22rem;
     }
 
     .stamp-wrapper {
@@ -1042,7 +1274,7 @@
       border: 3px double var(--sage-green);
       color: var(--sage-green);
       font-family: var(--font-hand);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       padding: 6px 16px;
       border-radius: 10px;
@@ -1074,7 +1306,7 @@
       border-radius: 12px;
       padding: 6px 12px;
       font-family: var(--font-hand);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 28px;
       color: var(--ink-primary);
       resize: vertical;
@@ -1089,7 +1321,7 @@
     }
 
     /* =========================================================
-       12. شريط التنقل السفلي كفواصل ورقية (4 Planner Tabs)
+       13. شريط التنقل السفلي (5 فواصل ورقية Planner Tabs)
        ========================================================= */
     .bookmark-nav {
       position: fixed;
@@ -1098,10 +1330,10 @@
       right: 0;
       max-width: 500px;
       margin: 0 auto;
-      padding: 6px 10px calc(8px + env(safe-area-inset-bottom));
+      padding: 6px 8px calc(8px + env(safe-area-inset-bottom));
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
       z-index: 90;
       pointer-events: none;
     }
@@ -1111,10 +1343,10 @@
       background: var(--card-bg);
       border: 2px solid var(--card-border);
       border-bottom: none;
-      border-radius: 14px 14px 4px 4px;
-      padding: 8px 4px 10px;
+      border-radius: 13px 13px 4px 4px;
+      padding: 7px 2px 9px;
       font-family: var(--font-hand);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--ink-secondary);
       cursor: pointer;
@@ -1128,9 +1360,7 @@
       transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .bookmark-tab span:first-child {
-      font-size: 1.1rem;
-    }
+    .bookmark-tab span:first-child { font-size: 1.05rem; }
 
     .bookmark-tab.active {
       background: var(--sticker-yellow);
@@ -1140,12 +1370,12 @@
     }
 
     /* =========================================================
-       13. النوافذ المنبثقة (Scrapbook Modals)
+       14. النوافذ المنبثقة (Scrapbook Modals)
        ========================================================= */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(43, 36, 31, 0.55);
+      background: rgba(43, 36, 31, 0.58);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       display: none;
@@ -1168,16 +1398,18 @@
       padding: 22px 18px 18px;
       box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
       position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-scrap::before {
       content: "";
       position: absolute;
-      top: -12px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%) rotate(2deg);
       width: 110px;
-      height: 24px;
+      height: 22px;
       background: var(--washi-pink);
       border-left: 2px dashed rgba(255, 255, 255, 0.6);
       border-right: 2px dashed rgba(255, 255, 255, 0.6);
@@ -1185,7 +1417,7 @@
 
     .modal-title {
       font-family: var(--font-hand);
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: var(--ink-primary);
       margin-bottom: 12px;
       text-align: center;
@@ -1195,7 +1427,7 @@
 
     .form-label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--ink-secondary);
       margin-bottom: 4px;
@@ -1209,7 +1441,7 @@
       border-bottom: 2px solid var(--input-underline);
       padding: 7px 4px;
       font-family: var(--font-hand);
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--ink-primary);
       outline: none;
       border-radius: 0;
@@ -1217,17 +1449,17 @@
 
     .radio-pills {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       margin-top: 6px;
     }
 
     .radio-pill {
       flex: 1;
       text-align: center;
-      padding: 7px;
+      padding: 7px 4px;
       border: 1.5px solid var(--card-border);
       border-radius: 10px;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
       background: var(--bg-paper-secondary);
@@ -1254,7 +1486,7 @@
       padding: 10px;
       border-radius: 12px;
       font-family: var(--font-hand);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
     }
@@ -1266,9 +1498,19 @@
       padding: 10px 14px;
       border-radius: 12px;
       font-family: var(--font-body);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    /* بطاقة ستوري المشاركة (Shareable Story Card) */
+    .story-card-preview {
+      background: var(--kraft-bg);
+      border: 2px solid var(--kraft-border);
+      border-radius: 18px;
+      padding: 22px 16px;
+      text-align: center;
+      box-shadow: inset 0 0 0 4px var(--kraft-inner-line);
     }
 
     .paper-toast {
@@ -1283,7 +1525,7 @@
       padding: 9px 18px;
       border-radius: 14px;
       font-family: var(--font-hand);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       z-index: 300;
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1310,20 +1552,24 @@
           <span id="ownerTitleText">دفتر ريالي</span>
           <span class="pro-pill">PRO</span>
         </h1>
-        <div class="brand-subtitle" id="currentDateLabel">مفكرة المصروفات والعادات المالية</div>
+        <div class="header-meta-row">
+          <span class="brand-subtitle" id="currentDateLabel">مفكرة المصروفات</span>
+          <span class="payday-badge" id="paydayCountdownBadge">⏳ باقي -- يوم للراتب</span>
+        </div>
       </div>
       <div class="header-actions">
+        <button class="notebook-icon-btn" id="privacyToggleBtn" onclick="togglePrivacyMode()" title="وضع الكافيه (إخفاء الأرقام)">👁️</button>
         <button class="notebook-icon-btn" onclick="openModal('settingsModal')" title="تخصيص الدفتر">⚙️</button>
         <button class="notebook-icon-btn" id="themeToggleBtn" title="تغيير ورق الدفتر">🌓</button>
       </div>
     </header>
 
     <!-- =======================================================
-         التبويب 1: الصفحة الرئيسية (اليوميات والدخل والمصروفات)
+         التبويب 1: الصفحة الرئيسية (اليوميات، المغلف، الملصقات)
          ======================================================= -->
     <main id="tab-home" class="tab-section active">
 
-      <!-- 1. مغلف الادخار البنكي -->
+      <!-- 1. مغلف الادخار البنكي + الأظرف الفرعية -->
       <section class="bank-card">
         <span class="paperclip-badge" aria-hidden="true">📎</span>
         <div class="card-header" style="margin-bottom: 4px;">
@@ -1331,15 +1577,21 @@
             <span>✉️</span>
             <span>مغلف الادخار والحساب البنكي</span>
           </div>
-          <button class="sketch-btn" onclick="openModal('bankModal')">✎ تحديث الرصيد</button>
+          <div style="display:flex; gap:5px;">
+            <button class="sketch-btn" onclick="openModal('subEnvelopeModal')">+ ظرف هدف</button>
+            <button class="sketch-btn" onclick="openModal('bankModal')">✎ الرصيد</button>
+          </div>
         </div>
 
         <div class="bank-balance-wrap">
           <div>
-            <span class="bank-amount-highlight" id="bankBalanceDisplay">0</span>
+            <span class="bank-amount-highlight sensitive-num" id="bankBalanceDisplay">0</span>
             <span class="currency-tag" id="bankCurrencyLabel">ر.س</span>
           </div>
         </div>
+
+        <!-- الأظرف الورقية الفرعية للأهداف (Cash Envelopes) -->
+        <div class="sub-envelopes-row" id="subEnvelopesContainer"></div>
 
         <div class="envelope-footer">
           <span id="bankNoteText">مدخراتك المحفوظة في المغلف الورقي</span>
@@ -1347,14 +1599,14 @@
         </div>
       </section>
 
-      <!-- 2. قصاصة الراتب ومصادر الدخل المتعددة -->
+      <!-- 2. قصاصة الراتب والرصيد الحقيقي الآمن بعد الأقساط -->
       <section class="card washi-pink">
         <div class="card-header">
           <h2 class="card-title">
             <span>💰</span>
             <span>الميزانية ومصادر الدخل</span>
           </h2>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 5px;">
             <button class="sketch-btn sage-btn" onclick="openModal('extraIncomeModal')">+ دخل إضافي</button>
             <button class="sketch-btn" onclick="openModal('salaryModal')">✎ الراتب</button>
           </div>
@@ -1363,23 +1615,29 @@
         <div class="salary-grid">
           <div class="salary-stat-box">
             <div class="stat-label">إجمالي الدخل</div>
-            <div class="stat-val" id="totalIncomeDisplay">0</div>
+            <div class="stat-val sensitive-num" id="totalIncomeDisplay">0</div>
           </div>
           <div class="salary-stat-box">
             <div class="stat-label">المصروف</div>
-            <div class="stat-val rose" id="salarySpentDisplay">0</div>
+            <div class="stat-val rose sensitive-num" id="salarySpentDisplay">0</div>
           </div>
           <div class="salary-stat-box">
             <div class="stat-label">المتبقي بالمحفظة</div>
-            <div class="stat-val sage" id="salaryRemainingDisplay">0</div>
+            <div class="stat-val sage sensitive-num" id="salaryRemainingDisplay">0</div>
           </div>
         </div>
 
-        <!-- عرض مصادر الدخل الإضافية المسجلة هذا الشهر -->
+        <!-- شريط الرصيد الحقيقي الآمن بعد خصم أقساط تابي وتمارا المستحقة هذا الشهر -->
+        <div class="safe-balance-banner">
+          <span>🛡️ الرصيد الآمن (بعد حجز أقساط الشهر):</span>
+          <strong class="sensitive-num" id="trueSafeBalanceDisplay">0 ر.س</strong>
+        </div>
+
+        <!-- مصادر الدخل الإضافية -->
         <div class="extra-incomes-box" id="extraIncomesBox" style="display: none;">
           <div class="extra-income-header">
             <span>✨ مصادر الدخل الإضافية هذا الشهر:</span>
-            <span id="extraIncomeTotalBadge">+0</span>
+            <span class="sensitive-num" id="extraIncomeTotalBadge">+0</span>
           </div>
           <div class="income-chip-list" id="extraIncomeList"></div>
         </div>
@@ -1389,7 +1647,7 @@
         </div>
         <div class="bar-meta">
           <span id="salaryPercentText">استهلاك الميزانية: 0%</span>
-          <span id="dailyAllowanceText">الحد اليومي المتاح: 0</span>
+          <span class="sensitive-num" id="dailyAllowanceText">المتاح يومياً: 0</span>
         </div>
       </section>
 
@@ -1420,7 +1678,7 @@
             <span>🖋️</span>
             <span>سجل العمليات المسطر</span>
           </h2>
-          <span style="font-size: 0.75rem; color: var(--ink-muted);" id="transactionsCountBadge">0 عملية</span>
+          <span style="font-size: 0.74rem; color: var(--ink-muted);" id="transactionsCountBadge">0 عملية</span>
         </div>
 
         <div class="ledger-sheet">
@@ -1430,11 +1688,98 @@
     </main>
 
     <!-- =======================================================
-         التبويب 2: الرسوم البيانية المائية (Charts & Visuals)
+         التبويب 2: أقساط تابي وتمارا والالتزامات + حاسبة ساعات العمل
+         ======================================================= -->
+    <section id="tab-installments" class="tab-section">
+
+      <!-- 1. ملخص وسقف الأقساط الآمن -->
+      <div class="card washi-pink">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>💳</span>
+            <span>بطاقات أقساط تابي وتمارا والجمعيات</span>
+          </h2>
+          <button class="sketch-btn sage-btn" onclick="openModal('installmentModal')">+ إضافة قسط / جمعية</button>
+        </div>
+
+        <div class="salary-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="salary-stat-box">
+            <div class="stat-label">المستحق دفعه هذا الشهر</div>
+            <div class="stat-val rose sensitive-num" id="instDueThisMonthVal">0</div>
+          </div>
+          <div class="salary-stat-box">
+            <div class="stat-label">إجمالي الأقساط المتبقية</div>
+            <div class="stat-val mustard sensitive-num" id="instTotalRemainingVal">0</div>
+          </div>
+        </div>
+
+        <div class="bar-track">
+          <div class="bar-fill" id="instSafeCapBar" style="width: 0%;"></div>
+        </div>
+        <div class="bar-meta">
+          <span id="instSafeCapText">نسبة الأقساط من الدخل: 0% (السقف الآمن 20%)</span>
+        </div>
+      </div>
+
+      <!-- 2. قائمة بطاقات التخريم التفاعلية (Punch Cards) -->
+      <div class="card washi-mustard">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🎟️</span>
+            <span>بطاقات التخريم (اضغط على الدفعة لختمها ✓)</span>
+          </h2>
+        </div>
+        <div id="punchCardsContainer"></div>
+      </div>
+
+      <!-- 3. حاسبة «كم ساعة عمل يساوي هذا المنتج؟» (Impulse Buy Stopper) -->
+      <div class="card washi-blue">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>⏳</span>
+            <span>حاسبة: هل يستحق الشراء؟ (ساعات العمل)</span>
+          </h2>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 10px;">
+          أدخل سعر أي منتج تفكر بشرائه ليريك الدفتر كم ساعة عمل من جهدك تساوي قيمته:
+        </p>
+        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+          <input type="number" id="impulsePriceInput" class="lined-input" placeholder="أدخل سعر المنتج (مثلاً 450)" inputmode="decimal" oninput="calculateWorkHours()" />
+        </div>
+        <div id="impulseResultBox" style="background: var(--bg-paper-secondary); border: 1px dashed var(--card-border); border-radius: 11px; padding: 10px 12px; font-family: var(--font-hand); font-size: 0.86rem; color: var(--ink-primary);">
+          💡 اكتب السعر بالأعلى لحساب تكلفته بساعات عملك الفعلية.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         التبويب 3: الرسوم البيانية المائية + تحدي التلوين للتوفير
          ======================================================= -->
     <section id="tab-charts" class="tab-section">
 
-      <!-- 1. رسم الدونات المائي لتوزيع الفئات -->
+      <!-- 1. تحدي التلوين للتوفير (Coloring Savings Tracker) -->
+      <div class="card washi-mustard">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🏺</span>
+            <span>تحدي التلوين للتوفير (20 مربعاً)</span>
+          </h2>
+          <button class="sketch-btn" id="coloringStepBtn" onclick="toggleColoringStep()">المربع = 50</button>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 6px;">
+          اضغط على أي مربع لتلوينه؛ سيُضاف مبلغه تلقائياً إلى مغلف ادخارك البنكي!
+        </p>
+
+        <div class="coloring-grid" id="coloringChallengeGrid"></div>
+
+        <div class="bar-meta" style="border-top: 1px dashed var(--card-border); padding-top: 8px;">
+          <span id="coloringProgressText">تم تلوين: 0 من 20</span>
+          <strong style="font-family: var(--font-hand); color: var(--sage-green);" id="coloringSavedTotal">وفرت بالتحدي: 0</strong>
+        </div>
+      </div>
+
+      <!-- 2. رسم الدونات المائي لتوزيع الفئات -->
       <div class="card washi-blue">
         <div class="card-header">
           <h2 class="card-title">
@@ -1445,18 +1790,18 @@
 
         <div class="donut-wrap">
           <div class="donut-svg-box">
-            <svg id="categoryDonutSvg" width="190" height="190" viewBox="0 0 42 42"></svg>
+            <svg id="categoryDonutSvg" width="185" height="185" viewBox="0 0 42 42"></svg>
             <div class="donut-center-label">
               <span>إجمالي الصرف</span>
-              <strong id="donutCenterTotal">0</strong>
+              <strong class="sensitive-num" id="donutCenterTotal">0</strong>
             </div>
           </div>
           <div class="chart-legend" id="donutLegendContainer"></div>
         </div>
       </div>
 
-      <!-- 2. الرسم البياني لأيام الأسبوع -->
-      <div class="card washi-mustard">
+      <!-- 3. الرسم البياني لأيام الأسبوع -->
+      <div class="card washi-pink">
         <div class="card-header">
           <h2 class="card-title">
             <span>📅</span>
@@ -1464,13 +1809,10 @@
           </h2>
         </div>
         <div class="weekly-bars-box" id="weeklyBarsContainer"></div>
-        <p style="font-size: 0.74rem; color: var(--ink-secondary); margin-top: 8px; text-align: center;" id="weeklyPeakNote">
-          يوضح الرسم أي أيام الأسبوع تستنزف ميزانيتك بشكل أكبر.
-        </p>
       </div>
 
-      <!-- 3. ميزان الضروريات مقابل الكماليات -->
-      <div class="card washi-pink">
+      <!-- 4. ميزان الضروريات مقابل الكماليات -->
+      <div class="card">
         <div class="card-header">
           <h2 class="card-title">
             <span>⚖️</span>
@@ -1480,11 +1822,11 @@
         <div class="salary-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="salary-stat-box">
             <div class="stat-label">🌿 مصروفات أساسية (Needs)</div>
-            <div class="stat-val sage" id="needsTotalVal">0</div>
+            <div class="stat-val sage sensitive-num" id="needsTotalVal">0</div>
           </div>
           <div class="salary-stat-box">
             <div class="stat-label">🛍️ كماليات ورغبات (Wants)</div>
-            <div class="stat-val rose" id="wantsTotalVal">0</div>
+            <div class="stat-val rose sensitive-num" id="wantsTotalVal">0</div>
           </div>
         </div>
         <div class="bar-track">
@@ -1499,11 +1841,11 @@
     </section>
 
     <!-- =======================================================
-         التبويب 3: تتبع عادات الصرف (Spending Habits Tracker)
+         التبويب 4: تتبع عادات الصرف ورادار القهوة
          ======================================================= -->
     <section id="tab-habits" class="tab-section">
 
-      <!-- 1. تشخيص العادات الذكي -->
+      <!-- 1. تشخيص العادات الذكي ورادار القهوة -->
       <div class="card washi-pink">
         <div class="card-header">
           <h2 class="card-title">
@@ -1518,8 +1860,8 @@
             <div class="habit-stat-value" id="habitPeakDay">--</div>
           </div>
           <div class="habit-stat-card">
-            <div class="habit-stat-label">🔄 العادة الأكثر تكراراً</div>
-            <div class="habit-stat-value" id="habitTopRepeated">--</div>
+            <div class="habit-stat-label">☕ رادار القهوة والمطاعم</div>
+            <div class="habit-stat-value" id="habitCoffeeRadar">0 مرة</div>
           </div>
           <div class="habit-stat-card">
             <div class="habit-stat-label">🌿 أيام بدون صرف (No-Spend)</div>
@@ -1531,7 +1873,7 @@
           </div>
         </div>
 
-        <div style="background: var(--mustard-soft); border-radius: 10px; padding: 10px 12px; font-size: 0.8rem;" id="habitSmartAdvice">
+        <div style="background: var(--mustard-soft); border-radius: 10px; padding: 10px 12px; font-size: 0.78rem;" id="habitSmartAdvice">
           💡 نصيحة الدفتر: ابدأ بتسجيل مصروفاتك اليومية ليقوم الدفتر بتحليل عاداتك تلقائياً.
         </div>
       </div>
@@ -1544,7 +1886,7 @@
             <span>متتبع أيام الالتزام الشهري (Habit Grid)</span>
           </h2>
         </div>
-        <p style="font-size: 0.76rem; color: var(--ink-secondary); margin-bottom: 8px;">
+        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 8px;">
           يتلون كل يوم من أيام الشهر تلقائياً حسب التزامك بالحد اليومي للميزانية:
         </p>
 
@@ -1560,7 +1902,7 @@
     </section>
 
     <!-- =======================================================
-         التبويب 4: تقرير الشهر والنسخ الاحتياطي (Report & Backup)
+         التبويب 5: تقرير الشهر، بطاقة الستوري، والنسخ الاحتياطي
          ======================================================= -->
     <section id="tab-report" class="tab-section">
 
@@ -1569,36 +1911,36 @@
         <span class="sticky-pin" aria-hidden="true">📌</span>
         <div class="sticky-title">
           <span>خلاصة الثروة والتقرير الشهري</span>
-          <span id="reportMonthName" style="font-size: 0.78rem;">دفتر الشهر</span>
+          <span id="reportMonthName" style="font-size: 0.76rem;">دفتر الشهر</span>
         </div>
         <div class="sticky-summary-grid">
           <div class="sticky-item">
             <span>رصيد مغلف البنك:</span>
-            <strong id="stickyBankBalance">0</strong>
+            <strong class="sensitive-num" id="stickyBankBalance">0</strong>
           </div>
           <div class="sticky-item">
             <span>إجمالي الدخل (مع الإضافي):</span>
-            <strong id="stickyTotalIncome">0</strong>
+            <strong class="sensitive-num" id="stickyTotalIncome">0</strong>
           </div>
           <div class="sticky-item">
             <span>إجمالي مصروفات الشهر:</span>
-            <strong id="stickyTotalSpent">0</strong>
+            <strong class="sensitive-num" id="stickyTotalSpent">0</strong>
           </div>
           <div class="sticky-item">
             <span>صافي الفائض للتوفير:</span>
-            <strong id="stickyNetSavings">0</strong>
+            <strong class="sensitive-num" id="stickyNetSavings">0</strong>
           </div>
         </div>
       </div>
 
-      <!-- 2. ختم الحبر وتأملات الشهر -->
+      <!-- 2. ختم الحبر وتأملات الشهر + مشاركة ستوري -->
       <div class="card washi-pink">
         <div class="card-header">
           <h2 class="card-title">
             <span>💮</span>
             <span>ختم التقييم وتأملات المفكرة</span>
           </h2>
-          <span style="font-size: 0.7rem; color: var(--sage-green);">حفظ تلقائي ✓</span>
+          <button class="sketch-btn sage-btn" onclick="openStoryShareModal()">📸 بطاقة ستوري للمشاركة</button>
         </div>
 
         <div class="stamp-wrapper">
@@ -1608,14 +1950,14 @@
         <textarea
           id="monthlyReflectionInput"
           class="reflection-textarea"
-          placeholder="دون هنا ملاحظاتك المالية لهذا الشهر، خطط زيادة الدخل، أو العادات التي تود تحسينها..."
+          placeholder="دون هنا ملاحظاتك المالية لهذا الشهر، خطط سداد الأقساط، أو العادات التي تود تحسينها..."
         ></textarea>
 
         <div class="pro-actions-grid">
           <button class="sketch-btn sage-btn" style="padding: 10px; font-weight: 700;" onclick="transferRemainingToBank()">
             📥 ترحيل الفائض للمغلف البنكي
           </button>
-          <button class="sketch-btn" style="padding: 10px; color: var(--dusty-rose); border-color: var(--dusty-rose);" onclick="clearMonthExpenses()">
+          <button class="sketch-btn rose-btn" style="padding: 10px;" onclick="clearMonthExpenses()">
             🗓️ بدء صفحة شهر جديد
           </button>
         </div>
@@ -1629,9 +1971,6 @@
             <span>حفظ البيانات والتصدير (Pro Tools)</span>
           </h2>
         </div>
-        <p style="font-size: 0.76rem; color: var(--ink-secondary); margin-bottom: 10px;">
-          احفظ نسخة احتياطية من دفترك على جهازك أو صدر كشف حسابك بصيغة Excel (CSV):
-        </p>
         <div class="pro-actions-grid">
           <button class="sketch-btn" style="padding: 10px;" onclick="exportCSVReport()">
             📊 تصدير جدول Excel (CSV)
@@ -1652,12 +1991,16 @@
   </div>
 
   <!-- =========================================================
-       شريط التنقل السفلي (4 فواصل ورقية Planner Tabs)
+       شريط التنقل السفلي (5 فواصل ورقية Planner Tabs)
        ========================================================= -->
   <nav class="bookmark-nav" aria-label="فواصل الدفتر">
     <button class="bookmark-tab active" id="navBtn-home" onclick="switchTab('home')">
       <span>📝</span>
       <span>اليوميات</span>
+    </button>
+    <button class="bookmark-tab" id="navBtn-installments" onclick="switchTab('installments')">
+      <span>💳</span>
+      <span>الأقساط</span>
     </button>
     <button class="bookmark-tab" id="navBtn-charts" onclick="switchTab('charts')">
       <span>🎨</span>
@@ -1696,7 +2039,26 @@
     </div>
   </div>
 
-  <!-- 2. نافذة الراتب الأساسي -->
+  <!-- 2. نافذة إضافة ظرف ادخار فرعي -->
+  <div class="modal-overlay" id="subEnvelopeModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title">🗂️ إضافة ظرف ادخار فرعي</h3>
+      <div class="form-group">
+        <label class="form-label">اسم الظرف والرمز (مثل: ✈️ سفر، 🚗 سيارة):</label>
+        <input type="text" id="subEnvTitleInput" class="lined-input" placeholder="مثال: ✈️ ظرف السفر" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المبلغ المخصص داخل هذا الظرف:</label>
+        <input type="number" id="subEnvAmountInput" class="lined-input" placeholder="2500" inputmode="decimal" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save-scrap" onclick="addSubEnvelope()">إضافة الظرف ✓</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('subEnvelopeModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. نافذة الراتب الأساسي -->
   <div class="modal-overlay" id="salaryModal">
     <div class="modal-scrap">
       <h3 class="modal-title">📌 تحديد الراتب الأساسي</h3>
@@ -1711,7 +2073,7 @@
     </div>
   </div>
 
-  <!-- 3. نافذة إضافة مصدر دخل إضافي (جديد) -->
+  <!-- 4. نافذة إضافة مصدر دخل إضافي -->
   <div class="modal-overlay" id="extraIncomeModal">
     <div class="modal-scrap">
       <h3 class="modal-title">✨ إضافة مصدر دخل إضافي</h3>
@@ -1737,7 +2099,43 @@
     </div>
   </div>
 
-  <!-- 4. نافذة تدوين مصروف مخصص باليد (مع تصنيف أساسي / كمالي) -->
+  <!-- 5. نافذة إضافة قسط تابي / تمارا / جمعية -->
+  <div class="modal-overlay" id="installmentModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title">💳 إضافة قسط (تابي / تمارا / جمعية)</h3>
+      <div class="form-group">
+        <label class="form-label">اسم المتجر أو الالتزام:</label>
+        <input type="text" id="instStoreInput" class="lined-input" placeholder="مثال: سيفورا، نمشي، جمعية العائلة..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">الجهة:</label>
+        <select id="instProviderInput" class="lined-select">
+          <option value="تابي">💚 تابي (Tabby - 4 دفعات)</option>
+          <option value="تمارا">🩷 تمارا (Tamara - 4 دفعات)</option>
+          <option value="جمعية/التزام">💛 جمعية أو التزام مقسط</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">إجمالي مبلغ الفاتورة الكلي:</label>
+        <input type="number" id="instTotalInput" class="lined-input" placeholder="مثال: 800 (ستقسم على 4 دفعات = 200)" inputmode="decimal" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">كم دفعة سددت منها حتى الآن؟</label>
+        <select id="instPaidCountInput" class="lined-select">
+          <option value="1">دفعة أولى مسددة عند الشراء (متبقي 3 دفعات)</option>
+          <option value="0">لم أسدد أي دفعة بعد (متبقي 4 دفعات)</option>
+          <option value="2">مسدد دفعتين (متبقي دفعتان)</option>
+          <option value="3">مسدد 3 دفعات (متبقي دفعة أخيرة)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save-scrap" onclick="addInstallmentCard()">إضافة بطاقة التخريم ✓</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('installmentModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. نافذة تدوين مصروف مخصص باليد -->
   <div class="modal-overlay" id="customExpenseModal">
     <div class="modal-scrap">
       <h3 class="modal-title">✒️ تدوين مصروف بالدفتر</h3>
@@ -1775,7 +2173,7 @@
     </div>
   </div>
 
-  <!-- 5. نافذة إضافة ملصق سريع جديد -->
+  <!-- 7. نافذة إضافة ملصق سريع جديد -->
   <div class="modal-overlay" id="stickerModal">
     <div class="modal-scrap">
       <h3 class="modal-title">🏷️ تصميم ملصق سريع جديد</h3>
@@ -1804,13 +2202,13 @@
     </div>
   </div>
 
-  <!-- 6. نافذة تخصيص الدفتر (اسم المالك والعملة) -->
+  <!-- 8. نافذة تخصيص الدفتر (اسم المالك، العملة، يوم الراتب) -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-scrap">
       <h3 class="modal-title">⚙️ تخصيص هوية الدفتر</h3>
       <div class="form-group">
         <label class="form-label">عنوان الدفتر أو اسم المالك:</label>
-        <input type="text" id="ownerNameInput" class="lined-input" placeholder="مثال: دفتر سارة المالي" />
+        <input type="text" id="ownerNameInput" class="lined-input" placeholder="مثال: دفتر مودة المالي" />
       </div>
       <div class="form-group">
         <label class="form-label">العملة المستخدمة:</label>
@@ -1825,6 +2223,10 @@
           <option value="$">دولار أمريكي ($)</option>
         </select>
       </div>
+      <div class="form-group">
+        <label class="form-label">يوم نزول الراتب في الشهر الميلادي (1 - 30):</label>
+        <input type="number" id="paydayDayInput" class="lined-input" placeholder="27" min="1" max="30" inputmode="numeric" />
+      </div>
       <div class="modal-actions">
         <button class="btn-save-scrap" onclick="saveJournalSettings()">حفظ الإعدادات ✓</button>
         <button class="btn-cancel-scrap" onclick="closeModal('settingsModal')">إلغاء</button>
@@ -1832,11 +2234,46 @@
     </div>
   </div>
 
+  <!-- 9. نافذة بطاقة مشاركة الإنجاز في السوشيال ميديا (Shareable Story Sticker) -->
+  <div class="modal-overlay" id="storyShareModal">
+    <div class="modal-scrap">
+      <div class="story-card-preview">
+        <div style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 4px;" id="storyMonthLabel">تقرير الشهر</div>
+        <h3 style="font-family: var(--font-calligraphy); font-size: 1.65rem; margin-bottom: 10px;" id="storyOwnerTitle">دفتر ريالي</h3>
+
+        <div class="stamp-wrapper" style="margin: 12px 0;">
+          <div class="rubber-stamp" id="storyStampBadge">ختم الالتزام 🌟</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0;">
+          <div style="background: rgba(255,255,255,0.6); padding: 10px; border-radius: 12px;">
+            <span style="font-size: 0.72rem; color: var(--ink-secondary); display: block;">أيام بدون صرف</span>
+            <strong style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--sage-green);" id="storyNoSpendVal">0 يوم 🌿</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.6); padding: 10px; border-radius: 12px;">
+            <span style="font-size: 0.72rem; color: var(--ink-secondary); display: block;">مربعات التحدي الملونة</span>
+            <strong style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--warm-mustard);" id="storyColoringVal">0 / 20 🏺</strong>
+          </div>
+        </div>
+
+        <div style="font-family: var(--font-hand); font-size: 0.75rem; color: var(--ink-secondary); margin-top: 10px; border-top: 1px dashed var(--kraft-border); padding-top: 8px;">
+          📒 تم التدوين عبر تطبيق «دفتر ريالي برو»
+        </div>
+      </div>
+      <p style="font-size: 0.72rem; text-align: center; color: var(--ink-muted); margin-top: 10px;">
+        📸 التقط صورة للشاشة (Screenshot) لمشاركة إنجازك بدون إظهار أرقامك البنكية الخاصة!
+      </p>
+      <div class="modal-actions" style="margin-top: 12px;">
+        <button class="btn-cancel-scrap" style="width: 100%;" onclick="closeModal('storyShareModal')">إغلاق البطاقة</button>
+      </div>
+    </div>
+  </div>
+
   <!-- =========================================================
-       البرمجة التفاعلية، الرسوم البيانية، وتتبع العادات (JavaScript)
+       البرمجة التفاعلية الشاملة (JavaScript)
        ========================================================= -->
   <script>
-    const STORAGE_KEY = 'riyali_pro_journal_v2';
+    const STORAGE_KEY = 'riyali_diamond_pro_v3';
     const THEME_KEY = 'riyali_journal_theme';
 
     const defaultStickers = [
@@ -1848,15 +2285,31 @@
       { id: 's6', title: 'مشوار / توصيل', amount: 30, category: 'وقود ومواصلات', icon: '🚕', needType: 'need' }
     ];
 
+    const defaultInstallments = [
+      { id: 'inst_1', store: 'سيفورا / عطور', provider: 'تابي', totalAmount: 600, totalSplits: 4, paidSplits: 2 },
+      { id: 'inst_2', store: 'أديداس / ملابس', provider: 'تمارا', totalAmount: 400, totalSplits: 4, paidSplits: 1 }
+    ];
+
+    const defaultSubEnvelopes = [
+      { id: 'env_1', title: '🛟 ظرف الطوارئ', amount: 5000 },
+      { id: 'env_2', title: '✈️ ظرف السفر', amount: 3000 },
+      { id: 'env_3', title: '🌙 ظرف المواسم', amount: 1500 }
+    ];
+
     let appData = {
       ownerTitle: 'دفتر ريالي',
       currency: 'ر.س',
+      paydayDay: 27,
       bankBalance: 12500,
       bankNote: 'مدخراتك المحفوظة في المغلف الورقي',
-      monthlySalary: 8000,
+      subEnvelopes: defaultSubEnvelopes,
+      monthlySalary: 8500,
       extraIncomes: [],
       expenses: [],
+      installments: defaultInstallments,
       quickStickers: defaultStickers,
+      coloringStep: 50,
+      coloredBoxes: [0, 1, 2],
       reflectionNote: ''
     };
 
@@ -1868,15 +2321,21 @@
 
     function loadAppData() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('riyali_journal_data_v1');
+        const saved =
+          localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem('riyali_pro_journal_v2') ||
+          localStorage.getItem('riyali_journal_data_v1');
         if (saved) {
           const parsed = JSON.parse(saved);
           appData = {
             ...appData,
             ...parsed,
+            subEnvelopes: Array.isArray(parsed.subEnvelopes) ? parsed.subEnvelopes : defaultSubEnvelopes,
             extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
             expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
-            quickStickers: (parsed.quickStickers && parsed.quickStickers.length) ? parsed.quickStickers : defaultStickers
+            installments: Array.isArray(parsed.installments) ? parsed.installments : defaultInstallments,
+            quickStickers: (parsed.quickStickers && parsed.quickStickers.length) ? parsed.quickStickers : defaultStickers,
+            coloredBoxes: Array.isArray(parsed.coloredBoxes) ? parsed.coloredBoxes : [0, 1, 2]
           };
         }
       } catch (e) {
@@ -1901,14 +2360,38 @@
       return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
-    function updateHeaderDate() {
+    // حساب الأيام المتبقية ليوم الراتب (مثلاً يوم 27)
+    function updateHeaderAndPayday() {
       const now = new Date();
       document.getElementById('currentDateLabel').textContent = now.toLocaleDateString('ar-SA', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        month: 'short', day: 'numeric'
       });
       document.getElementById('reportMonthName').textContent = now.toLocaleDateString('ar-SA', {
         month: 'long', year: 'numeric'
       });
+
+      const payDay = Number(appData.paydayDay) || 27;
+      let targetDate = new Date(now.getFullYear(), now.getMonth(), payDay);
+      if (now.getDate() > payDay) {
+        targetDate = new Date(now.getFullYear(), now.getMonth() + 1, payDay);
+      }
+      const diffDays = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
+      const badge = document.getElementById('paydayCountdownBadge');
+      if (diffDays === 0 || now.getDate() === payDay) {
+        badge.textContent = '🎉 اليوم يوم الراتب!';
+      } else {
+        badge.textContent = `⏳ باقي ${diffDays} يوم للراتب (يوم ${payDay})`;
+      }
+    }
+
+    // وضع الكافيه / إخفاء الأرقام الحساسة
+    function togglePrivacyMode() {
+      document.body.classList.toggle('privacy-mode');
+      const isPrivate = document.body.classList.contains('privacy-mode');
+      const btn = document.getElementById('privacyToggleBtn');
+      btn.textContent = isPrivate ? '🙈' : '👁️';
+      btn.classList.toggle('privacy-active', isPrivate);
+      showPaperToast(isPrivate ? '🙈 تم تفعيل وضع الكافيه (إخفاء الأرقام)' : '👁️ تم إظهار الأرقام المالية');
     }
 
     document.getElementById('themeToggleBtn').addEventListener('click', () => {
@@ -1927,24 +2410,52 @@
       toastTimeout = setTimeout(() => toast.classList.remove('show'), 2300);
     }
 
-    // تحديث شامل لكافة التبويبات والرسوم والعادات
+    // =========================================================
+    // تحديث شامل لكافة التبويبات الـ 5
+    // =========================================================
     function renderAll() {
       const cur = appData.currency || 'ر.س';
+      updateHeaderAndPayday();
+
       document.getElementById('ownerTitleText').textContent = appData.ownerTitle || 'دفتر ريالي';
       document.getElementById('bankCurrencyLabel').textContent = cur;
       document.getElementById('bankBalanceDisplay').textContent = formatNum(appData.bankBalance);
       document.getElementById('bankNoteText').textContent = appData.bankNote || 'مدخراتك المحفوظة في المغلف الورقي';
 
-      // حساب إجمالي الدخل (الراتب + الدخل الإضافي الموجه للميزانية)
+      // عرض الأظرف الفرعية داخل بطاقة البنك
+      const subEnvContainer = document.getElementById('subEnvelopesContainer');
+      subEnvContainer.innerHTML = appData.subEnvelopes.map((env) => `
+        <div class="mini-envelope" onclick="deleteSubEnvelope('${env.id}')" title="اضغط لحذف الظرف">
+          <span>${env.title}:</span>
+          <strong class="sensitive-num">${formatNum(env.amount)} ${cur}</strong>
+        </div>
+      `).join('');
+
+      // حساب الدخل والمصروفات والأقساط المستحقة هذا الشهر
       const extraBudgetIncome = appData.extraIncomes.reduce((s, item) => s + (Number(item.amount) || 0), 0);
       const totalIncome = (Number(appData.monthlySalary) || 0) + extraBudgetIncome;
       const totalSpent = appData.expenses.reduce((s, item) => s + (Number(item.amount) || 0), 0);
       const remaining = totalIncome - totalSpent;
+
+      // حساب أقساط تابي وتمارا المستحقة هذا الشهر (دفعة واحدة لكل بطاقة غير مكتملة)
+      let dueThisMonthInstallments = 0;
+      let totalRemainingInstallments = 0;
+      appData.installments.forEach((inst) => {
+        const splitAmt = (Number(inst.totalAmount) || 0) / (Number(inst.totalSplits) || 4);
+        const unpaidCount = Math.max(0, (Number(inst.totalSplits) || 4) - (Number(inst.paidSplits) || 0));
+        if (unpaidCount > 0) {
+          dueThisMonthInstallments += splitAmt;
+          totalRemainingInstallments += splitAmt * unpaidCount;
+        }
+      });
+
+      const trueSafeBalance = remaining - dueThisMonthInstallments;
       const spentPercent = totalIncome > 0 ? Math.min(100, Math.round((totalSpent / totalIncome) * 100)) : 0;
 
       document.getElementById('totalIncomeDisplay').textContent = formatNum(totalIncome);
       document.getElementById('salarySpentDisplay').textContent = formatNum(totalSpent);
       document.getElementById('salaryRemainingDisplay').textContent = formatNum(remaining);
+      document.getElementById('trueSafeBalanceDisplay').textContent = `${formatNum(trueSafeBalance)} ${cur}`;
 
       // عرض مصادر الدخل الإضافية
       const extraBox = document.getElementById('extraIncomesBox');
@@ -1955,8 +2466,8 @@
         extraList.innerHTML = appData.extraIncomes.map((inc) => `
           <span class="income-chip">
             <span>${inc.title}:</span>
-            <strong>+${formatNum(inc.amount)}</strong>
-            <button onclick="deleteExtraIncome('${inc.id}')" title="حذف">✕</button>
+            <strong class="sensitive-num">+${formatNum(inc.amount)}</strong>
+            <button onclick="deleteExtraIncome('${inc.id}')">✕</button>
           </span>
         `).join('');
       } else {
@@ -1974,16 +2485,225 @@
       const now = new Date();
       const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
       const remainingDays = Math.max(1, daysInMonth - now.getDate() + 1);
-      const dailyAvailable = remaining > 0 ? Math.floor(remaining / remainingDays) : 0;
-      document.getElementById('dailyAllowanceText').textContent = `المتاح يومياً: ${formatNum(dailyAvailable)} ${cur}`;
+      const dailyAvailable = trueSafeBalance > 0 ? Math.floor(trueSafeBalance / remainingDays) : 0;
+      document.getElementById('dailyAllowanceText').textContent = `المتاح الآمن يومياً: ${formatNum(dailyAvailable)} ${cur}`;
 
       renderQuickStickers(cur);
       renderLedgerList(cur);
+      renderInstallmentsTab(totalIncome, dueThisMonthInstallments, totalRemainingInstallments, cur);
+      renderColoringChallenge(cur);
       renderChartsTab(totalSpent, cur);
       renderHabitsTab(totalIncome, totalSpent, daysInMonth, cur);
       renderReportTab(totalIncome, totalSpent, remaining, cur);
     }
 
+    // =========================================================
+    // قسم بطاقات تخريم تابي وتمارا وحاسبة ساعات العمل
+    // =========================================================
+    function renderInstallmentsTab(totalIncome, dueThisMonth, totalRem, cur) {
+      document.getElementById('instDueThisMonthVal').textContent = `${formatNum(dueThisMonth)} ${cur}`;
+      document.getElementById('instTotalRemainingVal').textContent = `${formatNum(totalRem)} ${cur}`;
+
+      const capPct = totalIncome > 0 ? Math.min(100, Math.round((dueThisMonth / totalIncome) * 100)) : 0;
+      const capBar = document.getElementById('instSafeCapBar');
+      capBar.style.width = `${capPct}%`;
+      capBar.className = 'bar-fill';
+      if (capPct > 25) capBar.classList.add('danger');
+      else if (capPct > 15) capBar.classList.add('warning');
+
+      document.getElementById('instSafeCapText').textContent =
+        capPct > 20
+          ? `⚠️ تنبيه: أقساطك تستهلك ${capPct}% من دخلك (تجاوزت السقف الآمن 20%)`
+          : `✅ ممتاز: أقساطك تمثل ${capPct}% من دخلك (ضمن السقف الآمن 20%)`;
+
+      const container = document.getElementById('punchCardsContainer');
+      if (appData.installments.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:var(--ink-muted); font-family:var(--font-hand); padding:16px 0;">لا توجد أقساط مسجلة حالياً.. أنت حر من الالتزامات! 🌿</p>`;
+        return;
+      }
+
+      container.innerHTML = appData.installments.map((inst) => {
+        const splits = Number(inst.totalSplits) || 4;
+        const paid = Number(inst.paidSplits) || 0;
+        const splitAmount = Math.round(((Number(inst.totalAmount) || 0) / splits) * 100) / 100;
+
+        let provClass = 'provider-jamiyah';
+        if (inst.provider === 'تابي') provClass = 'provider-tabby';
+        else if (inst.provider === 'تمارا') provClass = 'provider-tamara';
+
+        let circlesHtml = '';
+        for (let i = 1; i <= splits; i++) {
+          const isPaid = i <= paid;
+          const isDueNow = i === paid + 1;
+          const circleClass = isPaid ? 'paid' : (isDueNow ? 'due-now' : '');
+          const statusLabel = isPaid ? '✓ مدفوع' : (isDueNow ? '⏳ سدد الآن' : '⚪ قادم');
+
+          circlesHtml += `
+            <div class="punch-circle ${circleClass}" onclick="stampInstallmentSplit('${inst.id}', ${i})">
+              <span class="punch-step-num">دفعة ${i}</span>
+              <span class="punch-step-amt sensitive-num">${formatNum(splitAmount)}</span>
+              <span class="punch-step-status">${statusLabel}</span>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="punch-card">
+            <div class="punch-card-top">
+              <div>
+                <span class="provider-badge ${provClass}">${inst.provider}</span>
+                <strong style="font-family:var(--font-hand); font-size:0.95rem;">${inst.store}</strong>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.75rem; color:var(--ink-secondary);" class="sensitive-num">الإجمالي: ${formatNum(inst.totalAmount)} ${cur}</span>
+                <button class="delete-entry-btn" onclick="deleteInstallmentCard('${inst.id}')" title="حذف البطاقة">✕</button>
+              </div>
+            </div>
+            <div class="punch-circles-row">
+              ${circlesHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ختم دفعة تابي/تمارا كـ "مدفوع" وخصمها فوراً في سجل المصروفات
+    function stampInstallmentSplit(instId, splitNumber) {
+      const inst = appData.installments.find((x) => x.id === instId);
+      if (!inst) return;
+
+      const splitAmount = Math.round(((Number(inst.totalAmount) || 0) / (Number(inst.totalSplits) || 4)) * 100) / 100;
+
+      if (splitNumber === inst.paidSplits + 1) {
+        inst.paidSplits += 1;
+        const now = new Date();
+        appData.expenses.unshift({
+          id: 'exp_' + Date.now(),
+          title: `سداد دفعة ${inst.paidSplits} (${inst.provider}) - ${inst.store}`,
+          amount: splitAmount,
+          category: 'فواتير والتزامات',
+          icon: '💳',
+          needType: 'need',
+          isoDate: now.toISOString(),
+          timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+        });
+        saveAppData();
+        renderAll();
+        showPaperToast(`💮 تم ختم الدفعة ${inst.paidSplits} لـ "${inst.store}" وخصمها من الميزانية!`);
+      } else if (splitNumber <= inst.paidSplits) {
+        showPaperToast('✓ هذه الدفعة مختومة كمدفوعة مسبقاً');
+      } else {
+        showPaperToast('⏳ يرجى سداد الدفعة المستحقة بالترتيب أولاً');
+      }
+    }
+
+    function addInstallmentCard() {
+      const store = document.getElementById('instStoreInput').value.trim();
+      const provider = document.getElementById('instProviderInput').value;
+      const totalAmount = parseFloat(document.getElementById('instTotalInput').value);
+      const paidSplits = parseInt(document.getElementById('instPaidCountInput').value, 10) || 0;
+
+      if (!store || isNaN(totalAmount) || totalAmount <= 0) {
+        showPaperToast('⚠️ يرجى إدخال اسم المتجر وإجمالي الفاتورة');
+        return;
+      }
+
+      appData.installments.unshift({
+        id: 'inst_' + Date.now(),
+        store,
+        provider,
+        totalAmount,
+        totalSplits: 4,
+        paidSplits
+      });
+
+      document.getElementById('instStoreInput').value = '';
+      document.getElementById('instTotalInput').value = '';
+      saveAppData();
+      renderAll();
+      closeModal('installmentModal');
+      showPaperToast(`💳 تمت إضافة بطاقة أقساط "${store}" (${provider})`);
+    }
+
+    function deleteInstallmentCard(id) {
+      appData.installments = appData.installments.filter((x) => x.id !== id);
+      saveAppData();
+      renderAll();
+      showPaperToast('🗑️ تم حذف بطاقة الأقساط');
+    }
+
+    // حاسبة ساعات العمل قبل الشراء
+    function calculateWorkHours() {
+      const price = parseFloat(document.getElementById('impulsePriceInput').value);
+      const resBox = document.getElementById('impulseResultBox');
+      const salary = Number(appData.monthlySalary) || 8000;
+      const hourlyRate = salary / 176; // 22 يوم عمل × 8 ساعات = 176 ساعة شهرياً
+
+      if (isNaN(price) || price <= 0 || hourlyRate <= 0) {
+        resBox.innerHTML = '💡 اكتب السعر بالأعلى لحساب تكلفته بساعات عملك الفعلية.';
+        return;
+      }
+
+      const hoursNeeded = (price / hourlyRate).toFixed(1);
+      const daysNeeded = (hoursNeeded / 8).toFixed(1);
+      resBox.innerHTML = `
+        ⏳ هذا المنتج يساوي <strong>${hoursNeeded} ساعة عمل</strong> متواصلة من جهدك (حوالي <strong>${daysNeeded} يوم دوام</strong>)!<br/>
+        <span style="font-size:0.75rem; color:var(--ink-secondary);">اسأل نفسك: هل يستحق هذا الجهد الآن أم تؤجله 48 ساعة؟</span>
+      `;
+    }
+
+    // =========================================================
+    // تحدي التلوين للتوفير (20 مربعاً)
+    // =========================================================
+    function renderColoringChallenge(cur) {
+      const step = Number(appData.coloringStep) || 50;
+      document.getElementById('coloringStepBtn').textContent = `المربع = ${step} ${cur}`;
+
+      const grid = document.getElementById('coloringChallengeGrid');
+      let html = '';
+      for (let i = 0; i < 20; i++) {
+        const isColored = appData.coloredBoxes.includes(i);
+        html += `
+          <div class="color-jar-cell ${isColored ? 'colored' : ''}" onclick="toggleColoringBox(${i})">
+            <span>${isColored ? '🎨' : '🏺'}</span>
+            <span>${step}</span>
+          </div>
+        `;
+      }
+      grid.innerHTML = html;
+
+      const count = appData.coloredBoxes.length;
+      const totalSaved = count * step;
+      document.getElementById('coloringProgressText').textContent = `تم تلوين: ${count} من 20 مربعاً`;
+      document.getElementById('coloringSavedTotal').textContent = `وفرت بالتحدي: ${formatNum(totalSaved)} ${cur}`;
+    }
+
+    function toggleColoringBox(index) {
+      const step = Number(appData.coloringStep) || 50;
+      const pos = appData.coloredBoxes.indexOf(index);
+      if (pos === -1) {
+        appData.coloredBoxes.push(index);
+        appData.bankBalance = (Number(appData.bankBalance) || 0) + step;
+        showPaperToast(`🎨 رائع! لونت مربعاً وأضفت +${step} ${appData.currency} لمغلف الادخار!`);
+      } else {
+        appData.coloredBoxes.splice(pos, 1);
+        appData.bankBalance = Math.max(0, (Number(appData.bankBalance) || 0) - step);
+        showPaperToast(`↩️ تم إلغاء تلوين المربع`);
+      }
+      saveAppData();
+      renderAll();
+    }
+
+    function toggleColoringStep() {
+      appData.coloringStep = appData.coloringStep === 50 ? 100 : 50;
+      saveAppData();
+      renderAll();
+      showPaperToast(`🏺 تم ضبط قيمة المربع الواحد على ${appData.coloringStep} ${appData.currency}`);
+    }
+
+    // =========================================================
+    // الملصقات السريعة وسجل العمليات المسطر
+    // =========================================================
     function renderQuickStickers(cur) {
       const container = document.getElementById('quickStickersContainer');
       container.innerHTML = '';
@@ -2050,7 +2770,7 @@
               </div>
             </div>
             <div class="ledger-right">
-              <span class="ledger-amount">-${formatNum(item.amount)} ${cur}</span>
+              <span class="ledger-amount sensitive-num">-${formatNum(item.amount)} ${cur}</span>
               <button class="delete-entry-btn" onclick="deleteExpense('${item.id}')">✕</button>
             </div>
           </li>
@@ -2059,7 +2779,7 @@
     }
 
     // =========================================================
-    // رسم المخططات البيانية (Donut SVG + Weekly Bars + Needs/Wants)
+    // الرسوم البيانية المائية ومتتبع العادات
     // =========================================================
     function renderChartsTab(totalSpent, cur) {
       document.getElementById('donutCenterTotal').textContent = `${formatNum(totalSpent)} ${cur}`;
@@ -2085,7 +2805,6 @@
         }
       });
 
-      // 1. رسم الدونات المائي
       const cats = Object.keys(catTotals).sort((a, b) => catTotals[b] - catTotals[a]);
       if (cats.length === 0 || totalSpent === 0) {
         svg.innerHTML = `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#d8cebe" stroke-width="5" stroke-dasharray="4 2"></circle>`;
@@ -2115,7 +2834,6 @@
         legend.innerHTML = legendHtml;
       }
 
-      // 2. رسم أعمدة أيام الأسبوع
       const maxDayVal = Math.max(...dayTotals, 1);
       const peakDayIndex = dayTotals.indexOf(Math.max(...dayTotals));
       const weeklyContainer = document.getElementById('weeklyBarsContainer');
@@ -2125,14 +2843,13 @@
         const isPeak = val > 0 && idx === peakDayIndex;
         return `
           <div class="day-col">
-            <span class="day-val">${val > 0 ? formatNum(val) : ''}</span>
+            <span class="day-val sensitive-num">${val > 0 ? formatNum(val) : ''}</span>
             <div class="day-bar ${isPeak ? 'peak-day' : ''}" style="height: ${heightPct}%;"></div>
             <span class="day-name">${dayName}</span>
           </div>
         `;
       }).join('');
 
-      // 3. ميزان الضروريات مقابل الكماليات
       document.getElementById('needsTotalVal').textContent = `${formatNum(needsSum)} ${cur}`;
       document.getElementById('wantsTotalVal').textContent = `${formatNum(wantsSum)} ${cur}`;
       const wantsPct = totalSpent > 0 ? Math.round((wantsSum / totalSpent) * 100) : 0;
@@ -2142,9 +2859,6 @@
       document.getElementById('wantsRatioText').textContent = `كمالي: ${wantsPct}%`;
     }
 
-    // =========================================================
-    // تتبع عادات الصرف وشبكة الـ Bullet Journal الشهرية
-    // =========================================================
     function renderHabitsTab(totalIncome, totalSpent, daysInMonth, cur) {
       const dailyBudgetLimit = totalIncome > 0 ? (totalIncome / daysInMonth) : 200;
       const now = new Date();
@@ -2152,18 +2866,19 @@
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
 
-      // حساب الصرف لكل يوم في الشهر الحالي
       const spendByDayOfMonth = {};
       const dayOfWeekSums = [0, 0, 0, 0, 0, 0, 0];
-      const itemFrequency = {};
+      let coffeeAndDiningCount = 0;
+      let coffeeAndDiningSum = 0;
       let wantsTotal = 0;
 
       appData.expenses.forEach((exp) => {
         const amt = Number(exp.amount) || 0;
         if (exp.needType === 'want') wantsTotal += amt;
-
-        const titleKey = exp.title.trim();
-        itemFrequency[titleKey] = (itemFrequency[titleKey] || 0) + 1;
+        if (exp.category === 'قهوة ومطاعم') {
+          coffeeAndDiningCount++;
+          coffeeAndDiningSum += amt;
+        }
 
         const d = exp.isoDate ? new Date(exp.isoDate) : now;
         dayOfWeekSums[d.getDay()] += amt;
@@ -2173,7 +2888,6 @@
         }
       });
 
-      // بناء شبكة أيام الشهر (1 إلى daysInMonth)
       let noSpendDays = 0;
       const gridEl = document.getElementById('bujoHabitGrid');
       let gridHtml = '';
@@ -2185,42 +2899,39 @@
           const spentToday = spendByDayOfMonth[day] || 0;
           if (spentToday === 0) {
             noSpendDays++;
-            gridHtml += `<div class="bujo-day-cell no-spend" title="يوم توفير: 0 صرف"><span>${day}</span><small>🌿</small></div>`;
+            gridHtml += `<div class="bujo-day-cell no-spend"><span>${day}</span><small>🌿</small></div>`;
           } else if (spentToday <= dailyBudgetLimit) {
-            gridHtml += `<div class="bujo-day-cell mindful-spend" title="صرف واعي: ${spentToday} ${cur}"><span>${day}</span><small>✨</small></div>`;
+            gridHtml += `<div class="bujo-day-cell mindful-spend"><span>${day}</span><small>✨</small></div>`;
           } else {
-            gridHtml += `<div class="bujo-day-cell over-spend" title="تجاوز الحد: ${spentToday} ${cur}"><span>${day}</span><small>🔥</small></div>`;
+            gridHtml += `<div class="bujo-day-cell over-spend"><span>${day}</span><small>🔥</small></div>`;
           }
         }
       }
       gridEl.innerHTML = gridHtml;
 
-      // تحديث بطاقات تشخيص العادات
       const maxWeekSum = Math.max(...dayOfWeekSums);
       const peakDayStr = maxWeekSum > 0 ? arabicDays[dayOfWeekSums.indexOf(maxWeekSum)] : 'لا يوجد بعد';
-
-      const sortedFreq = Object.keys(itemFrequency).sort((a, b) => itemFrequency[b] - itemFrequency[a]);
-      const topHabitStr = sortedFreq.length > 0 ? `${sortedFreq[0]} (${itemFrequency[sortedFreq[0]]}×)` : 'لا يوجد بعد';
-
       const impulseRate = totalSpent > 0 ? Math.round((wantsTotal / totalSpent) * 100) : 0;
 
       document.getElementById('habitPeakDay').textContent = peakDayStr;
-      document.getElementById('habitTopRepeated').textContent = topHabitStr;
+      document.getElementById('habitCoffeeRadar').textContent = `${coffeeAndDiningCount} مرة (${formatNum(coffeeAndDiningSum)} ${cur})`;
       document.getElementById('habitNoSpendCount').textContent = `${noSpendDays} يوم`;
       document.getElementById('habitImpulseRate').textContent = `${impulseRate}%`;
 
-      // نصيحة ذكية مخصصة
+      // تحديث بيانات بطاقة ستوري المشاركة
+      document.getElementById('storyNoSpendVal').textContent = `${noSpendDays} يوم 🌿`;
+      document.getElementById('storyColoringVal').textContent = `${appData.coloredBoxes.length} / 20 🏺`;
+
       const adviceEl = document.getElementById('habitSmartAdvice');
       if (totalSpent === 0) {
         adviceEl.textContent = '💡 نصيحة الدفتر: ابدأ بتسجيل مصروفاتك ليقوم الدفتر باكتشاف عاداتك الشرائية تلقائياً.';
       } else if (impulseRate > 45) {
-        adviceEl.textContent = `💡 ملاحظة الدفتر: الكماليات تستهلك ${impulseRate}% من مصروفاتك (خصوصاً "${sortedFreq[0] || ''}"). تقليلها بنسبة 20% سيوفر لك مبلغاً ممتازاً بنهاية الشهر!`;
+        adviceEl.textContent = `💡 ملاحظة الدفتر: الكماليات تستهلك ${impulseRate}% من مصروفاتك، وطلبت قهوة/مطاعم ${coffeeAndDiningCount} مرة. تقليلها للنصف سيوفر لك ${formatNum(Math.round(coffeeAndDiningSum / 2))} ${cur}!`;
       } else {
-        adviceEl.textContent = `🌟 أداء رائع! حققت ${noSpendDays} يوم بدون صرف حتى الآن، ونسبة الكماليات لديك تحت السيطرة (${impulseRate}%).`;
+        adviceEl.textContent = `🌟 أداء متوازن! حققت ${noSpendDays} يوم بدون صرف حتى الآن، ونسبة الكماليات لديك تحت السيطرة (${impulseRate}%).`;
       }
     }
 
-    // تحديث تبويب التقرير الشهري
     function renderReportTab(totalIncome, totalSpent, remaining, cur) {
       document.getElementById('stickyBankBalance').textContent = `${formatNum(appData.bankBalance)} ${cur}`;
       document.getElementById('stickyTotalIncome').textContent = `${formatNum(totalIncome)} ${cur}`;
@@ -2244,6 +2955,10 @@
         stampEl.classList.add('stamp-warn');
       }
 
+      document.getElementById('storyStampBadge').textContent = stampEl.textContent;
+      document.getElementById('storyOwnerTitle').textContent = appData.ownerTitle || 'دفتر ريالي';
+      document.getElementById('storyMonthLabel').textContent = document.getElementById('reportMonthName').textContent;
+
       const refInput = document.getElementById('monthlyReflectionInput');
       if (refInput.value !== (appData.reflectionNote || '')) {
         refInput.value = appData.reflectionNote || '';
@@ -2255,9 +2970,9 @@
       saveAppData();
     });
 
-    // التنقل بين التبويبات الـ 4
+    // التنقل بين التبويبات الـ 5
     function switchTab(tabName) {
-      ['home', 'charts', 'habits', 'report'].forEach((t) => {
+      ['home', 'installments', 'charts', 'habits', 'report'].forEach((t) => {
         document.getElementById(`tab-${t}`).classList.toggle('active', t === tabName);
         document.getElementById(`navBtn-${t}`).classList.toggle('active', t === tabName);
       });
@@ -2273,8 +2988,14 @@
       } else if (modalId === 'settingsModal') {
         document.getElementById('ownerNameInput').value = appData.ownerTitle || 'دفتر ريالي';
         document.getElementById('currencySelectInput').value = appData.currency || 'ر.س';
+        document.getElementById('paydayDayInput').value = appData.paydayDay || 27;
       }
       document.getElementById(modalId).classList.add('open');
+    }
+
+    function openStoryShareModal() {
+      renderAll();
+      document.getElementById('storyShareModal').classList.add('open');
     }
 
     function closeModal(modalId) {
@@ -2299,7 +3020,30 @@
       document.getElementById('expTypeWant').classList.toggle('selected', type === 'want');
     }
 
-    // إضافة مصدر دخل إضافي
+    function addSubEnvelope() {
+      const title = document.getElementById('subEnvTitleInput').value.trim();
+      const amount = parseFloat(document.getElementById('subEnvAmountInput').value);
+      if (!title || isNaN(amount) || amount <= 0) {
+        showPaperToast('⚠️ يرجى كتابة اسم الظرف والمبلغ');
+        return;
+      }
+      appData.subEnvelopes.push({ id: 'env_' + Date.now(), title, amount });
+      document.getElementById('subEnvTitleInput').value = '';
+      document.getElementById('subEnvAmountInput').value = '';
+      saveAppData();
+      renderAll();
+      closeModal('subEnvelopeModal');
+      showPaperToast('🗂️ تمت إضافة ظرف الادخار الفرعي');
+    }
+
+    function deleteSubEnvelope(id) {
+      if (confirm('هل ترغب بحذف هذا الظرف الفرعي؟')) {
+        appData.subEnvelopes = appData.subEnvelopes.filter((x) => x.id !== id);
+        saveAppData();
+        renderAll();
+      }
+    }
+
     function addExtraIncome() {
       const title = document.getElementById('incomeTitleInput').value.trim();
       const amount = parseFloat(document.getElementById('incomeAmountInput').value);
@@ -2313,11 +3057,7 @@
         appData.bankBalance = (Number(appData.bankBalance) || 0) + amount;
         showPaperToast(`✉️ تم إيداع "${title}" (${formatNum(amount)}) مباشرة في مغلف الادخار!`);
       } else {
-        appData.extraIncomes.push({
-          id: 'inc_' + Date.now(),
-          title,
-          amount
-        });
+        appData.extraIncomes.push({ id: 'inc_' + Date.now(), title, amount });
         showPaperToast(`💰 تمت إضافة دخل "${title}" (+${formatNum(amount)}) لميزانية الشهر!`);
       }
 
@@ -2419,8 +3159,10 @@
     function saveJournalSettings() {
       const name = document.getElementById('ownerNameInput').value.trim();
       const cur = document.getElementById('currencySelectInput').value;
+      const pDay = parseInt(document.getElementById('paydayDayInput').value, 10);
       appData.ownerTitle = name || 'دفتر ريالي';
       appData.currency = cur || 'ر.س';
+      appData.paydayDay = (!isNaN(pDay) && pDay >= 1 && pDay <= 30) ? pDay : 27;
       saveAppData();
       renderAll();
       closeModal('settingsModal');
@@ -2454,7 +3196,7 @@
     }
 
     function clearMonthExpenses() {
-      if (confirm('هل ترغب بفتح صفحة شهر جديد ومسح مصروفات ودخل الشهر الإضافي الحالي؟ (سيبقى رصيد البنك والراتب الأساسي محفوظين)')) {
+      if (confirm('هل ترغب بفتح صفحة شهر جديد ومسح مصروفات ودخل الشهر الإضافي الحالي؟ (سيبقى رصيد البنك والأقساط والراتب الأساسي محفوظين)')) {
         appData.expenses = [];
         appData.extraIncomes = [];
         saveAppData();
@@ -2463,7 +3205,6 @@
       }
     }
 
-    // تصدير ملف CSV متوافق مع Excel باللغة العربية
     function exportCSVReport() {
       if (appData.expenses.length === 0) {
         showPaperToast('⚠️ لا توجد مصروفات لتصديرها');
@@ -2483,7 +3224,6 @@
       showPaperToast('📊 تم تحميل ملف Excel (CSV)');
     }
 
-    // تصدير واستعادة نسخة احتياطية JSON
     function exportBackupJSON() {
       const dataStr = JSON.stringify(appData, null, 2);
       const blob = new Blob([dataStr], { type: 'application/json' });
@@ -2515,7 +3255,6 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       loadAppData();
-      updateHeaderDate();
       renderAll();
     });
   </script>
