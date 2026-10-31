@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="دفتر ريالي برو" />
-  <title>دفتر ريالي برو | مفكرة المصروفات والأقساط والعادات المالية</title>
+  <meta name="apple-mobile-web-app-title" content="دفتر ريالي AI" />
+  <title>دفتر ريالي AI | المفكرة المالية الذكية ورف الدفاتر السنوي</title>
 
   <!-- استيراد الخطوط اليدوية وخطوط المفكرة من Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,6 @@
       --sky-calm: #5b8fa8;
       --sky-soft: rgba(91, 143, 168, 0.22);
       --lavender-calm: #8b6fa8;
-      --lavender-soft: rgba(139, 111, 168, 0.2);
 
       --sticker-yellow: #fff6cc;
       --sticker-pink: #ffe4e6;
@@ -121,7 +120,6 @@
       --washi-blue: rgba(123, 180, 207, 0.38);
     }
 
-    /* وضع الكافيه / إخفاء الأرقام الحساسة (Privacy Blur Mode) */
     body.privacy-mode .sensitive-num {
       filter: blur(6px);
       user-select: none;
@@ -149,7 +147,7 @@
       background-size: 18px 18px;
       color: var(--ink-primary);
       min-height: 100vh;
-      padding-bottom: calc(110px + env(safe-area-inset-bottom));
+      padding-bottom: calc(112px + env(safe-area-inset-bottom));
       padding-top: env(safe-area-inset-top);
       transition: background-color 0.35s ease, color 0.35s ease;
       overflow-x: hidden;
@@ -176,31 +174,88 @@
     }
 
     /* =========================================================
-       3. ترويسة الدفتر وعداد يوم الراتب (Notebook Header)
+       3. شاشة تسجيل الدخول (بطاقة ملكية الدفتر - Auth Overlay)
+       ========================================================= */
+    .auth-screen {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(var(--dot-color) 1.2px, transparent 1.2px);
+      background-size: 18px 18px;
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-screen.active {
+      display: flex;
+    }
+
+    .ownership-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--kraft-bg);
+      border: 2px solid var(--kraft-border);
+      border-radius: 20px 16px 22px 18px;
+      padding: 28px 22px 24px;
+      box-shadow: 0 14px 34px rgba(60, 50, 40, 0.18), inset 0 0 0 5px var(--kraft-inner-line);
+      position: relative;
+      transform: rotate(-0.5deg);
+      text-align: center;
+    }
+
+    .ownership-card::before {
+      content: "";
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%) rotate(1.5deg);
+      width: 135px;
+      height: 26px;
+      background: var(--washi-green);
+      border-left: 2px dashed rgba(255,255,255,0.6);
+      border-right: 2px dashed rgba(255,255,255,0.6);
+    }
+
+    .ex-libris-stamp {
+      font-family: var(--font-hand);
+      font-size: 0.78rem;
+      color: var(--sage-green);
+      border: 1.5px dashed var(--sage-green);
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* =========================================================
+       4. ترويسة الدفتر وزر رف الدفاتر السنوي
        ========================================================= */
     .journal-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       padding: 6px 4px 12px;
       border-bottom: 2px dashed var(--card-border);
     }
 
     .brand-title {
       font-family: var(--font-calligraphy);
-      font-size: 1.8rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--ink-primary);
       line-height: 1.1;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
     }
 
     .pro-pill {
       font-family: var(--font-hand);
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       background: var(--mustard-soft);
       border: 1px solid var(--warm-mustard);
       color: var(--ink-primary);
@@ -214,42 +269,52 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
-    .brand-subtitle {
+    .bookshelf-pill-btn {
+      font-family: var(--font-hand);
       font-size: 0.74rem;
-      color: var(--ink-secondary);
-      font-weight: 500;
+      font-weight: 700;
+      background: var(--sticker-yellow);
+      color: var(--ink-primary);
+      border: 1.5px solid var(--warm-mustard);
+      padding: 2px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 4px rgba(60,50,40,0.08);
     }
 
     .payday-badge {
       font-family: var(--font-hand);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       background: var(--sage-soft);
       color: var(--sage-green);
       border: 1px dashed var(--sage-green);
-      padding: 1px 8px;
+      padding: 2px 8px;
       border-radius: 9px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .notebook-icon-btn {
       background: var(--card-bg);
       border: 1.5px solid var(--card-border);
       color: var(--ink-primary);
-      width: 38px;
-      height: 38px;
-      border-radius: 12px 15px 13px 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px 14px 12px 13px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       cursor: pointer;
       box-shadow: var(--card-shadow);
       transition: transform 0.15s ease;
@@ -265,7 +330,7 @@
     }
 
     /* =========================================================
-       4. البطاقات كقصاصات ورقية وشريط Washi Tape
+       5. البطاقات كقصاصات ورقية وشريط Washi Tape
        ========================================================= */
     .card {
       background: var(--card-bg);
@@ -321,7 +386,7 @@
 
     .card-title {
       font-family: var(--font-hand);
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--ink-primary);
       display: flex;
@@ -334,7 +399,7 @@
       border: 1.5px dashed var(--input-underline);
       color: var(--ink-primary);
       font-family: var(--font-body);
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 600;
       padding: 5px 10px;
       border-radius: 10px;
@@ -360,7 +425,7 @@
     }
 
     /* =========================================================
-       5. بطاقة الحساب البنكي كمغلف ادخار فاخر + الأظرف الفرعية
+       6. بطاقة الحساب البنكي كمغلف ادخار فاخر + الأظرف الفرعية
        ========================================================= */
     .bank-card {
       background: var(--kraft-bg);
@@ -453,7 +518,6 @@
       margin-right: 4px;
     }
 
-    /* الأظرف الورقية الفرعية داخل المغلف البنكي */
     .sub-envelopes-row {
       display: flex;
       gap: 6px;
@@ -473,6 +537,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      cursor: pointer;
     }
 
     body.kraft-night .mini-envelope {
@@ -490,12 +555,12 @@
       align-items: center;
       padding-top: 9px;
       border-top: 1px dashed var(--kraft-border);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--ink-secondary);
     }
 
     /* =========================================================
-       6. بطاقة الميزانية والرصيد الآمن بعد الأقساط
+       7. بطاقة الميزانية والرصيد الآمن
        ========================================================= */
     .salary-grid {
       display: grid;
@@ -520,7 +585,7 @@
 
     .stat-val {
       font-family: var(--font-hand);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 700;
       color: var(--ink-primary);
     }
@@ -529,7 +594,6 @@
     .stat-val.rose { color: var(--dusty-rose); }
     .stat-val.mustard { color: var(--warm-mustard); }
 
-    /* شريط الرصيد الحقيقي الآمن بعد حجز أقساط تابي وتمارا */
     .safe-balance-banner {
       background: var(--sticker-mint);
       border: 1.5px dashed var(--sage-green);
@@ -539,7 +603,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
     }
 
     .safe-balance-banner strong {
@@ -554,7 +618,7 @@
       border-radius: 11px;
       padding: 8px 10px;
       margin-bottom: 12px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
     }
 
     .extra-income-header {
@@ -594,7 +658,6 @@
       background: none;
       color: var(--ink-muted);
       cursor: pointer;
-      font-size: 0.75rem;
     }
 
     .bar-track {
@@ -625,14 +688,14 @@
     .bar-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: var(--ink-secondary);
       margin-top: 6px;
       font-weight: 500;
     }
 
     /* =========================================================
-       7. الأزرار السريعة كملصقات ورقية (Die-Cut Stickers)
+       8. الملصقات السريعة وسجل العمليات المسطر
        ========================================================= */
     .stickers-grid {
       display: grid;
@@ -654,7 +717,6 @@
       font-family: var(--font-body);
       color: var(--ink-primary);
       transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
       user-select: none;
     }
 
@@ -680,22 +742,12 @@
     }
 
     .sticker-emoji { font-size: 1.35rem; }
-
-    .sticker-title {
-      font-weight: 700;
-      font-size: 0.83rem;
-      display: block;
-    }
-
-    .sticker-cat {
-      font-size: 0.65rem;
-      color: var(--ink-secondary);
-      display: block;
-    }
+    .sticker-title { font-weight: 700; font-size: 0.82rem; display: block; }
+    .sticker-cat { font-size: 0.64rem; color: var(--ink-secondary); display: block; }
 
     .sticker-price {
       font-family: var(--font-hand);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       background: rgba(255, 255, 255, 0.55);
       padding: 2px 7px;
@@ -703,9 +755,7 @@
       white-space: nowrap;
     }
 
-    body.kraft-night .sticker-price {
-      background: rgba(0, 0, 0, 0.25);
-    }
+    body.kraft-night .sticker-price { background: rgba(0, 0, 0, 0.25); }
 
     .custom-expense-bar {
       margin-top: 14px;
@@ -719,7 +769,7 @@
       border: 2px dashed var(--warm-mustard);
       color: var(--ink-primary);
       font-family: var(--font-hand);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       padding: 10px;
       border-radius: 12px;
@@ -730,163 +780,6 @@
       gap: 6px;
     }
 
-    /* =========================================================
-       8. بطاقات تخريم أقساط تابي وتمارا (Tabby & Tamara Punch Cards)
-       ========================================================= */
-    .punch-card {
-      background: var(--bg-paper-secondary);
-      border: 1.5px solid var(--card-border);
-      border-radius: 14px;
-      padding: 13px 12px;
-      margin-bottom: 12px;
-      position: relative;
-      box-shadow: 0 2px 6px rgba(60, 50, 40, 0.05);
-    }
-
-    .punch-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .provider-badge {
-      font-family: var(--font-hand);
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 7px;
-      display: inline-block;
-      margin-left: 6px;
-    }
-
-    .provider-tabby {
-      background: #d4f8e8;
-      color: #166534;
-      border: 1px solid #86efac;
-    }
-
-    .provider-tamara {
-      background: #fce7f3;
-      color: #9d174d;
-      border: 1px solid #f9a8d4;
-    }
-
-    .provider-jamiyah {
-      background: var(--sticker-yellow);
-      color: #854d0e;
-      border: 1px solid #fde047;
-    }
-
-    body.kraft-night .provider-tabby { background: #1e3a2f; color: #86efac; }
-    body.kraft-night .provider-tamara { background: #4a2135; color: #f9a8d4; }
-    body.kraft-night .provider-jamiyah { background: #493d1e; color: #fde047; }
-
-    .punch-circles-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .punch-circle {
-      border: 2px dashed var(--input-underline);
-      border-radius: 12px;
-      padding: 8px 4px;
-      text-align: center;
-      cursor: pointer;
-      background: var(--card-bg);
-      transition: transform 0.15s ease, background 0.2s ease;
-      position: relative;
-      user-select: none;
-    }
-
-    .punch-circle:active {
-      transform: scale(0.93);
-    }
-
-    .punch-circle.paid {
-      background: var(--sage-soft);
-      border: 2px solid var(--sage-green);
-      color: var(--sage-green);
-    }
-
-    .punch-circle.due-now {
-      background: var(--mustard-soft);
-      border: 2px solid var(--warm-mustard);
-      color: var(--ink-primary);
-      animation: gentlePulse 2s infinite;
-    }
-
-    @keyframes gentlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-    }
-
-    .punch-step-num {
-      font-size: 0.65rem;
-      color: var(--ink-muted);
-      display: block;
-    }
-
-    .punch-step-amt {
-      font-family: var(--font-hand);
-      font-size: 0.85rem;
-      font-weight: 700;
-      display: block;
-    }
-
-    .punch-step-status {
-      font-size: 0.64rem;
-      font-weight: 600;
-      display: block;
-      margin-top: 2px;
-    }
-
-    /* =========================================================
-       9. تحدي التلوين للتوفير (Savings Coloring Challenge Grid)
-       ========================================================= */
-    .coloring-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .color-jar-cell {
-      aspect-ratio: 1.15;
-      border: 2px dashed var(--input-underline);
-      border-radius: 12px 10px 14px 11px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: var(--bg-paper-secondary);
-      font-family: var(--font-hand);
-      font-size: 0.8rem;
-      color: var(--ink-secondary);
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      user-select: none;
-    }
-
-    .color-jar-cell.colored {
-      border-style: solid;
-      border-color: var(--sage-green);
-      color: var(--ink-primary);
-      font-weight: 700;
-      transform: rotate(-1.5deg);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.5);
-    }
-
-    .color-jar-cell.colored:nth-child(4n+1) { background: var(--sticker-mint); }
-    .color-jar-cell.colored:nth-child(4n+2) { background: var(--sticker-yellow); border-color: var(--warm-mustard); }
-    .color-jar-cell.colored:nth-child(4n+3) { background: var(--sticker-pink); border-color: var(--dusty-rose); }
-    .color-jar-cell.colored:nth-child(4n+4) { background: var(--sticker-blue); border-color: var(--sky-calm); }
-
-    /* =========================================================
-       10. سجل المصروفات المسطر (Ruled Notebook Ledger)
-       ========================================================= */
     .ledger-card {
       padding: 20px 0 12px 0;
       overflow: hidden;
@@ -946,7 +839,7 @@
 
     .ledger-title {
       font-family: var(--font-hand);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--ink-primary);
       display: flex;
       align-items: center;
@@ -962,20 +855,20 @@
       font-weight: 600;
     }
 
-    .need-badge.essential {
-      background: var(--sage-soft);
-      color: var(--sage-green);
+    .need-badge.essential { background: var(--sage-soft); color: var(--sage-green); }
+    .need-badge.want { background: var(--rose-soft); color: var(--dusty-rose); }
+
+    .receipt-clip-btn {
+      background: var(--sticker-yellow);
+      border: 1px solid var(--warm-mustard);
+      border-radius: 6px;
+      padding: 1px 5px;
+      font-size: 0.62rem;
+      cursor: pointer;
+      color: var(--ink-primary);
     }
 
-    .need-badge.want {
-      background: var(--rose-soft);
-      color: var(--dusty-rose);
-    }
-
-    .ledger-date {
-      font-size: 0.67rem;
-      color: var(--ink-muted);
-    }
+    .ledger-date { font-size: 0.66rem; color: var(--ink-muted); }
 
     .ledger-right {
       display: flex;
@@ -985,7 +878,7 @@
 
     .ledger-amount {
       font-family: var(--font-calligraphy);
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--dusty-rose);
       background: var(--rose-soft);
@@ -1012,8 +905,286 @@
     }
 
     /* =========================================================
-       11. الرسوم البيانية المائية ومتتبع العادات
+       9. بطاقات تخريم تابي وتمارا + رادار الاشتراكات + الزكاة
        ========================================================= */
+    .punch-card {
+      background: var(--bg-paper-secondary);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 13px 12px;
+      margin-bottom: 12px;
+    }
+
+    .punch-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .provider-badge {
+      font-family: var(--font-hand);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 7px;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    .provider-tabby { background: #d4f8e8; color: #166534; border: 1px solid #86efac; }
+    .provider-tamara { background: #fce7f3; color: #9d174d; border: 1px solid #f9a8d4; }
+    .provider-jamiyah { background: var(--sticker-yellow); color: #854d0e; border: 1px solid #fde047; }
+
+    body.kraft-night .provider-tabby { background: #1e3a2f; color: #86efac; }
+    body.kraft-night .provider-tamara { background: #4a2135; color: #f9a8d4; }
+    body.kraft-night .provider-jamiyah { background: #493d1e; color: #fde047; }
+
+    .punch-circles-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .punch-circle {
+      border: 2px dashed var(--input-underline);
+      border-radius: 12px;
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card-bg);
+      transition: transform 0.15s ease;
+      user-select: none;
+    }
+
+    .punch-circle:active { transform: scale(0.93); }
+
+    .punch-circle.paid {
+      background: var(--sage-soft);
+      border: 2px solid var(--sage-green);
+      color: var(--sage-green);
+    }
+
+    .punch-circle.due-now {
+      background: var(--mustard-soft);
+      border: 2px solid var(--warm-mustard);
+      color: var(--ink-primary);
+    }
+
+    .punch-step-num { font-size: 0.64rem; color: var(--ink-muted); display: block; }
+    .punch-step-amt { font-family: var(--font-hand); font-size: 0.84rem; font-weight: 700; display: block; }
+    .punch-step-status { font-size: 0.62rem; font-weight: 600; display: block; margin-top: 2px; }
+
+    /* رادار الاشتراكات الثابتة */
+    .subs-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+    }
+
+    .sub-sticker {
+      background: var(--bg-paper-secondary);
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      padding: 9px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .sub-sticker:active { transform: scale(0.96); }
+
+    /* =========================================================
+       10. تبويب المساعد الذكي (AI Chat Agent) وماسح الفواتير (OCR)
+       ========================================================= */
+    .chat-paper-box {
+      background: var(--bg-paper-secondary);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px;
+      height: 310px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .chat-bubble {
+      max-width: 86%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      position: relative;
+      box-shadow: 0 2px 5px rgba(60,50,40,0.06);
+    }
+
+    .chat-bubble.ai {
+      align-self: flex-start;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-top-right-radius: 4px;
+      color: var(--ink-primary);
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: var(--sticker-mint);
+      border: 1.5px solid var(--sage-green);
+      border-top-left-radius: 4px;
+      color: var(--ink-primary);
+      font-family: var(--font-hand);
+    }
+
+    .quick-prompts-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .quick-prompts-row::-webkit-scrollbar { display: none; }
+
+    .prompt-chip {
+      background: var(--sticker-yellow);
+      border: 1px solid var(--warm-mustard);
+      border-radius: 10px;
+      padding: 4px 10px;
+      font-family: var(--font-hand);
+      font-size: 0.73rem;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--ink-primary);
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* منطقة مسح الفواتير بالذكاء الاصطناعي */
+    .scanner-dropzone {
+      border: 2px dashed var(--sage-green);
+      background: var(--sage-soft);
+      border-radius: 14px;
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      display: block;
+      transition: transform 0.15s ease;
+    }
+
+    .scanner-dropzone:active { transform: scale(0.98); }
+
+    .receipt-preview-box {
+      display: none;
+      margin-top: 14px;
+      background: var(--bg-paper-secondary);
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .receipt-preview-box.active { display: block; }
+
+    .receipt-polaroid {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      transform: rotate(-2deg);
+    }
+
+    /* =========================================================
+       11. رف الدفاتر السنوي (12-Month Bookshelf Grid)
+       ========================================================= */
+    .bookshelf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .notebook-spine {
+      background: var(--bg-paper-secondary);
+      border: 2px solid var(--card-border);
+      border-right: 6px solid var(--warm-mustard);
+      border-radius: 8px 12px 12px 8px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .notebook-spine:nth-child(3n+1) { border-right-color: var(--sage-green); }
+    .notebook-spine:nth-child(3n+2) { border-right-color: var(--dusty-rose); }
+    .notebook-spine:nth-child(3n+3) { border-right-color: var(--sky-calm); }
+
+    .notebook-spine.current-book {
+      background: var(--sticker-yellow);
+      border-color: var(--warm-mustard);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 12px rgba(60,50,40,0.14);
+    }
+
+    .spine-month {
+      font-family: var(--font-hand);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: block;
+      color: var(--ink-primary);
+    }
+
+    .spine-meta {
+      font-size: 0.65rem;
+      color: var(--ink-secondary);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* =========================================================
+       12. الرسوم البيانية المائية + مزامنة الأسبوع الفعلي + العادات
+       ========================================================= */
+    .coloring-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .color-jar-cell {
+      aspect-ratio: 1.15;
+      border: 2px dashed var(--input-underline);
+      border-radius: 12px 10px 14px 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--bg-paper-secondary);
+      font-family: var(--font-hand);
+      font-size: 0.8rem;
+      color: var(--ink-secondary);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .color-jar-cell.colored {
+      border-style: solid;
+      border-color: var(--sage-green);
+      color: var(--ink-primary);
+      font-weight: 700;
+      transform: rotate(-1.5deg);
+      background: var(--sticker-mint);
+    }
+
     .donut-wrap {
       display: flex;
       flex-direction: column;
@@ -1024,8 +1195,8 @@
 
     .donut-svg-box {
       position: relative;
-      width: 185px;
-      height: 185px;
+      width: 180px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1037,17 +1208,8 @@
       pointer-events: none;
     }
 
-    .donut-center-label span {
-      font-size: 0.7rem;
-      color: var(--ink-secondary);
-      display: block;
-    }
-
-    .donut-center-label strong {
-      font-family: var(--font-calligraphy);
-      font-size: 1.3rem;
-      color: var(--ink-primary);
-    }
+    .donut-center-label span { font-size: 0.7rem; color: var(--ink-secondary); display: block; }
+    .donut-center-label strong { font-family: var(--font-calligraphy); font-size: 1.25rem; color: var(--ink-primary); }
 
     .chart-legend {
       width: 100%;
@@ -1064,7 +1226,7 @@
       border: 1px solid var(--card-border);
       padding: 6px 9px;
       border-radius: 9px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
     }
 
     .legend-dot {
@@ -1075,13 +1237,14 @@
       margin-left: 6px;
     }
 
+    /* الرسم البياني المتزامن مع أيام وتواريخ الأسبوع الحالي */
     .weekly-bars-box {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
+      gap: 5px;
       align-items: end;
-      height: 145px;
-      padding: 16px 6px 6px;
+      height: 160px;
+      padding: 18px 5px 8px;
       background: var(--bg-paper-secondary);
       border: 1px dashed var(--card-border);
       border-radius: 12px;
@@ -1093,34 +1256,46 @@
       align-items: center;
       height: 100%;
       justify-content: flex-end;
+      padding: 2px;
+      border-radius: 8px;
+    }
+
+    .day-col.is-today {
+      background: rgba(82, 140, 110, 0.12);
+      border: 1px dashed var(--sage-green);
     }
 
     .day-val {
       font-family: var(--font-hand);
-      font-size: 0.64rem;
+      font-size: 0.62rem;
       color: var(--ink-secondary);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .day-bar {
       width: 100%;
-      max-width: 24px;
+      max-width: 22px;
       background: linear-gradient(180deg, var(--warm-mustard), rgba(217, 155, 38, 0.55));
       border: 1.5px solid var(--ink-primary);
-      border-radius: 8px 6px 3px 3px;
+      border-radius: 7px 5px 3px 3px;
       min-height: 6px;
       transition: height 0.4s ease;
     }
 
-    .day-bar.peak-day {
-      background: linear-gradient(180deg, var(--dusty-rose), rgba(217, 107, 107, 0.6));
+    .day-bar.today-bar {
+      background: linear-gradient(180deg, var(--sage-green), rgba(82, 140, 110, 0.6));
     }
 
     .day-name {
-      font-size: 0.68rem;
-      font-weight: 600;
+      font-size: 0.65rem;
+      font-weight: 700;
       color: var(--ink-primary);
-      margin-top: 6px;
+      margin-top: 5px;
+    }
+
+    .day-date-num {
+      font-size: 0.58rem;
+      color: var(--ink-muted);
     }
 
     .habits-insight-grid {
@@ -1137,18 +1312,8 @@
       padding: 10px;
     }
 
-    .habit-stat-label {
-      font-size: 0.71rem;
-      color: var(--ink-secondary);
-      margin-bottom: 2px;
-    }
-
-    .habit-stat-value {
-      font-family: var(--font-hand);
-      font-size: 0.94rem;
-      font-weight: 700;
-      color: var(--ink-primary);
-    }
+    .habit-stat-label { font-size: 0.7rem; color: var(--ink-secondary); margin-bottom: 2px; }
+    .habit-stat-value { font-family: var(--font-hand); font-size: 0.92rem; font-weight: 700; color: var(--ink-primary); }
 
     .bujo-habit-grid {
       display: grid;
@@ -1166,30 +1331,13 @@
       align-items: center;
       justify-content: center;
       font-family: var(--font-hand);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       background: var(--bg-paper-secondary);
     }
 
-    .bujo-day-cell.no-spend {
-      background: var(--sage-soft);
-      border: 2px solid var(--sage-green);
-      color: var(--sage-green);
-      font-weight: 700;
-    }
-
-    .bujo-day-cell.mindful-spend {
-      background: var(--mustard-soft);
-      border: 2px solid var(--warm-mustard);
-      color: var(--ink-primary);
-    }
-
-    .bujo-day-cell.over-spend {
-      background: var(--rose-soft);
-      border: 2px solid var(--dusty-rose);
-      color: var(--dusty-rose);
-      font-weight: 700;
-    }
-
+    .bujo-day-cell.no-spend { background: var(--sage-soft); border: 2px solid var(--sage-green); color: var(--sage-green); font-weight: 700; }
+    .bujo-day-cell.mindful-spend { background: var(--mustard-soft); border: 2px solid var(--warm-mustard); color: var(--ink-primary); }
+    .bujo-day-cell.over-spend { background: var(--rose-soft); border: 2px solid var(--dusty-rose); color: var(--dusty-rose); font-weight: 700; }
     .bujo-day-cell.future-day { opacity: 0.38; }
 
     .bujo-legend {
@@ -1204,13 +1352,12 @@
     }
 
     /* =========================================================
-       12. صفحة التقرير، الملاحظة اللاصقة، وبطاقة المشاركة (Story)
+       13. صفحة التقرير، الملاحظة اللاصقة، وشريط الفواصل السفلي
        ========================================================= */
     .tab-section {
       display: none;
       animation: pageFlip 0.25s ease-out;
     }
-
     .tab-section.active { display: block; }
 
     @keyframes pageFlip {
@@ -1241,7 +1388,7 @@
 
     .sticky-title {
       font-family: var(--font-hand);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 700;
       margin-bottom: 10px;
       border-bottom: 1.5px dotted rgba(60, 50, 40, 0.25);
@@ -1260,7 +1407,7 @@
     .sticky-item strong {
       display: block;
       font-family: var(--font-calligraphy);
-      font-size: 1.22rem;
+      font-size: 1.2rem;
     }
 
     .stamp-wrapper {
@@ -1274,7 +1421,7 @@
       border: 3px double var(--sage-green);
       color: var(--sage-green);
       font-family: var(--font-hand);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 700;
       padding: 6px 16px;
       border-radius: 10px;
@@ -1282,26 +1429,13 @@
       background: rgba(82, 140, 110, 0.06);
     }
 
-    .rubber-stamp.stamp-warn {
-      border-color: var(--warm-mustard);
-      color: var(--warm-mustard);
-      background: rgba(217, 155, 38, 0.08);
-    }
-
-    .rubber-stamp.stamp-danger {
-      border-color: var(--dusty-rose);
-      color: var(--dusty-rose);
-      background: rgba(217, 107, 107, 0.08);
-    }
+    .rubber-stamp.stamp-warn { border-color: var(--warm-mustard); color: var(--warm-mustard); background: rgba(217, 155, 38, 0.08); }
+    .rubber-stamp.stamp-danger { border-color: var(--dusty-rose); color: var(--dusty-rose); background: rgba(217, 107, 107, 0.08); }
 
     .reflection-textarea {
       width: 100%;
       min-height: 92px;
-      background: repeating-linear-gradient(
-        transparent,
-        transparent 27px,
-        var(--ledger-line) 28px
-      );
+      background: repeating-linear-gradient(transparent, transparent 27px, var(--ledger-line) 28px);
       border: 1.5px solid var(--card-border);
       border-radius: 12px;
       padding: 6px 12px;
@@ -1320,9 +1454,6 @@
       margin-top: 12px;
     }
 
-    /* =========================================================
-       13. شريط التنقل السفلي (5 فواصل ورقية Planner Tabs)
-       ========================================================= */
     .bookmark-nav {
       position: fixed;
       bottom: 0;
@@ -1346,7 +1477,7 @@
       border-radius: 13px 13px 4px 4px;
       padding: 7px 2px 9px;
       font-family: var(--font-hand);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--ink-secondary);
       cursor: pointer;
@@ -1389,7 +1520,7 @@
 
     .modal-scrap {
       width: 100%;
-      max-width: 395px;
+      max-width: 400px;
       background: var(--bg-paper);
       background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
       background-size: 16px 16px;
@@ -1417,7 +1548,7 @@
 
     .modal-title {
       font-family: var(--font-hand);
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       color: var(--ink-primary);
       margin-bottom: 12px;
       text-align: center;
@@ -1441,7 +1572,7 @@
       border-bottom: 2px solid var(--input-underline);
       padding: 7px 4px;
       font-family: var(--font-hand);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       color: var(--ink-primary);
       outline: none;
       border-radius: 0;
@@ -1459,7 +1590,7 @@
       padding: 7px 4px;
       border: 1.5px solid var(--card-border);
       border-radius: 10px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       background: var(--bg-paper-secondary);
@@ -1474,7 +1605,7 @@
     .modal-actions {
       display: flex;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
     .btn-save-scrap {
@@ -1503,16 +1634,6 @@
       cursor: pointer;
     }
 
-    /* بطاقة ستوري المشاركة (Shareable Story Card) */
-    .story-card-preview {
-      background: var(--kraft-bg);
-      border: 2px solid var(--kraft-border);
-      border-radius: 18px;
-      padding: 22px 16px;
-      text-align: center;
-      box-shadow: inset 0 0 0 4px var(--kraft-inner-line);
-    }
-
     .paper-toast {
       position: fixed;
       top: calc(16px + env(safe-area-inset-top));
@@ -1525,9 +1646,9 @@
       padding: 9px 18px;
       border-radius: 14px;
       font-family: var(--font-hand);
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      z-index: 300;
+      z-index: 500;
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
       white-space: nowrap;
@@ -1543,6 +1664,36 @@
   <!-- إشعار الملصق الفوري -->
   <div id="paperToast" class="paper-toast">✓ تم الحفظ في الدفتر!</div>
 
+  <!-- =========================================================
+       شاشة تسجيل الدخول (بطاقة ملكية الدفتر بالبريد الإلكتروني والرمز)
+       ========================================================= -->
+  <div id="authScreen" class="auth-screen">
+    <div class="ownership-card">
+      <span class="ex-libris-stamp">EX LIBRIS • بطاقة ملكية الدفتر</span>
+      <h2 style="font-family: var(--font-calligraphy); font-size: 2rem; margin-bottom: 4px;">📒 دفتر ريالي AI</h2>
+      <p style="font-size: 0.78rem; color: var(--ink-secondary); margin-bottom: 16px;">
+        سجّل دخولك بالبريد الإلكتروني والرمز السري لفتح دفترك ومزامنة شهور السنة
+      </p>
+
+      <div class="form-group" style="text-align: right;">
+        <label class="form-label">اسم صاحب الدفتر:</label>
+        <input type="text" id="authNameInput" class="lined-input" placeholder="مثال: دفتر مودة المالي" />
+      </div>
+      <div class="form-group" style="text-align: right;">
+        <label class="form-label">البريد الإلكتروني:</label>
+        <input type="email" id="authEmailInput" class="lined-input" placeholder="name@example.com" dir="ltr" style="text-align: right;" />
+      </div>
+      <div class="form-group" style="text-align: right;">
+        <label class="form-label">الرمز السري للدفتر (كلمة المرور):</label>
+        <input type="password" id="authPassInput" class="lined-input" placeholder="••••••" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-save-scrap" onclick="handleAuthSubmit()">🔓 فتح الدفتر وحفظ الملكية</button>
+      </div>
+    </div>
+  </div>
+
   <div class="app-container">
     <!-- ترويسة الدفتر -->
     <header class="journal-header">
@@ -1550,17 +1701,23 @@
         <h1 class="brand-title">
           <span>📒</span>
           <span id="ownerTitleText">دفتر ريالي</span>
-          <span class="pro-pill">PRO</span>
+          <span class="pro-pill">AI PRO</span>
         </h1>
         <div class="header-meta-row">
-          <span class="brand-subtitle" id="currentDateLabel">مفكرة المصروفات</span>
+          <!-- زر رف الدفاتر السنوي للتنقل بين الشهور -->
+          <button class="bookshelf-pill-btn" onclick="openModal('bookshelfModal')" title="تصفح دفاتر الشهور">
+            <span>📚</span>
+            <span id="activeNotebookBadge">دفتر الشهر الحالي</span>
+            <span>▾</span>
+          </button>
           <span class="payday-badge" id="paydayCountdownBadge">⏳ باقي -- يوم للراتب</span>
         </div>
       </div>
       <div class="header-actions">
         <button class="notebook-icon-btn" id="privacyToggleBtn" onclick="togglePrivacyMode()" title="وضع الكافيه (إخفاء الأرقام)">👁️</button>
-        <button class="notebook-icon-btn" onclick="openModal('settingsModal')" title="تخصيص الدفتر">⚙️</button>
+        <button class="notebook-icon-btn" onclick="openModal('settingsModal')" title="الإعدادات والذكاء الاصطناعي">⚙️</button>
         <button class="notebook-icon-btn" id="themeToggleBtn" title="تغيير ورق الدفتر">🌓</button>
+        <button class="notebook-icon-btn" onclick="lockNotebook()" title="قفل الدفتر / الحساب">🔒</button>
       </div>
     </header>
 
@@ -1575,7 +1732,7 @@
         <div class="card-header" style="margin-bottom: 4px;">
           <div class="envelope-label">
             <span>✉️</span>
-            <span>مغلف الادخار والحساب البنكي</span>
+            <span>مغلف الادخار والحساب البنكي العام</span>
           </div>
           <div style="display:flex; gap:5px;">
             <button class="sketch-btn" onclick="openModal('subEnvelopeModal')">+ ظرف هدف</button>
@@ -1590,12 +1747,11 @@
           </div>
         </div>
 
-        <!-- الأظرف الورقية الفرعية للأهداف (Cash Envelopes) -->
         <div class="sub-envelopes-row" id="subEnvelopesContainer"></div>
 
         <div class="envelope-footer">
-          <span id="bankNoteText">مدخراتك المحفوظة في المغلف الورقي</span>
-          <span style="font-family: var(--font-hand);">ختم الأمان ✓</span>
+          <span id="bankNoteText">مدخراتك المحفوظة عبر جميع الشهور</span>
+          <span style="font-family: var(--font-hand);" id="userEmailFooterBadge">حساب موثق ✓</span>
         </div>
       </section>
 
@@ -1604,7 +1760,7 @@
         <div class="card-header">
           <h2 class="card-title">
             <span>💰</span>
-            <span>الميزانية ومصادر الدخل</span>
+            <span>ميزانية <span id="budgetMonthTitle">هذا الشهر</span></span>
           </h2>
           <div style="display: flex; gap: 5px;">
             <button class="sketch-btn sage-btn" onclick="openModal('extraIncomeModal')">+ دخل إضافي</button>
@@ -1618,7 +1774,7 @@
             <div class="stat-val sensitive-num" id="totalIncomeDisplay">0</div>
           </div>
           <div class="salary-stat-box">
-            <div class="stat-label">المصروف</div>
+            <div class="stat-label">مصروف الشهر</div>
             <div class="stat-val rose sensitive-num" id="salarySpentDisplay">0</div>
           </div>
           <div class="salary-stat-box">
@@ -1627,16 +1783,14 @@
           </div>
         </div>
 
-        <!-- شريط الرصيد الحقيقي الآمن بعد خصم أقساط تابي وتمارا المستحقة هذا الشهر -->
         <div class="safe-balance-banner">
           <span>🛡️ الرصيد الآمن (بعد حجز أقساط الشهر):</span>
           <strong class="sensitive-num" id="trueSafeBalanceDisplay">0 ر.س</strong>
         </div>
 
-        <!-- مصادر الدخل الإضافية -->
         <div class="extra-incomes-box" id="extraIncomesBox" style="display: none;">
           <div class="extra-income-header">
-            <span>✨ مصادر الدخل الإضافية هذا الشهر:</span>
+            <span>✨ مصادر الدخل الإضافية في هذا الدفتر:</span>
             <span class="sensitive-num" id="extraIncomeTotalBadge">+0</span>
           </div>
           <div class="income-chip-list" id="extraIncomeList"></div>
@@ -1666,7 +1820,11 @@
         <div class="custom-expense-bar">
           <button class="add-custom-btn" onclick="openModal('customExpenseModal')">
             <span>✒️</span>
-            <span>تدوين مصروف مخصص باليد (أساسي / كمالي)...</span>
+            <span>تدوين مصروف باليد...</span>
+          </button>
+          <button class="add-custom-btn" style="background: var(--sage-soft); border-color: var(--sage-green);" onclick="switchTab('ai')">
+            <span>📷</span>
+            <span>مسح فاتورة بالـ AI</span>
           </button>
         </div>
       </section>
@@ -1676,7 +1834,7 @@
         <div class="card-header">
           <h2 class="card-title">
             <span>🖋️</span>
-            <span>سجل العمليات المسطر</span>
+            <span>سجل عمليات <span id="ledgerMonthLabel">الشهر</span></span>
           </h2>
           <span style="font-size: 0.74rem; color: var(--ink-muted);" id="transactionsCountBadge">0 عملية</span>
         </div>
@@ -1688,7 +1846,8 @@
     </main>
 
     <!-- =======================================================
-         التبويب 2: أقساط تابي وتمارا والالتزامات + حاسبة ساعات العمل
+         التبويب 2: أقساط تابي وتمارا + رادار الاشتراكات + الزكاة
+         (تم حذف حاسبة ساعات العمل حسب طلبك)
          ======================================================= -->
     <section id="tab-installments" class="tab-section">
 
@@ -1732,50 +1891,152 @@
         <div id="punchCardsContainer"></div>
       </div>
 
-      <!-- 3. حاسبة «كم ساعة عمل يساوي هذا المنتج؟» (Impulse Buy Stopper) -->
+      <!-- 3. رادار الاشتراكات الشهرية الثابتة -->
       <div class="card washi-blue">
         <div class="card-header">
           <h2 class="card-title">
-            <span>⏳</span>
-            <span>حاسبة: هل يستحق الشراء؟ (ساعات العمل)</span>
+            <span>🔔</span>
+            <span>رادار الاشتراكات الشهرية (اضغط لتسجيل السداد)</span>
+          </h2>
+          <button class="sketch-btn" onclick="openModal('subModal')">+ اشتراك</button>
+        </div>
+        <div class="subs-list" id="subscriptionsContainer"></div>
+      </div>
+
+      <!-- 4. حاسبة الزكاة الشرعية (2.5%) ومغلف الصدقة -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🌿</span>
+            <span>حاسبة زكاة المدخرات (2.5%) والصدقة</span>
           </h2>
         </div>
-        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 10px;">
-          أدخل سعر أي منتج تفكر بشرائه ليريك الدفتر كم ساعة عمل من جهدك تساوي قيمته:
-        </p>
-        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-          <input type="number" id="impulsePriceInput" class="lined-input" placeholder="أدخل سعر المنتج (مثلاً 450)" inputmode="decimal" oninput="calculateWorkHours()" />
-        </div>
-        <div id="impulseResultBox" style="background: var(--bg-paper-secondary); border: 1px dashed var(--card-border); border-radius: 11px; padding: 10px 12px; font-family: var(--font-hand); font-size: 0.86rem; color: var(--ink-primary);">
-          💡 اكتب السعر بالأعلى لحساب تكلفته بساعات عملك الفعلية.
+        <div class="safe-balance-banner" style="margin-bottom: 0;">
+          <div>
+            <span style="display:block; font-weight:700;">مقدار الزكاة السنوية على رصيد المغلف البنكي:</span>
+            <span style="font-size:0.7rem; color:var(--ink-secondary);">تُحسب بنسبة 2.5% (ربع العشر) عند مرور الحول</span>
+          </div>
+          <strong class="sensitive-num" id="zakatAmountDisplay">0 ر.س</strong>
         </div>
       </div>
 
     </section>
 
     <!-- =======================================================
-         التبويب 3: الرسوم البيانية المائية + تحدي التلوين للتوفير
+         التبويب 3: المساعد المالي الذكي (AI Agent) + ماسح الفواتير (OCR)
          ======================================================= -->
-    <section id="tab-charts" class="tab-section">
+    <section id="tab-ai" class="tab-section">
 
-      <!-- 1. تحدي التلوين للتوفير (Coloring Savings Tracker) -->
+      <!-- 1. شات المساعد المالي الذكي (رفيق الدفتر) -->
+      <div class="card washi-blue">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🤖</span>
+            <span>رفيق الدفتر (المساعد المالي الذكي)</span>
+          </h2>
+          <span class="pro-pill" id="aiModeStatusBadge">محرك ذكي مدمج ✓</span>
+        </div>
+
+        <!-- رسائل المحادثة -->
+        <div class="chat-paper-box" id="aiChatMessagesBox">
+          <div class="chat-bubble ai">
+            أهلاً بك في <strong>دفتر ريالي الذكي</strong>! 📒✨<br/>
+            يمكنك التحدث معي لتسجيل مصروفاتك فوراً (مثلاً اكتب: <em>«سجل 25 ريال قهوة»</em> أو <em>«دفعت 150 مقاضي»</em>) أو سؤالي عن تحليل ميزانيتك وأقساطك!
+          </div>
+        </div>
+
+        <!-- أزرار أوامر وأسئلة سريعة -->
+        <div class="quick-prompts-row">
+          <button class="prompt-chip" onclick="sendQuickPrompt('حلل لي مصروفاتي وعاداتي هذا الشهر')">📊 حلل مصروفاتي</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('كم باقي من راتبي بعد أقساط تابي وتمارا؟')">🛡️ كم رصيدي الآمن؟</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('سجل 22 ريال قهوة ومطاعم')">☕ سجل 22 ريال قهوة</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('قارن صرفي هذا الشهر بالشهر الماضي')">📚 مقارنة بالشهر الماضي</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('أعطني خطة لتوفير 2000 ريال')">💡 خطة توفير</button>
+        </div>
+
+        <!-- حقل كتابة الرسالة -->
+        <div class="chat-input-row">
+          <input
+            type="text"
+            id="aiChatInput"
+            class="lined-input"
+            placeholder="اكتب أمرك أو سؤالك المالي هنا..."
+            onkeydown="if(event.key==='Enter') handleSendAiMessage()"
+          />
+          <button class="sketch-btn sage-btn" style="padding: 8px 16px; font-weight: 700;" onclick="handleSendAiMessage()">إرسال ↵</button>
+        </div>
+      </div>
+
+      <!-- 2. ماسح الفواتير الذكي بالذكاء الاصطناعي (AI Receipt Scanner) -->
       <div class="card washi-mustard">
         <div class="card-header">
           <h2 class="card-title">
-            <span>🏺</span>
-            <span>تحدي التلوين للتوفير (20 مربعاً)</span>
+            <span>📷</span>
+            <span>ماسح الفواتير ولقطات الشاشة الذكي</span>
           </h2>
-          <button class="sketch-btn" id="coloringStepBtn" onclick="toggleColoringStep()">المربع = 50</button>
         </div>
-        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 6px;">
-          اضغط على أي مربع لتلوينه؛ سيُضاف مبلغه تلقائياً إلى مغلف ادخارك البنكي!
+        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 10px;">
+          صوّر الفاتورة الورقية أو ارفع لقطة شاشة لإشعار البنك/Apple Pay ليقوم الذكاء الاصطناعي بقراءتها وتوزيع المصروف وإرفاق صورتها في السجل المسطر:
         </p>
 
-        <div class="coloring-grid" id="coloringChallengeGrid"></div>
+        <label class="scanner-dropzone">
+          <span style="font-size: 1.8rem; display: block; margin-bottom: 4px;">🧾📸</span>
+          <strong style="font-family: var(--font-hand); font-size: 0.92rem; color: var(--ink-primary);">اضغط هنا لتصوير الفاتورة أو اختيار صورة</strong>
+          <span style="font-size: 0.7rem; color: var(--ink-secondary); display: block; margin-top: 2px;">يدعم الكاميرا المباشرة وصور الفواتير</span>
+          <input type="file" id="receiptFileInput" accept="image/*" style="display: none;" onchange="handleReceiptUpload(event)" />
+        </label>
 
-        <div class="bar-meta" style="border-top: 1px dashed var(--card-border); padding-top: 8px;">
-          <span id="coloringProgressText">تم تلوين: 0 من 20</span>
-          <strong style="font-family: var(--font-hand); color: var(--sage-green);" id="coloringSavedTotal">وفرت بالتحدي: 0</strong>
+        <!-- نتيجة قراءة الفاتورة -->
+        <div class="receipt-preview-box" id="receiptPreviewBox">
+          <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 10px;">
+            <img id="receiptThumbImg" class="receipt-polaroid" src="" alt="صورة الفاتورة" />
+            <div style="flex: 1;">
+              <div style="font-family: var(--font-hand); font-size: 0.85rem; color: var(--sage-green); margin-bottom: 4px;" id="ocrStatusText">
+                ✨ تم قراءة الفاتورة بنجاح!
+              </div>
+              <input type="text" id="ocrStoreInput" class="lined-input" placeholder="اسم المتجر / البيان" style="font-size: 0.88rem; margin-bottom: 6px;" />
+              <input type="number" id="ocrAmountInput" class="lined-input" placeholder="إجمالي الفاتورة" style="font-size: 0.88rem;" inputmode="decimal" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">تصنيف الفاتورة المستخرج:</label>
+            <select id="ocrCategoryInput" class="lined-select" style="font-size: 0.88rem;">
+              <option value="مقاضي وبقالة|🛒|need">🛒 مقاضي وبقالة (أساسي)</option>
+              <option value="قهوة ومطاعم|☕|want">☕ قهوة ومطاعم (كمالي)</option>
+              <option value="وقود ومواصلات|⛽|need">⛽ وقود ومواصلات (أساسي)</option>
+              <option value="تسوق ومشتريات|🛍️|want">🛍️ تسوق ومشتريات (كمالي)</option>
+              <option value="فواتير والتزامات|📱|need">📱 فواتير والتزامات (أساسي)</option>
+              <option value="صحة وعناية|🌿|need">🌿 صحة وعناية (أساسي)</option>
+            </select>
+          </div>
+
+          <button class="btn-save-scrap" style="width: 100%;" onclick="confirmScannedReceipt()">
+            📎 اعتماد الفاتورة وتثبيتها بالدبوس في السجل
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         التبويب 4: الرسوم البيانية + مزامنة أيام الأسبوع الحالي + العادات
+         ======================================================= -->
+    <section id="tab-charts" class="tab-section">
+
+      <!-- 1. المخطط المتزامن حياً مع أيام وتواريخ الأسبوع الحالي -->
+      <div class="card washi-pink">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>📅</span>
+            <span>مزامنة أيام الأسبوع الحالي</span>
+          </h2>
+          <span class="payday-badge" id="currentWeekRangeBadge">الأسبوع الحالي</span>
+        </div>
+        <div class="weekly-bars-box" id="weeklyBarsContainer"></div>
+        <div class="bar-meta" style="margin-top: 8px;">
+          <span id="thisWeekTotalText">صرف هذا الأسبوع: 0</span>
+          <span id="todayHighlightText" style="color: var(--sage-green); font-weight: 700;">📍 اليوم</span>
         </div>
       </div>
 
@@ -1790,7 +2051,7 @@
 
         <div class="donut-wrap">
           <div class="donut-svg-box">
-            <svg id="categoryDonutSvg" width="185" height="185" viewBox="0 0 42 42"></svg>
+            <svg id="categoryDonutSvg" width="180" height="180" viewBox="0 0 42 42"></svg>
             <div class="donut-center-label">
               <span>إجمالي الصرف</span>
               <strong class="sensitive-num" id="donutCenterTotal">0</strong>
@@ -1800,63 +2061,18 @@
         </div>
       </div>
 
-      <!-- 3. الرسم البياني لأيام الأسبوع -->
-      <div class="card washi-pink">
+      <!-- 3. متتبع عادات الصرف الشهري (Habit Tracker Grid) -->
+      <div class="card washi-mustard">
         <div class="card-header">
           <h2 class="card-title">
-            <span>📅</span>
-            <span>إيقاع الصرف خلال أيام الأسبوع</span>
-          </h2>
-        </div>
-        <div class="weekly-bars-box" id="weeklyBarsContainer"></div>
-      </div>
-
-      <!-- 4. ميزان الضروريات مقابل الكماليات -->
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span>⚖️</span>
-            <span>ميزان الضروريات مقابل الكماليات</span>
-          </h2>
-        </div>
-        <div class="salary-grid" style="grid-template-columns: 1fr 1fr;">
-          <div class="salary-stat-box">
-            <div class="stat-label">🌿 مصروفات أساسية (Needs)</div>
-            <div class="stat-val sage sensitive-num" id="needsTotalVal">0</div>
-          </div>
-          <div class="salary-stat-box">
-            <div class="stat-label">🛍️ كماليات ورغبات (Wants)</div>
-            <div class="stat-val rose sensitive-num" id="wantsTotalVal">0</div>
-          </div>
-        </div>
-        <div class="bar-track">
-          <div class="bar-fill warning" id="wantsRatioBar" style="width: 0%;"></div>
-        </div>
-        <div class="bar-meta">
-          <span id="needsRatioText">أساسي: 0%</span>
-          <span id="wantsRatioText">كمالي: 0%</span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- =======================================================
-         التبويب 4: تتبع عادات الصرف ورادار القهوة
-         ======================================================= -->
-    <section id="tab-habits" class="tab-section">
-
-      <!-- 1. تشخيص العادات الذكي ورادار القهوة -->
-      <div class="card washi-pink">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span>🔍</span>
-            <span>تشخيص عاداتك المالية هذا الشهر</span>
+            <span>🌿</span>
+            <span>متتبع العادات وأيام الالتزام</span>
           </h2>
         </div>
 
         <div class="habits-insight-grid">
           <div class="habit-stat-card">
-            <div class="habit-stat-label">🔥 أكثر يوم تصرف فيه</div>
+            <div class="habit-stat-label">🔥 أكثر يوم صرفاً</div>
             <div class="habit-stat-value" id="habitPeakDay">--</div>
           </div>
           <div class="habit-stat-card">
@@ -1864,31 +2080,14 @@
             <div class="habit-stat-value" id="habitCoffeeRadar">0 مرة</div>
           </div>
           <div class="habit-stat-card">
-            <div class="habit-stat-label">🌿 أيام بدون صرف (No-Spend)</div>
+            <div class="habit-stat-label">🌿 أيام بدون صرف</div>
             <div class="habit-stat-value" style="color: var(--sage-green);" id="habitNoSpendCount">0 يوم</div>
           </div>
           <div class="habit-stat-card">
-            <div class="habit-stat-label">💭 نسبة الصرف العاطفي/الكمالي</div>
+            <div class="habit-stat-label">💭 نسبة الكماليات</div>
             <div class="habit-stat-value" style="color: var(--dusty-rose);" id="habitImpulseRate">0%</div>
           </div>
         </div>
-
-        <div style="background: var(--mustard-soft); border-radius: 10px; padding: 10px 12px; font-size: 0.78rem;" id="habitSmartAdvice">
-          💡 نصيحة الدفتر: ابدأ بتسجيل مصروفاتك اليومية ليقوم الدفتر بتحليل عاداتك تلقائياً.
-        </div>
-      </div>
-
-      <!-- 2. شبكة متتبع العادات الشهري (Bullet Journal 30-Day Habit Grid) -->
-      <div class="card washi-mustard">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span>🌿</span>
-            <span>متتبع أيام الالتزام الشهري (Habit Grid)</span>
-          </h2>
-        </div>
-        <p style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 8px;">
-          يتلون كل يوم من أيام الشهر تلقائياً حسب التزامك بالحد اليومي للميزانية:
-        </p>
 
         <div class="bujo-habit-grid" id="bujoHabitGrid"></div>
 
@@ -1899,14 +2098,45 @@
         </div>
       </div>
 
+      <!-- 4. تحدي التلوين للتوفير (20 مربعاً) -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>🏺</span>
+            <span>تحدي التلوين للتوفير (20 مربعاً)</span>
+          </h2>
+          <button class="sketch-btn" id="coloringStepBtn" onclick="toggleColoringStep()">المربع = 50</button>
+        </div>
+        <div class="coloring-grid" id="coloringChallengeGrid"></div>
+        <div class="bar-meta">
+          <span id="coloringProgressText">تم تلوين: 0 من 20</span>
+          <strong style="font-family: var(--font-hand); color: var(--sage-green);" id="coloringSavedTotal">وفرت بالتحدي: 0</strong>
+        </div>
+      </div>
+
     </section>
 
     <!-- =======================================================
-         التبويب 5: تقرير الشهر، بطاقة الستوري، والنسخ الاحتياطي
+         التبويب 5: رف الدفاتر السنوي (12 شهراً) + التقرير الشهري
          ======================================================= -->
     <section id="tab-report" class="tab-section">
 
-      <!-- 1. الملاحظة اللاصقة الصفراء (Sticky Note) -->
+      <!-- 1. رف الدفاتر السنوي (12-Month Bookshelf) -->
+      <div class="card washi-mustard">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span>📚</span>
+            <span>رف الدفاتر السنوي (أرشيف الشهور)</span>
+          </h2>
+          <button class="sketch-btn sage-btn" onclick="archiveAndStartNextMonth()">+ فتح دفتر شهر جديد</button>
+        </div>
+        <p style="font-size: 0.74rem; color: var(--ink-secondary); margin-bottom: 8px;">
+          بياناتك لا تضيع أبداً! اضغط على أي دفتر شهري لمراجعة سجلاته وملاحظاته:
+        </p>
+        <div class="bookshelf-grid" id="reportBookshelfGrid"></div>
+      </div>
+
+      <!-- 2. الملاحظة اللاصقة الصفراء (Sticky Note) -->
       <div class="sticky-note">
         <span class="sticky-pin" aria-hidden="true">📌</span>
         <div class="sticky-title">
@@ -1919,11 +2149,11 @@
             <strong class="sensitive-num" id="stickyBankBalance">0</strong>
           </div>
           <div class="sticky-item">
-            <span>إجمالي الدخل (مع الإضافي):</span>
+            <span>إجمالي دخل الشهر:</span>
             <strong class="sensitive-num" id="stickyTotalIncome">0</strong>
           </div>
           <div class="sticky-item">
-            <span>إجمالي مصروفات الشهر:</span>
+            <span>مصروفات هذا الدفتر:</span>
             <strong class="sensitive-num" id="stickyTotalSpent">0</strong>
           </div>
           <div class="sticky-item">
@@ -1933,14 +2163,14 @@
         </div>
       </div>
 
-      <!-- 2. ختم الحبر وتأملات الشهر + مشاركة ستوري -->
+      <!-- 3. ختم الحبر وتأملات الشهر -->
       <div class="card washi-pink">
         <div class="card-header">
           <h2 class="card-title">
             <span>💮</span>
-            <span>ختم التقييم وتأملات المفكرة</span>
+            <span>ختم التقييم وتأملات هذا الدفتر</span>
           </h2>
-          <button class="sketch-btn sage-btn" onclick="openStoryShareModal()">📸 بطاقة ستوري للمشاركة</button>
+          <button class="sketch-btn sage-btn" onclick="openStoryShareModal()">📸 بطاقة ستوري</button>
         </div>
 
         <div class="stamp-wrapper">
@@ -1950,40 +2180,16 @@
         <textarea
           id="monthlyReflectionInput"
           class="reflection-textarea"
-          placeholder="دون هنا ملاحظاتك المالية لهذا الشهر، خطط سداد الأقساط، أو العادات التي تود تحسينها..."
+          placeholder="دون هنا ملاحظاتك المالية الخاصة بهذا الشهر (تُحفظ داخل دفتر هذا الشهر للأبد)..."
         ></textarea>
 
         <div class="pro-actions-grid">
           <button class="sketch-btn sage-btn" style="padding: 10px; font-weight: 700;" onclick="transferRemainingToBank()">
-            📥 ترحيل الفائض للمغلف البنكي
+            📥 ترحيل فائض الشهر للبنك
           </button>
-          <button class="sketch-btn rose-btn" style="padding: 10px;" onclick="clearMonthExpenses()">
-            🗓️ بدء صفحة شهر جديد
-          </button>
-        </div>
-      </div>
-
-      <!-- 3. أدوات النسخة الاحترافية (النسخ الاحتياطي وتصدير Excel) -->
-      <div class="card washi-blue">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span>💼</span>
-            <span>حفظ البيانات والتصدير (Pro Tools)</span>
-          </h2>
-        </div>
-        <div class="pro-actions-grid">
           <button class="sketch-btn" style="padding: 10px;" onclick="exportCSVReport()">
-            📊 تصدير جدول Excel (CSV)
+            📊 تصدير Excel (CSV)
           </button>
-          <button class="sketch-btn" style="padding: 10px;" onclick="exportBackupJSON()">
-            💾 تحميل نسخة احتياطية
-          </button>
-        </div>
-        <div style="margin-top: 9px;">
-          <label class="sketch-btn" style="display: block; text-align: center; padding: 9px; cursor: pointer;">
-            📂 استعادة بيانات من نسخة احتياطية سابقة
-            <input type="file" id="importJsonInput" accept=".json" style="display: none;" onchange="importBackupJSON(event)" />
-          </label>
         </div>
       </div>
 
@@ -2000,19 +2206,19 @@
     </button>
     <button class="bookmark-tab" id="navBtn-installments" onclick="switchTab('installments')">
       <span>💳</span>
-      <span>الأقساط</span>
+      <span>التزاماتي</span>
+    </button>
+    <button class="bookmark-tab" id="navBtn-ai" onclick="switchTab('ai')">
+      <span>🤖</span>
+      <span>المساعد AI</span>
     </button>
     <button class="bookmark-tab" id="navBtn-charts" onclick="switchTab('charts')">
       <span>🎨</span>
       <span>الرسوم</span>
     </button>
-    <button class="bookmark-tab" id="navBtn-habits" onclick="switchTab('habits')">
-      <span>🌿</span>
-      <span>العادات</span>
-    </button>
     <button class="bookmark-tab" id="navBtn-report" onclick="switchTab('report')">
-      <span>📊</span>
-      <span>التقرير</span>
+      <span>📚</span>
+      <span>الرف والتقرير</span>
     </button>
   </nav>
 
@@ -2020,7 +2226,33 @@
        النوافذ المنبثقة (Modals)
        ========================================================= -->
 
-  <!-- 1. نافذة تحديث مغلف البنك -->
+  <!-- نافذة رف الدفاتر السنوي السريعة -->
+  <div class="modal-overlay" id="bookshelfModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title">📚 رف الدفاتر السنوي (12 شهراً)</h3>
+      <p style="font-size: 0.75rem; color: var(--ink-secondary); text-align: center; margin-bottom: 10px;">
+        اختر أي شهر لتصفح دفتره أو افتح دفتر شهر جديد دون فقدان أي بيانات سابقة:
+      </p>
+      <div class="bookshelf-grid" id="modalBookshelfGrid"></div>
+      <div class="modal-actions">
+        <button class="btn-save-scrap" onclick="archiveAndStartNextMonth()">+ فتح دفتر شهر جديد</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('bookshelfModal')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة معاينة صورة الفاتورة المرفقة بالدبوس -->
+  <div class="modal-overlay" id="receiptViewModal">
+    <div class="modal-scrap" style="text-align: center;">
+      <h3 class="modal-title" id="receiptModalTitle">📎 قصاصة الفاتورة المرفقة</h3>
+      <img id="receiptModalFullImg" src="" alt="الفاتورة" style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2);" />
+      <div class="modal-actions">
+        <button class="btn-cancel-scrap" style="width: 100%;" onclick="closeModal('receiptViewModal')">إغلاق القصاصة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تحديث مغلف البنك -->
   <div class="modal-overlay" id="bankModal">
     <div class="modal-scrap">
       <h3 class="modal-title">✉️ تحديث مغلف الادخار البنكي</h3>
@@ -2039,7 +2271,7 @@
     </div>
   </div>
 
-  <!-- 2. نافذة إضافة ظرف ادخار فرعي -->
+  <!-- نافذة إضافة ظرف ادخار فرعي -->
   <div class="modal-overlay" id="subEnvelopeModal">
     <div class="modal-scrap">
       <h3 class="modal-title">🗂️ إضافة ظرف ادخار فرعي</h3>
@@ -2058,13 +2290,13 @@
     </div>
   </div>
 
-  <!-- 3. نافذة الراتب الأساسي -->
+  <!-- نافذة الراتب الأساسي -->
   <div class="modal-overlay" id="salaryModal">
     <div class="modal-scrap">
       <h3 class="modal-title">📌 تحديد الراتب الأساسي</h3>
       <div class="form-group">
         <label class="form-label">مبلغ الراتب الشهري الثابت:</label>
-        <input type="number" id="salaryInput" class="lined-input" placeholder="8000" inputmode="decimal" />
+        <input type="number" id="salaryInput" class="lined-input" placeholder="8500" inputmode="decimal" />
       </div>
       <div class="modal-actions">
         <button class="btn-save-scrap" onclick="saveSalary()">اعتماد الراتب ✓</button>
@@ -2073,7 +2305,7 @@
     </div>
   </div>
 
-  <!-- 4. نافذة إضافة مصدر دخل إضافي -->
+  <!-- نافذة إضافة مصدر دخل إضافي -->
   <div class="modal-overlay" id="extraIncomeModal">
     <div class="modal-scrap">
       <h3 class="modal-title">✨ إضافة مصدر دخل إضافي</h3>
@@ -2088,7 +2320,7 @@
       <div class="form-group">
         <label class="form-label">أين ترغب بتوجيه هذا الدخل؟</label>
         <div class="radio-pills">
-          <div class="radio-pill selected" id="incDestBudget" onclick="selectIncomeDest('budget')">➕ لميزانية الشهر</div>
+          <div class="radio-pill selected" id="incDestBudget" onclick="selectIncomeDest('budget')">➕ لميزانية هذا الشهر</div>
           <div class="radio-pill" id="incDestBank" onclick="selectIncomeDest('bank')">✉️ لمغلف الادخار مباشرة</div>
         </div>
       </div>
@@ -2099,13 +2331,13 @@
     </div>
   </div>
 
-  <!-- 5. نافذة إضافة قسط تابي / تمارا / جمعية -->
+  <!-- نافذة إضافة قسط تابي / تمارا / جمعية -->
   <div class="modal-overlay" id="installmentModal">
     <div class="modal-scrap">
       <h3 class="modal-title">💳 إضافة قسط (تابي / تمارا / جمعية)</h3>
       <div class="form-group">
         <label class="form-label">اسم المتجر أو الالتزام:</label>
-        <input type="text" id="instStoreInput" class="lined-input" placeholder="مثال: سيفورا، نمشي، جمعية العائلة..." />
+        <input type="text" id="instStoreInput" class="lined-input" placeholder="مثال: سيفورا، نمشي، جمعية..." />
       </div>
       <div class="form-group">
         <label class="form-label">الجهة:</label>
@@ -2117,15 +2349,15 @@
       </div>
       <div class="form-group">
         <label class="form-label">إجمالي مبلغ الفاتورة الكلي:</label>
-        <input type="number" id="instTotalInput" class="lined-input" placeholder="مثال: 800 (ستقسم على 4 دفعات = 200)" inputmode="decimal" />
+        <input type="number" id="instTotalInput" class="lined-input" placeholder="800" inputmode="decimal" />
       </div>
       <div class="form-group">
         <label class="form-label">كم دفعة سددت منها حتى الآن؟</label>
         <select id="instPaidCountInput" class="lined-select">
-          <option value="1">دفعة أولى مسددة عند الشراء (متبقي 3 دفعات)</option>
-          <option value="0">لم أسدد أي دفعة بعد (متبقي 4 دفعات)</option>
-          <option value="2">مسدد دفعتين (متبقي دفعتان)</option>
-          <option value="3">مسدد 3 دفعات (متبقي دفعة أخيرة)</option>
+          <option value="1">دفعة أولى مسددة عند الشراء (متبقي 3)</option>
+          <option value="0">لم أسدد أي دفعة بعد (متبقي 4)</option>
+          <option value="2">مسدد دفعتين (متبقي 2)</option>
+          <option value="3">مسدد 3 دفعات (متبقي 1)</option>
         </select>
       </div>
       <div class="modal-actions">
@@ -2135,7 +2367,26 @@
     </div>
   </div>
 
-  <!-- 6. نافذة تدوين مصروف مخصص باليد -->
+  <!-- نافذة إضافة اشتراك شهري ثابت -->
+  <div class="modal-overlay" id="subModal">
+    <div class="modal-scrap">
+      <h3 class="modal-title">🔔 إضافة اشتراك شهري</h3>
+      <div class="form-group">
+        <label class="form-label">اسم الاشتراك (نتفليكس، آي كلاود، جوال، نادي...):</label>
+        <input type="text" id="subTitleInput" class="lined-input" placeholder="مثال: 🎬 اشتراك شاهد / نتفليكس" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المبلغ الشهري:</label>
+        <input type="number" id="subAmountInput" class="lined-input" placeholder="45" inputmode="decimal" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save-scrap" onclick="addSubscriptionItem()">حفظ الاشتراك ✓</button>
+        <button class="btn-cancel-scrap" onclick="closeModal('subModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تدوين مصروف مخصص باليد -->
   <div class="modal-overlay" id="customExpenseModal">
     <div class="modal-scrap">
       <h3 class="modal-title">✒️ تدوين مصروف بالدفتر</h3>
@@ -2173,7 +2424,7 @@
     </div>
   </div>
 
-  <!-- 7. نافذة إضافة ملصق سريع جديد -->
+  <!-- نافذة إضافة ملصق سريع جديد -->
   <div class="modal-overlay" id="stickerModal">
     <div class="modal-scrap">
       <h3 class="modal-title">🏷️ تصميم ملصق سريع جديد</h3>
@@ -2202,10 +2453,10 @@
     </div>
   </div>
 
-  <!-- 8. نافذة تخصيص الدفتر (اسم المالك، العملة، يوم الراتب) -->
+  <!-- نافذة الإعدادات ومفتاح الذكاء الاصطناعي Gemini API -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-scrap">
-      <h3 class="modal-title">⚙️ تخصيص هوية الدفتر</h3>
+      <h3 class="modal-title">⚙️ إعدادات الدفتر والذكاء الاصطناعي</h3>
       <div class="form-group">
         <label class="form-label">عنوان الدفتر أو اسم المالك:</label>
         <input type="text" id="ownerNameInput" class="lined-input" placeholder="مثال: دفتر مودة المالي" />
@@ -2224,8 +2475,12 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">يوم نزول الراتب في الشهر الميلادي (1 - 30):</label>
+        <label class="form-label">يوم نزول الراتب الميلادي (1 - 30):</label>
         <input type="number" id="paydayDayInput" class="lined-input" placeholder="27" min="1" max="30" inputmode="numeric" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">🤖 مفتاح Gemini API (اختياري لتفعيل الرؤية السحابية للفواتير):</label>
+        <input type="password" id="geminiKeyInput" class="lined-input" placeholder="AIzaSy... (يعمل المساعد بدونه أيضاً)" dir="ltr" />
       </div>
       <div class="modal-actions">
         <button class="btn-save-scrap" onclick="saveJournalSettings()">حفظ الإعدادات ✓</button>
@@ -2234,35 +2489,29 @@
     </div>
   </div>
 
-  <!-- 9. نافذة بطاقة مشاركة الإنجاز في السوشيال ميديا (Shareable Story Sticker) -->
+  <!-- نافذة بطاقة ستوري المشاركة -->
   <div class="modal-overlay" id="storyShareModal">
     <div class="modal-scrap">
-      <div class="story-card-preview">
+      <div style="background: var(--kraft-bg); border: 2px solid var(--kraft-border); border-radius: 18px; padding: 22px 16px; text-align: center;">
         <div style="font-size: 0.75rem; color: var(--ink-secondary); margin-bottom: 4px;" id="storyMonthLabel">تقرير الشهر</div>
         <h3 style="font-family: var(--font-calligraphy); font-size: 1.65rem; margin-bottom: 10px;" id="storyOwnerTitle">دفتر ريالي</h3>
-
         <div class="stamp-wrapper" style="margin: 12px 0;">
           <div class="rubber-stamp" id="storyStampBadge">ختم الالتزام 🌟</div>
         </div>
-
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0;">
           <div style="background: rgba(255,255,255,0.6); padding: 10px; border-radius: 12px;">
             <span style="font-size: 0.72rem; color: var(--ink-secondary); display: block;">أيام بدون صرف</span>
             <strong style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--sage-green);" id="storyNoSpendVal">0 يوم 🌿</strong>
           </div>
           <div style="background: rgba(255,255,255,0.6); padding: 10px; border-radius: 12px;">
-            <span style="font-size: 0.72rem; color: var(--ink-secondary); display: block;">مربعات التحدي الملونة</span>
+            <span style="font-size: 0.72rem; color: var(--ink-secondary); display: block;">مربعات التحدي</span>
             <strong style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--warm-mustard);" id="storyColoringVal">0 / 20 🏺</strong>
           </div>
         </div>
-
-        <div style="font-family: var(--font-hand); font-size: 0.75rem; color: var(--ink-secondary); margin-top: 10px; border-top: 1px dashed var(--kraft-border); padding-top: 8px;">
-          📒 تم التدوين عبر تطبيق «دفتر ريالي برو»
+        <div style="font-family: var(--font-hand); font-size: 0.74rem; color: var(--ink-secondary); margin-top: 10px; border-top: 1px dashed var(--kraft-border); padding-top: 8px;">
+          📒 تم التدوين عبر تطبيق «دفتر ريالي AI»
         </div>
       </div>
-      <p style="font-size: 0.72rem; text-align: center; color: var(--ink-muted); margin-top: 10px;">
-        📸 التقط صورة للشاشة (Screenshot) لمشاركة إنجازك بدون إظهار أرقامك البنكية الخاصة!
-      </p>
       <div class="modal-actions" style="margin-top: 12px;">
         <button class="btn-cancel-scrap" style="width: 100%;" onclick="closeModal('storyShareModal')">إغلاق البطاقة</button>
       </div>
@@ -2270,11 +2519,18 @@
   </div>
 
   <!-- =========================================================
-       البرمجة التفاعلية الشاملة (JavaScript)
+       البرمجة التفاعلية، أرشيف الشهور، المساعد الذكي، وماسح الفواتير
        ========================================================= -->
   <script>
-    const STORAGE_KEY = 'riyali_diamond_pro_v3';
+    const STORAGE_KEY = 'riyali_ai_bookshelf_v4';
     const THEME_KEY = 'riyali_journal_theme';
+
+    const arabicMonths = [
+      'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+      'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+    ];
+    const arabicDays = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const chartColors = ['#528c6e', '#d99b26', '#d96b6b', '#5b8fa8', '#8b6fa8', '#c97b53', '#7f8c8d'];
 
     const defaultStickers = [
       { id: 's1', title: 'قهوة مختصة', amount: 18, category: 'قهوة ومطاعم', icon: '☕', needType: 'want' },
@@ -2290,53 +2546,102 @@
       { id: 'inst_2', store: 'أديداس / ملابس', provider: 'تمارا', totalAmount: 400, totalSplits: 4, paidSplits: 1 }
     ];
 
+    const defaultSubscriptions = [
+      { id: 'sub_1', title: '☁️ آي كلاود (iCloud)', amount: 12 },
+      { id: 'sub_2', title: '🎬 نتفليكس / شاهد', amount: 45 },
+      { id: 'sub_3', title: '📱 باقة الجوال', amount: 115 },
+      { id: 'sub_4', title: '🏋️‍♀️ اشتراك النادي', amount: 250 }
+    ];
+
     const defaultSubEnvelopes = [
       { id: 'env_1', title: '🛟 ظرف الطوارئ', amount: 5000 },
       { id: 'env_2', title: '✈️ ظرف السفر', amount: 3000 },
       { id: 'env_3', title: '🌙 ظرف المواسم', amount: 1500 }
     ];
 
+    function getCurrentMonthKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function getPreviousMonthKey(monthKey) {
+      const [y, m] = monthKey.split('-').map(Number);
+      const prevDate = new Date(y, m - 2, 1);
+      return `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function formatMonthKeyArabic(monthKey) {
+      const [y, m] = monthKey.split('-').map(Number);
+      return `${arabicMonths[(m - 1 + 12) % 12]} ${y}`;
+    }
+
+    const initMonthKey = getCurrentMonthKey();
+    const prevSampleKey = getPreviousMonthKey(initMonthKey);
+
     let appData = {
+      userAuth: {
+        email: '',
+        password: '',
+        isLoggedIn: false
+      },
       ownerTitle: 'دفتر ريالي',
       currency: 'ر.س',
       paydayDay: 27,
+      geminiApiKey: '',
       bankBalance: 12500,
-      bankNote: 'مدخراتك المحفوظة في المغلف الورقي',
+      bankNote: 'مدخراتك المحفوظة عبر جميع الشهور',
       subEnvelopes: defaultSubEnvelopes,
       monthlySalary: 8500,
-      extraIncomes: [],
-      expenses: [],
       installments: defaultInstallments,
+      subscriptions: defaultSubscriptions,
       quickStickers: defaultStickers,
       coloringStep: 50,
       coloredBoxes: [0, 1, 2],
-      reflectionNote: ''
+      activeMonthKey: initMonthKey,
+      notebooks: {
+        [prevSampleKey]: {
+          expenses: [
+            { id: 'old_1', title: 'مقاضي الشهر الماضي', amount: 420, category: 'مقاضي وبقالة', icon: '🛒', needType: 'need', timestamp: 'الشهر الماضي' },
+            { id: 'old_2', title: 'قهوة ومطاعم', amount: 185, category: 'قهوة ومطاعم', icon: '☕', needType: 'want', timestamp: 'الشهر الماضي' }
+          ],
+          extraIncomes: [],
+          reflectionNote: 'دفتر الشهر الماضي المؤرشف في الرف 📚'
+        },
+        [initMonthKey]: {
+          expenses: [],
+          extraIncomes: [],
+          reflectionNote: ''
+        }
+      }
     };
 
     let selectedIncomeDest = 'budget';
     let selectedExpenseNeed = 'need';
+    let currentScannedImageBase64 = null;
 
-    const chartColors = ['#528c6e', '#d99b26', '#d96b6b', '#5b8fa8', '#8b6fa8', '#c97b53', '#7f8c8d'];
-    const arabicDays = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-
+    // تحميل البيانات مع دعم الترقية التلقائية من الإصدارات السابقة
     function loadAppData() {
       try {
         const saved =
           localStorage.getItem(STORAGE_KEY) ||
-          localStorage.getItem('riyali_pro_journal_v2') ||
-          localStorage.getItem('riyali_journal_data_v1');
+          localStorage.getItem('riyali_diamond_pro_v3') ||
+          localStorage.getItem('riyali_pro_journal_v2');
+
         if (saved) {
           const parsed = JSON.parse(saved);
-          appData = {
-            ...appData,
-            ...parsed,
-            subEnvelopes: Array.isArray(parsed.subEnvelopes) ? parsed.subEnvelopes : defaultSubEnvelopes,
-            extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
-            expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
-            installments: Array.isArray(parsed.installments) ? parsed.installments : defaultInstallments,
-            quickStickers: (parsed.quickStickers && parsed.quickStickers.length) ? parsed.quickStickers : defaultStickers,
-            coloredBoxes: Array.isArray(parsed.coloredBoxes) ? parsed.coloredBoxes : [0, 1, 2]
-          };
+          appData = { ...appData, ...parsed };
+
+          // إذا كانت هناك مصروفات قديمة غير مقسمة بالشهور، انقلها للشهر الحالي
+          if (!appData.notebooks) {
+            appData.notebooks = {};
+          }
+          if (!appData.notebooks[appData.activeMonthKey]) {
+            appData.notebooks[appData.activeMonthKey] = {
+              expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
+              extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
+              reflectionNote: parsed.reflectionNote || ''
+            };
+          }
         }
       } catch (e) {
         console.error('خطأ في قراءة البيانات:', e);
@@ -2344,6 +2649,15 @@
 
       if (localStorage.getItem(THEME_KEY) === 'kraft-night') {
         document.body.classList.add('kraft-night');
+      }
+
+      // التحقق من حالة تسجيل الدخول
+      if (!appData.userAuth || !appData.userAuth.isLoggedIn) {
+        document.getElementById('authScreen').classList.add('active');
+        if (appData.userAuth && appData.userAuth.email) {
+          document.getElementById('authEmailInput').value = appData.userAuth.email;
+          document.getElementById('authNameInput').value = appData.ownerTitle || '';
+        }
       }
     }
 
@@ -2355,36 +2669,54 @@
       }
     }
 
+    // الحصول على دفتر الشهر النشط حالياً
+    function getActiveNotebook() {
+      if (!appData.notebooks[appData.activeMonthKey]) {
+        appData.notebooks[appData.activeMonthKey] = {
+          expenses: [],
+          extraIncomes: [],
+          reflectionNote: ''
+        };
+      }
+      return appData.notebooks[appData.activeMonthKey];
+    }
+
+    // تسجيل الدخول بالبريد الإلكتروني والرمز السري
+    function handleAuthSubmit() {
+      const name = document.getElementById('authNameInput').value.trim();
+      const email = document.getElementById('authEmailInput').value.trim();
+      const pass = document.getElementById('authPassInput').value.trim();
+
+      if (!email || !pass) {
+        showPaperToast('⚠️ يرجى إدخال البريد الإلكتروني والرمز السري');
+        return;
+      }
+
+      appData.ownerTitle = name || appData.ownerTitle || 'دفتر ريالي';
+      appData.userAuth = {
+        email,
+        password: pass,
+        isLoggedIn: true
+      };
+      saveAppData();
+      document.getElementById('authScreen').classList.remove('active');
+      renderAll();
+      showPaperToast(`🔓 أهلاً بك في دفترك (${email})`);
+    }
+
+    function lockNotebook() {
+      appData.userAuth.isLoggedIn = false;
+      saveAppData();
+      document.getElementById('authPassInput').value = '';
+      document.getElementById('authScreen').classList.add('active');
+      showPaperToast('🔒 تم قفل الدفتر لحماية خصوصيتك');
+    }
+
     function formatNum(num) {
       const n = Number(num) || 0;
       return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
-    // حساب الأيام المتبقية ليوم الراتب (مثلاً يوم 27)
-    function updateHeaderAndPayday() {
-      const now = new Date();
-      document.getElementById('currentDateLabel').textContent = now.toLocaleDateString('ar-SA', {
-        month: 'short', day: 'numeric'
-      });
-      document.getElementById('reportMonthName').textContent = now.toLocaleDateString('ar-SA', {
-        month: 'long', year: 'numeric'
-      });
-
-      const payDay = Number(appData.paydayDay) || 27;
-      let targetDate = new Date(now.getFullYear(), now.getMonth(), payDay);
-      if (now.getDate() > payDay) {
-        targetDate = new Date(now.getFullYear(), now.getMonth() + 1, payDay);
-      }
-      const diffDays = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
-      const badge = document.getElementById('paydayCountdownBadge');
-      if (diffDays === 0 || now.getDate() === payDay) {
-        badge.textContent = '🎉 اليوم يوم الراتب!';
-      } else {
-        badge.textContent = `⏳ باقي ${diffDays} يوم للراتب (يوم ${payDay})`;
-      }
-    }
-
-    // وضع الكافيه / إخفاء الأرقام الحساسة
     function togglePrivacyMode() {
       document.body.classList.toggle('privacy-mode');
       const isPrivate = document.body.classList.contains('privacy-mode');
@@ -2407,37 +2739,58 @@
       toast.textContent = message;
       toast.classList.add('show');
       clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2300);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     // =========================================================
-    // تحديث شامل لكافة التبويبات الـ 5
+    // التحديث الشامل لجميع الواجهات والرف السنوي
     // =========================================================
     function renderAll() {
       const cur = appData.currency || 'ر.س';
-      updateHeaderAndPayday();
+      const activeBook = getActiveNotebook();
+      const monthNameAr = formatMonthKeyArabic(appData.activeMonthKey);
 
       document.getElementById('ownerTitleText').textContent = appData.ownerTitle || 'دفتر ريالي';
+      document.getElementById('activeNotebookBadge').textContent = `دفتر ${monthNameAr}`;
+      document.getElementById('budgetMonthTitle').textContent = monthNameAr;
+      document.getElementById('ledgerMonthLabel').textContent = monthNameAr;
+      document.getElementById('reportMonthName').textContent = `دفتر ${monthNameAr}`;
+      document.getElementById('userEmailFooterBadge').textContent =
+        (appData.userAuth && appData.userAuth.email) ? `📧 ${appData.userAuth.email}` : 'حساب محلي موثق ✓';
+
+      document.getElementById('aiModeStatusBadge').textContent =
+        appData.geminiApiKey ? 'Gemini AI متصل ✨' : 'محرك ذكي مدمج ✓';
+
+      // حساب عداد يوم الراتب
+      const now = new Date();
+      const payDay = Number(appData.paydayDay) || 27;
+      let targetDate = new Date(now.getFullYear(), now.getMonth(), payDay);
+      if (now.getDate() > payDay) {
+        targetDate = new Date(now.getFullYear(), now.getMonth() + 1, payDay);
+      }
+      const diffDays = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
+      document.getElementById('paydayCountdownBadge').textContent =
+        (diffDays === 0 || now.getDate() === payDay) ? '🎉 اليوم يوم الراتب!' : `⏳ باقي ${diffDays} يوم للراتب`;
+
+      // البنك والأظرف الفرعية
       document.getElementById('bankCurrencyLabel').textContent = cur;
       document.getElementById('bankBalanceDisplay').textContent = formatNum(appData.bankBalance);
-      document.getElementById('bankNoteText').textContent = appData.bankNote || 'مدخراتك المحفوظة في المغلف الورقي';
+      document.getElementById('bankNoteText').textContent = appData.bankNote || 'مدخراتك المحفوظة عبر جميع الشهور';
 
-      // عرض الأظرف الفرعية داخل بطاقة البنك
-      const subEnvContainer = document.getElementById('subEnvelopesContainer');
-      subEnvContainer.innerHTML = appData.subEnvelopes.map((env) => `
+      document.getElementById('subEnvelopesContainer').innerHTML = appData.subEnvelopes.map((env) => `
         <div class="mini-envelope" onclick="deleteSubEnvelope('${env.id}')" title="اضغط لحذف الظرف">
           <span>${env.title}:</span>
           <strong class="sensitive-num">${formatNum(env.amount)} ${cur}</strong>
         </div>
       `).join('');
 
-      // حساب الدخل والمصروفات والأقساط المستحقة هذا الشهر
-      const extraBudgetIncome = appData.extraIncomes.reduce((s, item) => s + (Number(item.amount) || 0), 0);
+      // حساب دخل ومصروفات الشهر النشط
+      const extraBudgetIncome = activeBook.extraIncomes.reduce((s, item) => s + (Number(item.amount) || 0), 0);
       const totalIncome = (Number(appData.monthlySalary) || 0) + extraBudgetIncome;
-      const totalSpent = appData.expenses.reduce((s, item) => s + (Number(item.amount) || 0), 0);
+      const totalSpent = activeBook.expenses.reduce((s, item) => s + (Number(item.amount) || 0), 0);
       const remaining = totalIncome - totalSpent;
 
-      // حساب أقساط تابي وتمارا المستحقة هذا الشهر (دفعة واحدة لكل بطاقة غير مكتملة)
+      // حساب أقساط تابي وتمارا المستحقة
       let dueThisMonthInstallments = 0;
       let totalRemainingInstallments = 0;
       appData.installments.forEach((inst) => {
@@ -2457,13 +2810,13 @@
       document.getElementById('salaryRemainingDisplay').textContent = formatNum(remaining);
       document.getElementById('trueSafeBalanceDisplay').textContent = `${formatNum(trueSafeBalance)} ${cur}`;
 
-      // عرض مصادر الدخل الإضافية
+      // عرض الدخل الإضافي للشهر النشط
       const extraBox = document.getElementById('extraIncomesBox');
       const extraList = document.getElementById('extraIncomeList');
-      if (appData.extraIncomes.length > 0) {
+      if (activeBook.extraIncomes.length > 0) {
         extraBox.style.display = 'block';
         document.getElementById('extraIncomeTotalBadge').textContent = `+${formatNum(extraBudgetIncome)} ${cur}`;
-        extraList.innerHTML = appData.extraIncomes.map((inc) => `
+        extraList.innerHTML = activeBook.extraIncomes.map((inc) => `
           <span class="income-chip">
             <span>${inc.title}:</span>
             <strong class="sensitive-num">+${formatNum(inc.amount)}</strong>
@@ -2482,25 +2835,494 @@
 
       document.getElementById('salaryPercentText').textContent = `استهلاك الميزانية: ${spentPercent}%`;
 
-      const now = new Date();
       const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
       const remainingDays = Math.max(1, daysInMonth - now.getDate() + 1);
       const dailyAvailable = trueSafeBalance > 0 ? Math.floor(trueSafeBalance / remainingDays) : 0;
       document.getElementById('dailyAllowanceText').textContent = `المتاح الآمن يومياً: ${formatNum(dailyAvailable)} ${cur}`;
 
       renderQuickStickers(cur);
-      renderLedgerList(cur);
-      renderInstallmentsTab(totalIncome, dueThisMonthInstallments, totalRemainingInstallments, cur);
-      renderColoringChallenge(cur);
-      renderChartsTab(totalSpent, cur);
-      renderHabitsTab(totalIncome, totalSpent, daysInMonth, cur);
-      renderReportTab(totalIncome, totalSpent, remaining, cur);
+      renderLedgerList(activeBook.expenses, cur);
+      renderInstallmentsAndSubsTab(totalIncome, dueThisMonthInstallments, totalRemainingInstallments, cur);
+      renderChartsAndCurrentWeekTab(activeBook.expenses, totalIncome, totalSpent, daysInMonth, cur);
+      renderBookshelfAndReportTab(activeBook, totalIncome, totalSpent, remaining, cur);
     }
 
     // =========================================================
-    // قسم بطاقات تخريم تابي وتمارا وحاسبة ساعات العمل
+    // 1. رف الدفاتر السنوي (12-Month Bookshelf)
     // =========================================================
-    function renderInstallmentsTab(totalIncome, dueThisMonth, totalRem, cur) {
+    function renderBookshelfAndReportTab(activeBook, totalIncome, totalSpent, remaining, cur) {
+      const year = new Date().getFullYear();
+      let shelfHtml = '';
+
+      // عرض 12 دفتراً لشهور السنة الحالية + أي شهور محفوظة
+      for (let m = 1; m <= 12; m++) {
+        const key = `${year}-${String(m).padStart(2, '0')}`;
+        const book = appData.notebooks[key];
+        const count = book && book.expenses ? book.expenses.length : 0;
+        const spent = book && book.expenses ? book.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0) : 0;
+        const isCurrent = key === appData.activeMonthKey;
+
+        shelfHtml += `
+          <div class="notebook-spine ${isCurrent ? 'current-book' : ''}" onclick="switchMonthNotebook('${key}')">
+            <span class="spine-month">📒 ${arabicMonths[m - 1]}</span>
+            <span class="spine-meta">${count} عملية</span>
+            <span class="spine-meta sensitive-num" style="font-weight:700; color:var(--dusty-rose);">${spent > 0 ? formatNum(spent) + ' ' + cur : 'فارغ'}</span>
+          </div>
+        `;
+      }
+
+      document.getElementById('reportBookshelfGrid').innerHTML = shelfHtml;
+      document.getElementById('modalBookshelfGrid').innerHTML = shelfHtml;
+
+      // تحديث الملاحظة اللاصقة والتقرير
+      document.getElementById('stickyBankBalance').textContent = `${formatNum(appData.bankBalance)} ${cur}`;
+      document.getElementById('stickyTotalIncome').textContent = `${formatNum(totalIncome)} ${cur}`;
+      document.getElementById('stickyTotalSpent').textContent = `${formatNum(totalSpent)} ${cur}`;
+      document.getElementById('stickyNetSavings').textContent = `${formatNum(remaining)} ${cur}`;
+
+      const savingsPercent = totalIncome > 0 ? Math.max(0, Math.round((remaining / totalIncome) * 100)) : 0;
+      const stampEl = document.getElementById('savingsRubberStamp');
+      stampEl.className = 'rubber-stamp';
+
+      if (remaining < 0) {
+        stampEl.textContent = 'تنبيه: تجاوزت ميزانية الشهر ⚠️';
+        stampEl.classList.add('stamp-danger');
+      } else if (savingsPercent >= 25) {
+        stampEl.textContent = `ختم التميز: فائض ادخار ${savingsPercent}% 🌟`;
+      } else {
+        stampEl.textContent = `ضمن الميزانية: متبقي ${savingsPercent}% ✓`;
+        stampEl.classList.add('stamp-warn');
+      }
+
+      document.getElementById('storyStampBadge').textContent = stampEl.textContent;
+      document.getElementById('storyOwnerTitle').textContent = appData.ownerTitle || 'دفتر ريالي';
+      document.getElementById('storyMonthLabel').textContent = `دفتر ${formatMonthKeyArabic(appData.activeMonthKey)}`;
+
+      const refInput = document.getElementById('monthlyReflectionInput');
+      if (refInput.value !== (activeBook.reflectionNote || '')) {
+        refInput.value = activeBook.reflectionNote || '';
+      }
+    }
+
+    function switchMonthNotebook(monthKey) {
+      appData.activeMonthKey = monthKey;
+      if (!appData.notebooks[monthKey]) {
+        appData.notebooks[monthKey] = { expenses: [], extraIncomes: [], reflectionNote: '' };
+      }
+      saveAppData();
+      renderAll();
+      closeModal('bookshelfModal');
+      showPaperToast(`📚 تم فتح دفتر ${formatMonthKeyArabic(monthKey)}`);
+    }
+
+    function archiveAndStartNextMonth() {
+      const [y, m] = appData.activeMonthKey.split('-').map(Number);
+      const nextDate = new Date(y, m, 1);
+      const nextKey = `${nextDate.getFullYear()}-${String(nextDate.getMonth() + 1).padStart(2, '0')}`;
+      switchMonthNotebook(nextKey);
+      showPaperToast(`🗓️ تم حفظ الشهر السابق في الرف وفتح دفتر ${formatMonthKeyArabic(nextKey)}!`);
+    }
+
+    document.getElementById('monthlyReflectionInput').addEventListener('input', (e) => {
+      const book = getActiveNotebook();
+      book.reflectionNote = e.target.value;
+      saveAppData();
+    });
+
+    // =========================================================
+    // 2. المساعد المالي الذكي (AI Chat Agent) + ماسح الفواتير (OCR)
+    // =========================================================
+    function appendChatBubble(text, sender) {
+      const box = document.getElementById('aiChatMessagesBox');
+      const div = document.createElement('div');
+      div.className = `chat-bubble ${sender}`;
+      div.innerHTML = text;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function sendQuickPrompt(promptText) {
+      document.getElementById('aiChatInput').value = promptText;
+      handleSendAiMessage();
+    }
+
+    async function handleSendAiMessage() {
+      const input = document.getElementById('aiChatInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      appendChatBubble(msg, 'user');
+      input.value = '';
+
+      // أولاً: فحص هل الرسالة أمر بتسجيل مصروف مباشر (مثل: سجل 45 ريال مقاضي / دفعت 120 بنزين)
+      const commandMatch = msg.match(/(?:سجل|دفعت|صرفت|اشتريت|اضف|أضف)\s*(\d+(?:\.\d+)?)\s*(?:ريال|ر\.س|درهم|دينار)?\s*(.*)/i);
+      if (commandMatch) {
+        const amt = parseFloat(commandMatch[1]);
+        const desc = (commandMatch[2] || 'مصروف سريع').trim();
+        let cat = 'أخرى';
+        let icon = '📎';
+        let needType = 'need';
+
+        if (/قهوة|قهوه|كافيه|مطعم|عشاء|غداء|فطور|حلى/.test(desc)) {
+          cat = 'قهوة ومطاعم'; icon = '☕'; needType = 'want';
+        } else if (/مقاضي|بقالة|سوبرماركت|تموينات|خبز|ماء/.test(desc)) {
+          cat = 'مقاضي وبقالة'; icon = '🛒'; needType = 'need';
+        } else if (/بنزين|وقود|أوبر|مشوار|توصيل|سيارة/.test(desc)) {
+          cat = 'وقود ومواصلات'; icon = '⛽'; needType = 'need';
+        } else if (/ملابس|عطر|سوق|تسوق|هدية|شنطة/.test(desc)) {
+          cat = 'تسوق ومشتريات'; icon = '🛍️'; needType = 'want';
+        } else if (/فاتورة|نت|جوال|كهرباء|قسط/.test(desc)) {
+          cat = 'فواتير والتزامات'; icon = '📱'; needType = 'need';
+        }
+
+        const now = new Date();
+        getActiveNotebook().expenses.unshift({
+          id: 'exp_' + Date.now(),
+          title: desc,
+          amount: amt,
+          category: cat,
+          icon,
+          needType,
+          isoDate: now.toISOString(),
+          timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+        });
+        saveAppData();
+        renderAll();
+
+        appendChatBubble(
+          `✅ أبشر! قمت بتدوين <strong>«${desc}»</strong> بمبلغ <strong>${formatNum(amt)} ${appData.currency}</strong> ضمن فئة (${icon} ${cat}) في دفتر ${formatMonthKeyArabic(appData.activeMonthKey)}.`,
+          'ai'
+        );
+        return;
+      }
+
+      // ثانياً: إذا كان المستخدم قد وضع مفتاح Gemini API، نستخدم نموذج Gemini لتحليل سؤاله المالي
+      if (appData.geminiApiKey) {
+        try {
+          const activeBook = getActiveNotebook();
+          const totalSpent = activeBook.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+          const contextPrompt = `أنت "رفيق الدفتر"، مستشار مالي شخصي لطيف داخل تطبيق "دفتر ريالي". أجب باختصار وود وباللغة العربية.
+بيانات العميل الحالية:
+- الراتب الشهري: ${appData.monthlySalary} ${appData.currency}
+- رصيد البنك المدخر: ${appData.bankBalance} ${appData.currency}
+- إجمالي مصروفات هذا الشهر (${formatMonthKeyArabic(appData.activeMonthKey)}): ${totalSpent} ${appData.currency}
+- عدد العمليات: ${activeBook.expenses.length}
+سؤال العميل: ${msg}`;
+
+          const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${appData.geminiApiKey}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: contextPrompt }] }]
+              })
+            }
+          );
+          const data = await response.json();
+          const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (aiReply) {
+            appendChatBubble(aiReply.replace(/\n/g, '<br/>'), 'ai');
+            return;
+          }
+        } catch (err) {
+          console.warn('تعذر الاتصال بـ Gemini API، سيتم استخدام المحرك الذكي المدمج:', err);
+        }
+      }
+
+      // ثالثاً: المحرك المالي الذكي المدمج (يعمل فوراً بدون إنترنت)
+      const reply = generateLocalSmartReply(msg);
+      appendChatBubble(reply, 'ai');
+    }
+
+    function generateLocalSmartReply(question) {
+      const cur = appData.currency || 'ر.س';
+      const activeBook = getActiveNotebook();
+      const extraInc = activeBook.extraIncomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const totalIncome = (Number(appData.monthlySalary) || 0) + extraInc;
+      const totalSpent = activeBook.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+      const remaining = totalIncome - totalSpent;
+
+      let dueInst = 0;
+      appData.installments.forEach((inst) => {
+        const split = (Number(inst.totalAmount) || 0) / (Number(inst.totalSplits) || 4);
+        if ((inst.paidSplits || 0) < (inst.totalSplits || 4)) dueInst += split;
+      });
+      const safeBal = remaining - dueInst;
+
+      if (/باقي|متبقي|آمن|امن|راتب/.test(question)) {
+        return `💰 إجمالي دخلك هذا الشهر <strong>${formatNum(totalIncome)} ${cur}</strong>، صرفت منه <strong>${formatNum(totalSpent)} ${cur}</strong>.<br/>
+🛡️ رصيدك الحقيقي الآمن بعد حجز أقساط تابي وتمارا لهذا الشهر (${formatNum(dueInst)} ${cur}) هو: <strong>${formatNum(safeBal)} ${cur}</strong>.`;
+      }
+
+      if (/قارن|الماضي|السابق|رف/.test(question)) {
+        const prevKey = getPreviousMonthKey(appData.activeMonthKey);
+        const prevBook = appData.notebooks[prevKey];
+        const prevSpent = prevBook && prevBook.expenses ? prevBook.expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0) : 0;
+        const diff = totalSpent - prevSpent;
+        return `📚 في دفتر الشهر الماضي (${formatMonthKeyArabic(prevKey)}) صرفت <strong>${formatNum(prevSpent)} ${cur}</strong>، وفي هذا الشهر صرفت حتى الآن <strong>${formatNum(totalSpent)} ${cur}</strong>.<br/>
+${diff <= 0 ? `🌟 ممتاز! أنت موفر هذا الشهر بفارق ${formatNum(Math.abs(diff))} ${cur}.` : `⚠️ انتبه: صرفك هذا الشهر أعلى بـ ${formatNum(diff)} ${cur}.`}`;
+      }
+
+      if (/توفير|خطة|خطه|ادخار|سفر/.test(question)) {
+        const suggestedSave = Math.round(totalIncome * 0.2);
+        return `💡 <strong>خطة التوفير المقترحة من رفيق الدفتر:</strong><br/>
+1. خصص 20% من دخلك أول الشهر (<strong>${formatNum(suggestedSave)} ${cur}</strong>) لمغلف الادخار.<br/>
+2. استخدم «تحدي التلوين 🏺» لتلوين مربعين أسبوعياً.<br/>
+3. حافظ على الرصيد الآمن اليومي لتجنب السحب من المدخرات.`;
+      }
+
+      // تحليل شامل افتراضي
+      const wantsSum = activeBook.expenses.filter((e) => e.needType === 'want').reduce((s, e) => s + (Number(e.amount) || 0), 0);
+      const wantsPct = totalSpent > 0 ? Math.round((wantsSum / totalSpent) * 100) : 0;
+      const zakat = Math.round(appData.bankBalance * 0.025);
+
+      return `📊 <strong>ملخص دفترك (${formatMonthKeyArabic(appData.activeMonthKey)}):</strong><br/>
+• إجمالي الصرف: <strong>${formatNum(totalSpent)} ${cur}</strong> (${activeBook.expenses.length} عملية).<br/>
+• نسبة الكماليات والرغبات: <strong>${wantsPct}%</strong>.<br/>
+• الرصيد الآمن بعد الأقساط: <strong>${formatNum(safeBal)} ${cur}</strong>.<br/>
+• زكاة مدخراتك البنكية (2.5%): <strong>${formatNum(zakat)} ${cur}</strong>.<br/>
+✨ <em>تلميح: يمكنك أن تكتب لي «سجل 30 ريال غداء» وسأدونها لك فوراً!</em>`;
+    }
+
+    // ماسح الفواتير الذكي بالذكاء الاصطناعي (OCR + Gemini Vision + مرفق الدبوس)
+    async function handleReceiptUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        currentScannedImageBase64 = e.target.result;
+        document.getElementById('receiptThumbImg').src = currentScannedImageBase64;
+        document.getElementById('receiptPreviewBox').classList.add('active');
+        document.getElementById('ocrStatusText').textContent = '🔍 جاري قراءة الفاتورة بالذكاء الاصطناعي...';
+
+        // إذا كان مفتاح Gemini API متوفراً، نرسل الصورة لنموذج الرؤية لاستخراج البيانات الفعلية
+        if (appData.geminiApiKey) {
+          try {
+            const base64Clean = currentScannedImageBase64.split(',')[1];
+            const res = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${appData.geminiApiKey}`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  contents: [{
+                    parts: [
+                      { text: 'اقرأ هذه الفاتورة وأرجع فقط JSON بهذا الشكل بدون أي نص إضافي: {"store":"اسم المتجر","amount":0,"category":"مقاضي وبقالة أو قهوة ومطاعم أو وقود ومواصلات أو تسوق ومشتريات"}' },
+                      { inline_data: { mime_type: file.type || 'image/jpeg', data: base64Clean } }
+                    ]
+                  }]
+                })
+              }
+            );
+            const jsonRes = await res.json();
+            const rawText = jsonRes?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const matchJson = rawText.match(/\{[\s\S]*\}/);
+            if (matchJson) {
+              const parsed = JSON.parse(matchJson[0]);
+              document.getElementById('ocrStoreInput').value = parsed.store || 'فاتورة مشتريات';
+              document.getElementById('ocrAmountInput').value = parsed.amount || '';
+              document.getElementById('ocrStatusText').textContent = '✨ تم استخراج بيانات الفاتورة بـ Gemini Vision!';
+              return;
+            }
+          } catch (err) {
+            console.warn('تعذر استخدام Gemini Vision، سيتم التعبئة الذكية:', err);
+          }
+        }
+
+        // استخراج ذكي فوري لاسم الملف وتجهيز الحقول للمراجعة السريعة
+        const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        document.getElementById('ocrStoreInput').value =
+          cleanName.length > 2 && !/IMG|Screenshot|image/i.test(cleanName) ? cleanName : 'فاتورة مشتريات ممسوحة';
+        document.getElementById('ocrAmountInput').value = '65';
+        document.getElementById('ocrStatusText').textContent = '✨ تم إرفاق الفاتورة! راجع المبلغ واضغط اعتماد:';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function confirmScannedReceipt() {
+      const store = document.getElementById('ocrStoreInput').value.trim() || 'فاتورة ممسوحة';
+      const amount = parseFloat(document.getElementById('ocrAmountInput').value);
+      const catRaw = document.getElementById('ocrCategoryInput').value.split('|');
+
+      if (isNaN(amount) || amount <= 0) {
+        showPaperToast('⚠️ يرجى التأكد من مبلغ الفاتورة');
+        return;
+      }
+
+      const now = new Date();
+      getActiveNotebook().expenses.unshift({
+        id: 'exp_' + Date.now(),
+        title: store,
+        amount,
+        category: catRaw[0],
+        icon: catRaw[1] || '🧾',
+        needType: catRaw[2] || 'need',
+        receiptImage: currentScannedImageBase64,
+        isoDate: now.toISOString(),
+        timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      });
+
+      document.getElementById('receiptPreviewBox').classList.remove('active');
+      currentScannedImageBase64 = null;
+      saveAppData();
+      renderAll();
+      switchTab('home');
+      showPaperToast('📎 تم تسجيل الفاتورة وتثبيت صورتها في السجل المسطر!');
+    }
+
+    function viewAttachedReceipt(expId) {
+      const exp = getActiveNotebook().expenses.find((e) => e.id === expId);
+      if (!exp || !exp.receiptImage) return;
+      document.getElementById('receiptModalTitle').textContent = `📎 فاتورة: ${exp.title} (${exp.amount} ${appData.currency})`;
+      document.getElementById('receiptModalFullImg').src = exp.receiptImage;
+      document.getElementById('receiptViewModal').classList.add('open');
+    }
+
+    // =========================================================
+    // 3. المزامنة الحية مع أيام وتواريخ الأسبوع الحالي + الرسوم
+    // =========================================================
+    function renderChartsAndCurrentWeekTab(expenses, totalIncome, totalSpent, daysInMonth, cur) {
+      const now = new Date();
+      const todayDayIdx = now.getDay(); // 0 = الأحد ... 6 = السبت
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - todayDayIdx);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      document.getElementById('currentWeekRangeBadge').textContent =
+        `${startOfWeek.getDate()}/${startOfWeek.getMonth() + 1} - ${endOfWeek.getDate()}/${endOfWeek.getMonth() + 1}`;
+      document.getElementById('todayHighlightText').textContent =
+        `📍 اليوم: ${arabicDays[todayDayIdx]} ${now.getDate()}/${now.getMonth() + 1}`;
+
+      const weekDayTotals = [0, 0, 0, 0, 0, 0, 0];
+      const catTotals = {};
+      const spendByDayOfMonth = {};
+      let coffeeCount = 0;
+      let coffeeSum = 0;
+      let wantsTotal = 0;
+
+      expenses.forEach((exp) => {
+        const amt = Number(exp.amount) || 0;
+        const cat = exp.category || 'أخرى';
+        catTotals[cat] = (catTotals[cat] || 0) + amt;
+
+        if (exp.needType === 'want') wantsTotal += amt;
+        if (cat === 'قهوة ومطاعم') {
+          coffeeCount++;
+          coffeeSum += amt;
+        }
+
+        const d = exp.isoDate ? new Date(exp.isoDate) : now;
+        if (!isNaN(d.getTime())) {
+          weekDayTotals[d.getDay()] += amt;
+          spendByDayOfMonth[d.getDate()] = (spendByDayOfMonth[d.getDate()] || 0) + amt;
+        }
+      });
+
+      const maxDayVal = Math.max(...weekDayTotals, 1);
+      const thisWeekSum = weekDayTotals.reduce((a, b) => a + b, 0);
+      document.getElementById('thisWeekTotalText').textContent = `إجمالي الأسبوع: ${formatNum(thisWeekSum)} ${cur}`;
+
+      // رسم أعمدة أيام الأسبوع المتزامنة مع التواريخ الفعلية
+      const weeklyContainer = document.getElementById('weeklyBarsContainer');
+      weeklyContainer.innerHTML = arabicDays.map((dayName, idx) => {
+        const dayDate = new Date(startOfWeek);
+        dayDate.setDate(startOfWeek.getDate() + idx);
+        const dateStr = `${dayDate.getDate()}/${dayDate.getMonth() + 1}`;
+        const val = weekDayTotals[idx];
+        const heightPct = Math.max(8, Math.round((val / maxDayVal) * 100));
+        const isToday = idx === todayDayIdx;
+
+        return `
+          <div class="day-col ${isToday ? 'is-today' : ''}">
+            <span class="day-val sensitive-num">${val > 0 ? formatNum(val) : ''}</span>
+            <div class="day-bar ${isToday ? 'today-bar' : ''}" style="height: ${heightPct}%;"></div>
+            <span class="day-name">${dayName}</span>
+            <span class="day-date-num">${dateStr}</span>
+          </div>
+        `;
+      }).join('');
+
+      // رسم الدونات المائي
+      document.getElementById('donutCenterTotal').textContent = `${formatNum(totalSpent)} ${cur}`;
+      const svg = document.getElementById('categoryDonutSvg');
+      const legend = document.getElementById('donutLegendContainer');
+      const cats = Object.keys(catTotals).sort((a, b) => catTotals[b] - catTotals[a]);
+
+      if (cats.length === 0 || totalSpent === 0) {
+        svg.innerHTML = `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#d8cebe" stroke-width="5" stroke-dasharray="4 2"></circle>`;
+        legend.innerHTML = `<div style="grid-column: span 2; text-align:center; color: var(--ink-muted); font-family: var(--font-hand);">سجل مصروفاتك لتظهر خريطة الألوان المائية 🎨</div>`;
+      } else {
+        let cumulativePercent = 0;
+        let circlesHtml = '';
+        let legendHtml = '';
+        cats.forEach((cat, i) => {
+          const val = catTotals[cat];
+          const pct = (val / totalSpent) * 100;
+          const color = chartColors[i % chartColors.length];
+          const dashArray = `${pct} ${100 - pct}`;
+          const dashOffset = 25 - cumulativePercent;
+          cumulativePercent += pct;
+
+          circlesHtml += `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="${color}" stroke-width="5.5" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}"></circle>`;
+          legendHtml += `
+            <div class="legend-item">
+              <div><span class="legend-dot" style="background:${color};"></span><span>${cat}</span></div>
+              <strong style="font-family:var(--font-hand);">${Math.round(pct)}%</strong>
+            </div>
+          `;
+        });
+        svg.innerHTML = circlesHtml;
+        legend.innerHTML = legendHtml;
+      }
+
+      // شبكة تتبع العادات الشهرية
+      const dailyLimit = totalIncome > 0 ? (totalIncome / daysInMonth) : 200;
+      const currentDay = now.getDate();
+      let noSpendDays = 0;
+      let gridHtml = '';
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        if (day > currentDay) {
+          gridHtml += `<div class="bujo-day-cell future-day"><span>${day}</span></div>`;
+        } else {
+          const spentToday = spendByDayOfMonth[day] || 0;
+          if (spentToday === 0) {
+            noSpendDays++;
+            gridHtml += `<div class="bujo-day-cell no-spend"><span>${day}</span><small>🌿</small></div>`;
+          } else if (spentToday <= dailyLimit) {
+            gridHtml += `<div class="bujo-day-cell mindful-spend"><span>${day}</span><small>✨</small></div>`;
+          } else {
+            gridHtml += `<div class="bujo-day-cell over-spend"><span>${day}</span><small>🔥</small></div>`;
+          }
+        }
+      }
+      document.getElementById('bujoHabitGrid').innerHTML = gridHtml;
+
+      const maxWeekSum = Math.max(...weekDayTotals);
+      const peakDayStr = maxWeekSum > 0 ? arabicDays[weekDayTotals.indexOf(maxWeekSum)] : 'لا يوجد بعد';
+      const impulseRate = totalSpent > 0 ? Math.round((wantsTotal / totalSpent) * 100) : 0;
+
+      document.getElementById('habitPeakDay').textContent = peakDayStr;
+      document.getElementById('habitCoffeeRadar').textContent = `${coffeeCount} مرة (${formatNum(coffeeSum)})`;
+      document.getElementById('habitNoSpendCount').textContent = `${noSpendDays} يوم`;
+      document.getElementById('habitImpulseRate').textContent = `${impulseRate}%`;
+
+      document.getElementById('storyNoSpendVal').textContent = `${noSpendDays} يوم 🌿`;
+      document.getElementById('storyColoringVal').textContent = `${appData.coloredBoxes.length} / 20 🏺`;
+
+      renderColoringChallenge(cur);
+    }
+
+    // =========================================================
+    // 4. الأقساط (تابي وتمارا) + رادار الاشتراكات + الزكاة
+    // =========================================================
+    function renderInstallmentsAndSubsTab(totalIncome, dueThisMonth, totalRem, cur) {
       document.getElementById('instDueThisMonthVal').textContent = `${formatNum(dueThisMonth)} ${cur}`;
       document.getElementById('instTotalRemainingVal').textContent = `${formatNum(totalRem)} ${cur}`;
 
@@ -2518,66 +3340,77 @@
 
       const container = document.getElementById('punchCardsContainer');
       if (appData.installments.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--ink-muted); font-family:var(--font-hand); padding:16px 0;">لا توجد أقساط مسجلة حالياً.. أنت حر من الالتزامات! 🌿</p>`;
-        return;
-      }
+        container.innerHTML = `<p style="text-align:center; color:var(--ink-muted); font-family:var(--font-hand); padding:14px 0;">لا توجد أقساط مسجلة حالياً 🌿</p>`;
+      } else {
+        container.innerHTML = appData.installments.map((inst) => {
+          const splits = Number(inst.totalSplits) || 4;
+          const paid = Number(inst.paidSplits) || 0;
+          const splitAmount = Math.round(((Number(inst.totalAmount) || 0) / splits) * 100) / 100;
 
-      container.innerHTML = appData.installments.map((inst) => {
-        const splits = Number(inst.totalSplits) || 4;
-        const paid = Number(inst.paidSplits) || 0;
-        const splitAmount = Math.round(((Number(inst.totalAmount) || 0) / splits) * 100) / 100;
+          let provClass = 'provider-jamiyah';
+          if (inst.provider === 'تابي') provClass = 'provider-tabby';
+          else if (inst.provider === 'تمارا') provClass = 'provider-tamara';
 
-        let provClass = 'provider-jamiyah';
-        if (inst.provider === 'تابي') provClass = 'provider-tabby';
-        else if (inst.provider === 'تمارا') provClass = 'provider-tamara';
+          let circlesHtml = '';
+          for (let i = 1; i <= splits; i++) {
+            const isPaid = i <= paid;
+            const isDueNow = i === paid + 1;
+            const circleClass = isPaid ? 'paid' : (isDueNow ? 'due-now' : '');
+            const statusLabel = isPaid ? '✓ مدفوع' : (isDueNow ? '⏳ سدد الآن' : '⚪ قادم');
 
-        let circlesHtml = '';
-        for (let i = 1; i <= splits; i++) {
-          const isPaid = i <= paid;
-          const isDueNow = i === paid + 1;
-          const circleClass = isPaid ? 'paid' : (isDueNow ? 'due-now' : '');
-          const statusLabel = isPaid ? '✓ مدفوع' : (isDueNow ? '⏳ سدد الآن' : '⚪ قادم');
+            circlesHtml += `
+              <div class="punch-circle ${circleClass}" onclick="stampInstallmentSplit('${inst.id}', ${i})">
+                <span class="punch-step-num">دفعة ${i}</span>
+                <span class="punch-step-amt sensitive-num">${formatNum(splitAmount)}</span>
+                <span class="punch-step-status">${statusLabel}</span>
+              </div>
+            `;
+          }
 
-          circlesHtml += `
-            <div class="punch-circle ${circleClass}" onclick="stampInstallmentSplit('${inst.id}', ${i})">
-              <span class="punch-step-num">دفعة ${i}</span>
-              <span class="punch-step-amt sensitive-num">${formatNum(splitAmount)}</span>
-              <span class="punch-step-status">${statusLabel}</span>
+          return `
+            <div class="punch-card">
+              <div class="punch-card-top">
+                <div>
+                  <span class="provider-badge ${provClass}">${inst.provider}</span>
+                  <strong style="font-family:var(--font-hand); font-size:0.92rem;">${inst.store}</strong>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:0.74rem; color:var(--ink-secondary);" class="sensitive-num">الإجمالي: ${formatNum(inst.totalAmount)} ${cur}</span>
+                  <button class="delete-entry-btn" onclick="deleteInstallmentCard('${inst.id}')">✕</button>
+                </div>
+              </div>
+              <div class="punch-circles-row">${circlesHtml}</div>
             </div>
           `;
-        }
+        }).join('');
+      }
 
-        return `
-          <div class="punch-card">
-            <div class="punch-card-top">
-              <div>
-                <span class="provider-badge ${provClass}">${inst.provider}</span>
-                <strong style="font-family:var(--font-hand); font-size:0.95rem;">${inst.store}</strong>
-              </div>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:0.75rem; color:var(--ink-secondary);" class="sensitive-num">الإجمالي: ${formatNum(inst.totalAmount)} ${cur}</span>
-                <button class="delete-entry-btn" onclick="deleteInstallmentCard('${inst.id}')" title="حذف البطاقة">✕</button>
-              </div>
-            </div>
-            <div class="punch-circles-row">
-              ${circlesHtml}
-            </div>
+      // عرض رادار الاشتراكات الثابتة
+      const subsEl = document.getElementById('subscriptionsContainer');
+      subsEl.innerHTML = appData.subscriptions.map((sub) => `
+        <div class="sub-sticker" onclick="logSubscriptionExpense('${sub.id}')" title="اضغط لتسجيل سداد الاشتراك">
+          <div>
+            <strong style="font-size:0.78rem; display:block;">${sub.title}</strong>
+            <span style="font-family:var(--font-hand); font-size:0.75rem; color:var(--sage-green);">${formatNum(sub.amount)} ${cur}</span>
           </div>
-        `;
-      }).join('');
+          <span style="font-size:0.75rem;">➕</span>
+        </div>
+      `).join('');
+
+      // حساب الزكاة الشرعية (2.5%) على رصيد المغلف البنكي
+      const zakatVal = Math.round((Number(appData.bankBalance) || 0) * 0.025);
+      document.getElementById('zakatAmountDisplay').textContent = `${formatNum(zakatVal)} ${cur}`;
     }
 
-    // ختم دفعة تابي/تمارا كـ "مدفوع" وخصمها فوراً في سجل المصروفات
     function stampInstallmentSplit(instId, splitNumber) {
       const inst = appData.installments.find((x) => x.id === instId);
       if (!inst) return;
-
       const splitAmount = Math.round(((Number(inst.totalAmount) || 0) / (Number(inst.totalSplits) || 4)) * 100) / 100;
 
       if (splitNumber === inst.paidSplits + 1) {
         inst.paidSplits += 1;
         const now = new Date();
-        appData.expenses.unshift({
+        getActiveNotebook().expenses.unshift({
           id: 'exp_' + Date.now(),
           title: `سداد دفعة ${inst.paidSplits} (${inst.provider}) - ${inst.store}`,
           amount: splitAmount,
@@ -2597,112 +3430,43 @@
       }
     }
 
-    function addInstallmentCard() {
-      const store = document.getElementById('instStoreInput').value.trim();
-      const provider = document.getElementById('instProviderInput').value;
-      const totalAmount = parseFloat(document.getElementById('instTotalInput').value);
-      const paidSplits = parseInt(document.getElementById('instPaidCountInput').value, 10) || 0;
-
-      if (!store || isNaN(totalAmount) || totalAmount <= 0) {
-        showPaperToast('⚠️ يرجى إدخال اسم المتجر وإجمالي الفاتورة');
-        return;
-      }
-
-      appData.installments.unshift({
-        id: 'inst_' + Date.now(),
-        store,
-        provider,
-        totalAmount,
-        totalSplits: 4,
-        paidSplits
+    function logSubscriptionExpense(subId) {
+      const sub = appData.subscriptions.find((s) => s.id === subId);
+      if (!sub) return;
+      const now = new Date();
+      getActiveNotebook().expenses.unshift({
+        id: 'exp_' + Date.now(),
+        title: sub.title,
+        amount: Number(sub.amount),
+        category: 'فواتير والتزامات',
+        icon: '🔔',
+        needType: 'need',
+        isoDate: now.toISOString(),
+        timestamp: now.toLocaleString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       });
-
-      document.getElementById('instStoreInput').value = '';
-      document.getElementById('instTotalInput').value = '';
       saveAppData();
       renderAll();
-      closeModal('installmentModal');
-      showPaperToast(`💳 تمت إضافة بطاقة أقساط "${store}" (${provider})`);
+      showPaperToast(`🔔 تم تسجيل سداد "${sub.title}" (${sub.amount} ${appData.currency})`);
     }
 
-    function deleteInstallmentCard(id) {
-      appData.installments = appData.installments.filter((x) => x.id !== id);
-      saveAppData();
-      renderAll();
-      showPaperToast('🗑️ تم حذف بطاقة الأقساط');
-    }
-
-    // حاسبة ساعات العمل قبل الشراء
-    function calculateWorkHours() {
-      const price = parseFloat(document.getElementById('impulsePriceInput').value);
-      const resBox = document.getElementById('impulseResultBox');
-      const salary = Number(appData.monthlySalary) || 8000;
-      const hourlyRate = salary / 176; // 22 يوم عمل × 8 ساعات = 176 ساعة شهرياً
-
-      if (isNaN(price) || price <= 0 || hourlyRate <= 0) {
-        resBox.innerHTML = '💡 اكتب السعر بالأعلى لحساب تكلفته بساعات عملك الفعلية.';
+    function addSubscriptionItem() {
+      const title = document.getElementById('subTitleInput').value.trim();
+      const amount = parseFloat(document.getElementById('subAmountInput').value);
+      if (!title || isNaN(amount) || amount <= 0) {
+        showPaperToast('⚠️ يرجى كتابة اسم الاشتراك والمبلغ');
         return;
       }
-
-      const hoursNeeded = (price / hourlyRate).toFixed(1);
-      const daysNeeded = (hoursNeeded / 8).toFixed(1);
-      resBox.innerHTML = `
-        ⏳ هذا المنتج يساوي <strong>${hoursNeeded} ساعة عمل</strong> متواصلة من جهدك (حوالي <strong>${daysNeeded} يوم دوام</strong>)!<br/>
-        <span style="font-size:0.75rem; color:var(--ink-secondary);">اسأل نفسك: هل يستحق هذا الجهد الآن أم تؤجله 48 ساعة؟</span>
-      `;
-    }
-
-    // =========================================================
-    // تحدي التلوين للتوفير (20 مربعاً)
-    // =========================================================
-    function renderColoringChallenge(cur) {
-      const step = Number(appData.coloringStep) || 50;
-      document.getElementById('coloringStepBtn').textContent = `المربع = ${step} ${cur}`;
-
-      const grid = document.getElementById('coloringChallengeGrid');
-      let html = '';
-      for (let i = 0; i < 20; i++) {
-        const isColored = appData.coloredBoxes.includes(i);
-        html += `
-          <div class="color-jar-cell ${isColored ? 'colored' : ''}" onclick="toggleColoringBox(${i})">
-            <span>${isColored ? '🎨' : '🏺'}</span>
-            <span>${step}</span>
-          </div>
-        `;
-      }
-      grid.innerHTML = html;
-
-      const count = appData.coloredBoxes.length;
-      const totalSaved = count * step;
-      document.getElementById('coloringProgressText').textContent = `تم تلوين: ${count} من 20 مربعاً`;
-      document.getElementById('coloringSavedTotal').textContent = `وفرت بالتحدي: ${formatNum(totalSaved)} ${cur}`;
-    }
-
-    function toggleColoringBox(index) {
-      const step = Number(appData.coloringStep) || 50;
-      const pos = appData.coloredBoxes.indexOf(index);
-      if (pos === -1) {
-        appData.coloredBoxes.push(index);
-        appData.bankBalance = (Number(appData.bankBalance) || 0) + step;
-        showPaperToast(`🎨 رائع! لونت مربعاً وأضفت +${step} ${appData.currency} لمغلف الادخار!`);
-      } else {
-        appData.coloredBoxes.splice(pos, 1);
-        appData.bankBalance = Math.max(0, (Number(appData.bankBalance) || 0) - step);
-        showPaperToast(`↩️ تم إلغاء تلوين المربع`);
-      }
+      appData.subscriptions.push({ id: 'sub_' + Date.now(), title, amount });
+      document.getElementById('subTitleInput').value = '';
+      document.getElementById('subAmountInput').value = '';
       saveAppData();
       renderAll();
-    }
-
-    function toggleColoringStep() {
-      appData.coloringStep = appData.coloringStep === 50 ? 100 : 50;
-      saveAppData();
-      renderAll();
-      showPaperToast(`🏺 تم ضبط قيمة المربع الواحد على ${appData.coloringStep} ${appData.currency}`);
+      closeModal('subModal');
+      showPaperToast('🔔 تمت إضافة الاشتراك الشهري');
     }
 
     // =========================================================
-    // الملصقات السريعة وسجل العمليات المسطر
+    // بقية الوظائف الأساسية (الملصقات، السجل، التلوين، الإعدادات)
     // =========================================================
     function renderQuickStickers(cur) {
       const container = document.getElementById('quickStickersContainer');
@@ -2728,7 +3492,7 @@
 
     function logQuickSticker(sticker) {
       const now = new Date();
-      appData.expenses.unshift({
+      getActiveNotebook().expenses.unshift({
         id: 'exp_' + Date.now(),
         title: sticker.title,
         amount: Number(sticker.amount),
@@ -2743,19 +3507,23 @@
       showPaperToast(`🏷️ تم لصق "${sticker.title}" (${sticker.amount} ${appData.currency})`);
     }
 
-    function renderLedgerList(cur) {
+    function renderLedgerList(expenses, cur) {
       const listEl = document.getElementById('expensesLedgerList');
-      document.getElementById('transactionsCountBadge').textContent = `${appData.expenses.length} عملية`;
+      document.getElementById('transactionsCountBadge').textContent = `${expenses.length} عملية`;
 
-      if (appData.expenses.length === 0) {
-        listEl.innerHTML = `<li class="empty-ledger">صفحة الدفتر فارغة حالياً.. اضغط على أي ملصق بالأعلى لتدوين أول مصروف ✒️</li>`;
+      if (expenses.length === 0) {
+        listEl.innerHTML = `<li class="empty-ledger">صفحة هذا الشهر فارغة.. اضغط على أي ملصق أو اطلب من المساعد الذكي تسجيل مصروفك ✒️</li>`;
         return;
       }
 
-      listEl.innerHTML = appData.expenses.map((item) => {
+      listEl.innerHTML = expenses.map((item) => {
         const isWant = item.needType === 'want';
         const badgeText = isWant ? 'كمالي' : 'أساسي';
         const badgeClass = isWant ? 'want' : 'essential';
+        const clipBtn = item.receiptImage
+          ? `<button class="receipt-clip-btn" onclick="viewAttachedReceipt('${item.id}')">📎 الفاتورة</button>`
+          : '';
+
         return `
           <li class="ledger-item">
             <span class="ledger-check">✓</span>
@@ -2765,6 +3533,7 @@
                 <div class="ledger-title">
                   <span>${item.title}</span>
                   <span class="need-badge ${badgeClass}">${badgeText}</span>
+                  ${clipBtn}
                 </div>
                 <span class="ledger-date">${item.category} • ${item.timestamp}</span>
               </div>
@@ -2778,201 +3547,49 @@
       }).join('');
     }
 
-    // =========================================================
-    // الرسوم البيانية المائية ومتتبع العادات
-    // =========================================================
-    function renderChartsTab(totalSpent, cur) {
-      document.getElementById('donutCenterTotal').textContent = `${formatNum(totalSpent)} ${cur}`;
-      const svg = document.getElementById('categoryDonutSvg');
-      const legend = document.getElementById('donutLegendContainer');
-
-      const catTotals = {};
-      let needsSum = 0;
-      let wantsSum = 0;
-      const dayTotals = [0, 0, 0, 0, 0, 0, 0];
-
-      appData.expenses.forEach((exp) => {
-        const amt = Number(exp.amount) || 0;
-        const cat = exp.category || 'أخرى';
-        catTotals[cat] = (catTotals[cat] || 0) + amt;
-
-        if (exp.needType === 'want') wantsSum += amt;
-        else needsSum += amt;
-
-        const d = exp.isoDate ? new Date(exp.isoDate) : new Date();
-        if (!isNaN(d.getDay())) {
-          dayTotals[d.getDay()] += amt;
-        }
-      });
-
-      const cats = Object.keys(catTotals).sort((a, b) => catTotals[b] - catTotals[a]);
-      if (cats.length === 0 || totalSpent === 0) {
-        svg.innerHTML = `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#d8cebe" stroke-width="5" stroke-dasharray="4 2"></circle>`;
-        legend.innerHTML = `<div style="grid-column: span 2; text-align:center; color: var(--ink-muted); font-family: var(--font-hand);">سجل مصروفاتك لتظهر خريطة الألوان المائية 🎨</div>`;
-      } else {
-        let cumulativePercent = 0;
-        let circlesHtml = '';
-        let legendHtml = '';
-
-        cats.forEach((cat, i) => {
-          const val = catTotals[cat];
-          const pct = (val / totalSpent) * 100;
-          const color = chartColors[i % chartColors.length];
-          const dashArray = `${pct} ${100 - pct}`;
-          const dashOffset = 25 - cumulativePercent;
-          cumulativePercent += pct;
-
-          circlesHtml += `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="${color}" stroke-width="5.5" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}"></circle>`;
-          legendHtml += `
-            <div class="legend-item">
-              <div><span class="legend-dot" style="background:${color};"></span><span>${cat}</span></div>
-              <strong style="font-family:var(--font-hand);">${Math.round(pct)}%</strong>
-            </div>
-          `;
-        });
-        svg.innerHTML = circlesHtml;
-        legend.innerHTML = legendHtml;
-      }
-
-      const maxDayVal = Math.max(...dayTotals, 1);
-      const peakDayIndex = dayTotals.indexOf(Math.max(...dayTotals));
-      const weeklyContainer = document.getElementById('weeklyBarsContainer');
-      weeklyContainer.innerHTML = arabicDays.map((dayName, idx) => {
-        const val = dayTotals[idx];
-        const heightPct = Math.max(8, Math.round((val / maxDayVal) * 100));
-        const isPeak = val > 0 && idx === peakDayIndex;
-        return `
-          <div class="day-col">
-            <span class="day-val sensitive-num">${val > 0 ? formatNum(val) : ''}</span>
-            <div class="day-bar ${isPeak ? 'peak-day' : ''}" style="height: ${heightPct}%;"></div>
-            <span class="day-name">${dayName}</span>
+    function renderColoringChallenge(cur) {
+      const step = Number(appData.coloringStep) || 50;
+      document.getElementById('coloringStepBtn').textContent = `المربع = ${step} ${cur}`;
+      const grid = document.getElementById('coloringChallengeGrid');
+      let html = '';
+      for (let i = 0; i < 20; i++) {
+        const isColored = appData.coloredBoxes.includes(i);
+        html += `
+          <div class="color-jar-cell ${isColored ? 'colored' : ''}" onclick="toggleColoringBox(${i})">
+            <span>${isColored ? '🎨' : '🏺'}</span>
+            <span>${step}</span>
           </div>
         `;
-      }).join('');
-
-      document.getElementById('needsTotalVal').textContent = `${formatNum(needsSum)} ${cur}`;
-      document.getElementById('wantsTotalVal').textContent = `${formatNum(wantsSum)} ${cur}`;
-      const wantsPct = totalSpent > 0 ? Math.round((wantsSum / totalSpent) * 100) : 0;
-      const needsPct = totalSpent > 0 ? 100 - wantsPct : 0;
-      document.getElementById('wantsRatioBar').style.width = `${wantsPct}%`;
-      document.getElementById('needsRatioText').textContent = `أساسي: ${needsPct}%`;
-      document.getElementById('wantsRatioText').textContent = `كمالي: ${wantsPct}%`;
+      }
+      grid.innerHTML = html;
+      const count = appData.coloredBoxes.length;
+      document.getElementById('coloringProgressText').textContent = `تم تلوين: ${count} من 20 مربعاً`;
+      document.getElementById('coloringSavedTotal').textContent = `وفرت بالتحدي: ${formatNum(count * step)} ${cur}`;
     }
 
-    function renderHabitsTab(totalIncome, totalSpent, daysInMonth, cur) {
-      const dailyBudgetLimit = totalIncome > 0 ? (totalIncome / daysInMonth) : 200;
-      const now = new Date();
-      const currentDay = now.getDate();
-      const currentMonth = now.getMonth();
-      const currentYear = now.getFullYear();
-
-      const spendByDayOfMonth = {};
-      const dayOfWeekSums = [0, 0, 0, 0, 0, 0, 0];
-      let coffeeAndDiningCount = 0;
-      let coffeeAndDiningSum = 0;
-      let wantsTotal = 0;
-
-      appData.expenses.forEach((exp) => {
-        const amt = Number(exp.amount) || 0;
-        if (exp.needType === 'want') wantsTotal += amt;
-        if (exp.category === 'قهوة ومطاعم') {
-          coffeeAndDiningCount++;
-          coffeeAndDiningSum += amt;
-        }
-
-        const d = exp.isoDate ? new Date(exp.isoDate) : now;
-        dayOfWeekSums[d.getDay()] += amt;
-        if (d.getMonth() === currentMonth && d.getFullYear() === currentYear) {
-          const dom = d.getDate();
-          spendByDayOfMonth[dom] = (spendByDayOfMonth[dom] || 0) + amt;
-        }
-      });
-
-      let noSpendDays = 0;
-      const gridEl = document.getElementById('bujoHabitGrid');
-      let gridHtml = '';
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        if (day > currentDay) {
-          gridHtml += `<div class="bujo-day-cell future-day"><span>${day}</span></div>`;
-        } else {
-          const spentToday = spendByDayOfMonth[day] || 0;
-          if (spentToday === 0) {
-            noSpendDays++;
-            gridHtml += `<div class="bujo-day-cell no-spend"><span>${day}</span><small>🌿</small></div>`;
-          } else if (spentToday <= dailyBudgetLimit) {
-            gridHtml += `<div class="bujo-day-cell mindful-spend"><span>${day}</span><small>✨</small></div>`;
-          } else {
-            gridHtml += `<div class="bujo-day-cell over-spend"><span>${day}</span><small>🔥</small></div>`;
-          }
-        }
-      }
-      gridEl.innerHTML = gridHtml;
-
-      const maxWeekSum = Math.max(...dayOfWeekSums);
-      const peakDayStr = maxWeekSum > 0 ? arabicDays[dayOfWeekSums.indexOf(maxWeekSum)] : 'لا يوجد بعد';
-      const impulseRate = totalSpent > 0 ? Math.round((wantsTotal / totalSpent) * 100) : 0;
-
-      document.getElementById('habitPeakDay').textContent = peakDayStr;
-      document.getElementById('habitCoffeeRadar').textContent = `${coffeeAndDiningCount} مرة (${formatNum(coffeeAndDiningSum)} ${cur})`;
-      document.getElementById('habitNoSpendCount').textContent = `${noSpendDays} يوم`;
-      document.getElementById('habitImpulseRate').textContent = `${impulseRate}%`;
-
-      // تحديث بيانات بطاقة ستوري المشاركة
-      document.getElementById('storyNoSpendVal').textContent = `${noSpendDays} يوم 🌿`;
-      document.getElementById('storyColoringVal').textContent = `${appData.coloredBoxes.length} / 20 🏺`;
-
-      const adviceEl = document.getElementById('habitSmartAdvice');
-      if (totalSpent === 0) {
-        adviceEl.textContent = '💡 نصيحة الدفتر: ابدأ بتسجيل مصروفاتك ليقوم الدفتر باكتشاف عاداتك الشرائية تلقائياً.';
-      } else if (impulseRate > 45) {
-        adviceEl.textContent = `💡 ملاحظة الدفتر: الكماليات تستهلك ${impulseRate}% من مصروفاتك، وطلبت قهوة/مطاعم ${coffeeAndDiningCount} مرة. تقليلها للنصف سيوفر لك ${formatNum(Math.round(coffeeAndDiningSum / 2))} ${cur}!`;
+    function toggleColoringBox(index) {
+      const step = Number(appData.coloringStep) || 50;
+      const pos = appData.coloredBoxes.indexOf(index);
+      if (pos === -1) {
+        appData.coloredBoxes.push(index);
+        appData.bankBalance = (Number(appData.bankBalance) || 0) + step;
+        showPaperToast(`🎨 لونت مربعاً وأضفت +${step} ${appData.currency} لمغلف الادخار!`);
       } else {
-        adviceEl.textContent = `🌟 أداء متوازن! حققت ${noSpendDays} يوم بدون صرف حتى الآن، ونسبة الكماليات لديك تحت السيطرة (${impulseRate}%).`;
+        appData.coloredBoxes.splice(pos, 1);
+        appData.bankBalance = Math.max(0, (Number(appData.bankBalance) || 0) - step);
       }
-    }
-
-    function renderReportTab(totalIncome, totalSpent, remaining, cur) {
-      document.getElementById('stickyBankBalance').textContent = `${formatNum(appData.bankBalance)} ${cur}`;
-      document.getElementById('stickyTotalIncome').textContent = `${formatNum(totalIncome)} ${cur}`;
-      document.getElementById('stickyTotalSpent').textContent = `${formatNum(totalSpent)} ${cur}`;
-      document.getElementById('stickyNetSavings').textContent = `${formatNum(remaining)} ${cur}`;
-
-      const savingsPercent = totalIncome > 0 ? Math.max(0, Math.round((remaining / totalIncome) * 100)) : 0;
-      const stampEl = document.getElementById('savingsRubberStamp');
-      stampEl.className = 'rubber-stamp';
-
-      if (totalIncome === 0) {
-        stampEl.textContent = 'يرجى تحديد الراتب أولاً 📌';
-        stampEl.classList.add('stamp-warn');
-      } else if (remaining < 0) {
-        stampEl.textContent = 'تنبيه: تجاوزت ميزانية الشهر ⚠️';
-        stampEl.classList.add('stamp-danger');
-      } else if (savingsPercent >= 25) {
-        stampEl.textContent = `ختم التميز: فائض ادخار ${savingsPercent}% 🌟`;
-      } else {
-        stampEl.textContent = `ضمن الميزانية: متبقي ${savingsPercent}% ✓`;
-        stampEl.classList.add('stamp-warn');
-      }
-
-      document.getElementById('storyStampBadge').textContent = stampEl.textContent;
-      document.getElementById('storyOwnerTitle').textContent = appData.ownerTitle || 'دفتر ريالي';
-      document.getElementById('storyMonthLabel').textContent = document.getElementById('reportMonthName').textContent;
-
-      const refInput = document.getElementById('monthlyReflectionInput');
-      if (refInput.value !== (appData.reflectionNote || '')) {
-        refInput.value = appData.reflectionNote || '';
-      }
-    }
-
-    document.getElementById('monthlyReflectionInput').addEventListener('input', (e) => {
-      appData.reflectionNote = e.target.value;
       saveAppData();
-    });
+      renderAll();
+    }
 
-    // التنقل بين التبويبات الـ 5
+    function toggleColoringStep() {
+      appData.coloringStep = appData.coloringStep === 50 ? 100 : 50;
+      saveAppData();
+      renderAll();
+    }
+
     function switchTab(tabName) {
-      ['home', 'installments', 'charts', 'habits', 'report'].forEach((t) => {
+      ['home', 'installments', 'ai', 'charts', 'report'].forEach((t) => {
         document.getElementById(`tab-${t}`).classList.toggle('active', t === tabName);
         document.getElementById(`navBtn-${t}`).classList.toggle('active', t === tabName);
       });
@@ -2989,6 +3606,7 @@
         document.getElementById('ownerNameInput').value = appData.ownerTitle || 'دفتر ريالي';
         document.getElementById('currencySelectInput').value = appData.currency || 'ر.س';
         document.getElementById('paydayDayInput').value = appData.paydayDay || 27;
+        document.getElementById('geminiKeyInput').value = appData.geminiApiKey || '';
       }
       document.getElementById(modalId).classList.add('open');
     }
@@ -3023,10 +3641,7 @@
     function addSubEnvelope() {
       const title = document.getElementById('subEnvTitleInput').value.trim();
       const amount = parseFloat(document.getElementById('subEnvAmountInput').value);
-      if (!title || isNaN(amount) || amount <= 0) {
-        showPaperToast('⚠️ يرجى كتابة اسم الظرف والمبلغ');
-        return;
-      }
+      if (!title || isNaN(amount) || amount <= 0) return;
       appData.subEnvelopes.push({ id: 'env_' + Date.now(), title, amount });
       document.getElementById('subEnvTitleInput').value = '';
       document.getElementById('subEnvAmountInput').value = '';
@@ -3047,20 +3662,15 @@
     function addExtraIncome() {
       const title = document.getElementById('incomeTitleInput').value.trim();
       const amount = parseFloat(document.getElementById('incomeAmountInput').value);
-
-      if (!title || isNaN(amount) || amount <= 0) {
-        showPaperToast('⚠️ يرجى كتابة اسم مصدر الدخل والمبلغ');
-        return;
-      }
+      if (!title || isNaN(amount) || amount <= 0) return;
 
       if (selectedIncomeDest === 'bank') {
         appData.bankBalance = (Number(appData.bankBalance) || 0) + amount;
-        showPaperToast(`✉️ تم إيداع "${title}" (${formatNum(amount)}) مباشرة في مغلف الادخار!`);
+        showPaperToast(`✉️ تم إيداع "${title}" مباشرة في مغلف الادخار!`);
       } else {
-        appData.extraIncomes.push({ id: 'inc_' + Date.now(), title, amount });
-        showPaperToast(`💰 تمت إضافة دخل "${title}" (+${formatNum(amount)}) لميزانية الشهر!`);
+        getActiveNotebook().extraIncomes.push({ id: 'inc_' + Date.now(), title, amount });
+        showPaperToast(`💰 تمت إضافة دخل "${title}" لميزانية هذا الشهر!`);
       }
-
       document.getElementById('incomeTitleInput').value = '';
       document.getElementById('incomeAmountInput').value = '';
       saveAppData();
@@ -3069,10 +3679,39 @@
     }
 
     function deleteExtraIncome(id) {
-      appData.extraIncomes = appData.extraIncomes.filter((i) => i.id !== id);
+      const book = getActiveNotebook();
+      book.extraIncomes = book.extraIncomes.filter((i) => i.id !== id);
       saveAppData();
       renderAll();
-      showPaperToast('🗑️ تم حذف مصدر الدخل الإضافي');
+    }
+
+    function addInstallmentCard() {
+      const store = document.getElementById('instStoreInput').value.trim();
+      const provider = document.getElementById('instProviderInput').value;
+      const totalAmount = parseFloat(document.getElementById('instTotalInput').value);
+      const paidSplits = parseInt(document.getElementById('instPaidCountInput').value, 10) || 0;
+      if (!store || isNaN(totalAmount) || totalAmount <= 0) return;
+
+      appData.installments.unshift({
+        id: 'inst_' + Date.now(),
+        store,
+        provider,
+        totalAmount,
+        totalSplits: 4,
+        paidSplits
+      });
+      document.getElementById('instStoreInput').value = '';
+      document.getElementById('instTotalInput').value = '';
+      saveAppData();
+      renderAll();
+      closeModal('installmentModal');
+      showPaperToast(`💳 تمت إضافة بطاقة أقساط "${store}"`);
+    }
+
+    function deleteInstallmentCard(id) {
+      appData.installments = appData.installments.filter((x) => x.id !== id);
+      saveAppData();
+      renderAll();
     }
 
     function saveBankBalance() {
@@ -3080,7 +3719,7 @@
       const note = document.getElementById('bankGoalInput').value.trim();
       if (!isNaN(val) && val >= 0) {
         appData.bankBalance = val;
-        appData.bankNote = note || 'مدخراتك المحفوظة في المغلف الورقي';
+        appData.bankNote = note || 'مدخراتك المحفوظة عبر جميع الشهور';
         saveAppData();
         renderAll();
         closeModal('bankModal');
@@ -3103,14 +3742,10 @@
       const title = document.getElementById('expTitleInput').value.trim();
       const amount = parseFloat(document.getElementById('expAmountInput').value);
       const catRaw = document.getElementById('expCategoryInput').value.split('|');
-
-      if (!title || isNaN(amount) || amount <= 0) {
-        showPaperToast('⚠️ يرجى إدخال البيان والمبلغ');
-        return;
-      }
+      if (!title || isNaN(amount) || amount <= 0) return;
 
       const now = new Date();
-      appData.expenses.unshift({
+      getActiveNotebook().expenses.unshift({
         id: 'exp_' + Date.now(),
         title,
         amount,
@@ -3133,11 +3768,7 @@
       const title = document.getElementById('stickerTitleInput').value.trim();
       const amount = parseFloat(document.getElementById('stickerAmountInput').value);
       const catRaw = document.getElementById('stickerCategoryInput').value.split('|');
-
-      if (!title || isNaN(amount) || amount <= 0) {
-        showPaperToast('⚠️ يرجى إدخال اسم الملصق والسعر');
-        return;
-      }
+      if (!title || isNaN(amount) || amount <= 0) return;
 
       appData.quickStickers.push({
         id: 'st_' + Date.now(),
@@ -3160,58 +3791,52 @@
       const name = document.getElementById('ownerNameInput').value.trim();
       const cur = document.getElementById('currencySelectInput').value;
       const pDay = parseInt(document.getElementById('paydayDayInput').value, 10);
+      const gKey = document.getElementById('geminiKeyInput').value.trim();
+
       appData.ownerTitle = name || 'دفتر ريالي';
       appData.currency = cur || 'ر.س';
       appData.paydayDay = (!isNaN(pDay) && pDay >= 1 && pDay <= 30) ? pDay : 27;
+      appData.geminiApiKey = gKey;
+
       saveAppData();
       renderAll();
       closeModal('settingsModal');
-      showPaperToast('⚙️ تم تحديث إعدادات الدفتر');
+      showPaperToast('⚙️ تم تحديث إعدادات الدفتر والـ AI');
     }
 
     function deleteExpense(id) {
-      appData.expenses = appData.expenses.filter((e) => e.id !== id);
+      const book = getActiveNotebook();
+      book.expenses = book.expenses.filter((e) => e.id !== id);
       saveAppData();
       renderAll();
       showPaperToast('🗑️ تم شطب العملية من السجل');
     }
 
     function transferRemainingToBank() {
-      const extraIncome = appData.extraIncomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const book = getActiveNotebook();
+      const extraIncome = book.extraIncomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
       const totalIncome = (Number(appData.monthlySalary) || 0) + extraIncome;
-      const totalSpent = appData.expenses.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const totalSpent = book.expenses.reduce((s, i) => s + (Number(i.amount) || 0), 0);
       const remaining = totalIncome - totalSpent;
 
       if (remaining <= 0) {
-        showPaperToast('⚠️ لا يوجد فائض لترحيله حالياً');
+        showPaperToast('⚠️ لا يوجد فائض لترحيله في هذا الشهر');
         return;
       }
 
       appData.bankBalance = (Number(appData.bankBalance) || 0) + remaining;
-      appData.expenses = [];
-      appData.extraIncomes = [];
-      saveAppData();
-      renderAll();
-      showPaperToast(`🎉 تم ترحيل ${formatNum(remaining)} ${appData.currency} لمغلف الادخار!`);
-    }
-
-    function clearMonthExpenses() {
-      if (confirm('هل ترغب بفتح صفحة شهر جديد ومسح مصروفات ودخل الشهر الإضافي الحالي؟ (سيبقى رصيد البنك والأقساط والراتب الأساسي محفوظين)')) {
-        appData.expenses = [];
-        appData.extraIncomes = [];
-        saveAppData();
-        renderAll();
-        showPaperToast('🗓️ تم فتح صفحة شهر جديد');
-      }
+      archiveAndStartNextMonth();
+      showPaperToast(`🎉 تم ترحيل ${formatNum(remaining)} ${appData.currency} للبنك وحفظ الشهر في الرف!`);
     }
 
     function exportCSVReport() {
-      if (appData.expenses.length === 0) {
-        showPaperToast('⚠️ لا توجد مصروفات لتصديرها');
+      const book = getActiveNotebook();
+      if (book.expenses.length === 0) {
+        showPaperToast('⚠️ لا توجد مصروفات في هذا الدفتر لتصديرها');
         return;
       }
       let csv = '\uFEFFالبيان,المبلغ,العملة,الفئة,النوع,التاريخ\n';
-      appData.expenses.forEach((e) => {
+      book.expenses.forEach((e) => {
         const typeAr = e.needType === 'want' ? 'كمالي' : 'أساسي';
         csv += `"${e.title}",${e.amount},"${appData.currency}","${e.category}","${typeAr}","${e.timestamp}"\n`;
       });
@@ -3219,38 +3844,9 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `تقرير_دفتر_ريالي_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `دفتر_ريالي_${appData.activeMonthKey}.csv`;
       a.click();
       showPaperToast('📊 تم تحميل ملف Excel (CSV)');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = JSON.stringify(appData, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `نسخة_احتياطية_دفتر_ريالي_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      showPaperToast('💾 تم تحميل النسخة الاحتياطية');
-    }
-
-    function importBackupJSON(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const imported = JSON.parse(e.target.result);
-          appData = { ...appData, ...imported };
-          saveAppData();
-          renderAll();
-          showPaperToast('🎉 تمت استعادة بيانات الدفتر بنجاح!');
-        } catch (err) {
-          showPaperToast('⚠️ ملف النسخة الاحتياطية غير صالح');
-        }
-      };
-      reader.readAsText(file);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
